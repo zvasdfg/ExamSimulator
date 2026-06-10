@@ -23,6 +23,7 @@ const state = {
 };
 
 const els = {
+  appTitle: document.querySelector("#app-title"),
   sourceLabel: document.querySelector("#source-label"),
   bankStatus: document.querySelector("#bank-status"),
   progressStatus: document.querySelector("#progress-status"),
@@ -237,6 +238,53 @@ function normalizeAnswer(rawAnswer, options, type) {
   return byText ? byText.id : "";
 }
 
+function firstNonEmptyString(values, fallback = "") {
+  const found = values.find(
+    (value) => typeof value === "string" && value.trim().length > 0,
+  );
+  return found ? found.trim() : fallback;
+}
+
+function getRawBankTitle(rawBank) {
+  if (Array.isArray(rawBank)) {
+    return "Banco importado";
+  }
+
+  return firstNonEmptyString(
+    [
+      rawBank.title,
+      rawBank.name,
+      rawBank.examTitle,
+      rawBank.courseTitle,
+      rawBank.subject,
+      rawBank.metadata?.title,
+      rawBank.metadata?.name,
+      rawBank.meta?.title,
+      rawBank.meta?.name,
+      rawBank.exam?.title,
+      rawBank.exam?.name,
+    ],
+    "Banco importado",
+  );
+}
+
+function getRawBankDescription(rawBank) {
+  if (Array.isArray(rawBank)) {
+    return "";
+  }
+
+  return firstNonEmptyString(
+    [
+      rawBank.description,
+      rawBank.summary,
+      rawBank.metadata?.description,
+      rawBank.meta?.description,
+      rawBank.exam?.description,
+    ],
+    "Banco de preguntas cargado desde JSON.",
+  );
+}
+
 function normalizeBank(rawBank) {
   const rawQuestions = Array.isArray(rawBank)
     ? rawBank
@@ -291,12 +339,8 @@ function normalizeBank(rawBank) {
   }
 
   return {
-    title: Array.isArray(rawBank)
-      ? "Banco importado"
-      : rawBank.title || rawBank.name || "Banco importado",
-    description: Array.isArray(rawBank)
-      ? ""
-      : rawBank.description || "Banco de preguntas cargado desde JSON.",
+    title: getRawBankTitle(rawBank),
+    description: getRawBankDescription(rawBank),
     version: Array.isArray(rawBank) ? "" : rawBank.version || "",
     questions,
   };
@@ -440,6 +484,16 @@ function setStatus(message) {
   els.bankStatus.textContent = message;
 }
 
+function getBankDisplayTitle() {
+  return state.bank?.title || "Simulador de examenes";
+}
+
+function updateDocumentTitle() {
+  const title = getBankDisplayTitle();
+  els.appTitle.textContent = title;
+  document.title = `${title} | Simulador`;
+}
+
 function updateBankStatus() {
   const total = state.bank?.questions.length || 0;
   if (!total) {
@@ -447,6 +501,7 @@ function updateBankStatus() {
   }
 
   els.bankStatus.textContent = `${total} preguntas disponibles`;
+  updateDocumentTitle();
   syncAttemptSizeInput();
 }
 

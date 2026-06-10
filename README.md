@@ -6,6 +6,8 @@ cloud usando bancos de preguntas en JSON.
 ## Funcionalidad principal
 
 - Banco por defecto con 120 preguntas basadas en el material de la asignatura.
+- El titulo visible del examen se toma de la metadata del JSON, por ejemplo
+  `title`, `name`, `metadata.title`, `exam.title`, `courseTitle` o `subject`.
 - El usuario elige cuantas preguntas quiere contestar por intento.
 - Cada intento selecciona preguntas de forma aleatoria desde el banco completo.
 - No hay cuota fija de preguntas verdadero/falso ni ABCD.
