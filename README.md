@@ -1,10 +1,36 @@
 # Simulador SecDevOps
 
-Simulador web simple para practicar examenes de SecDevOps y administracion de
-redes cloud. No usa React ni Node: Python solo sirve los archivos estaticos.
-La interfaz usa Foundation for Sites desde CDN y una capa local de estilos en
-`public/styles.css`.
-Incluye un switch de modo oscuro que guarda la preferencia en el navegador.
+Plataforma web para practicar examenes de SecDevOps y administracion de redes
+cloud usando bancos de preguntas en JSON.
+
+## Funcionalidad principal
+
+- Banco por defecto con 120 preguntas basadas en el material de la asignatura.
+- El usuario elige cuantas preguntas quiere contestar por intento.
+- Cada intento selecciona preguntas de forma aleatoria desde el banco completo.
+- No hay cuota fija de preguntas verdadero/falso ni ABCD.
+- Las respuestas se reordenan aleatoriamente en cada intento, por lo que la
+  respuesta correcta no queda fija en la misma letra.
+- Al elegir una respuesta, la app indica de inmediato si fue correcta o
+  incorrecta.
+- El boton `Enviar examen` genera un dashboard flotante con resultado final.
+- El dashboard muestra calificacion, aciertos, fallos, preguntas marcadas,
+  tiempo total y tiempo promedio por pregunta.
+- Desde el dashboard se puede revisar cada pregunta, la respuesta elegida, la
+  respuesta correcta, el tiempo dedicado y la explicacion.
+- Incluye modo oscuro con preferencia guardada en el navegador.
+
+## Banco de preguntas
+
+El banco por defecto esta en:
+
+```text
+public/question-banks/secdevops-unir.json
+```
+
+El banco fue recalibrado para reducir pistas obvias por longitud o especificidad
+de la respuesta correcta. Las explicaciones tambien fueron ampliadas para que el
+dashboard sirva como herramienta de revision despues del intento.
 
 ## Ejecutar
 
@@ -20,30 +46,6 @@ http://localhost:8000/
 ```
 
 Para detener el servidor, usa `Ctrl+C` en la terminal.
-
-## Banco de preguntas
-
-El banco por defecto esta en:
-
-```text
-public/question-banks/secdevops-unir.json
-```
-
-Contiene 120 preguntas generadas desde el material fuente de la asignatura.
-Cada intento usa el numero de preguntas elegido en el campo `Preguntas`; por
-defecto son 25 y el valor se limita automaticamente al total del banco cargado.
-La seleccion se hace barajando todo el banco y tomando la cantidad solicitada.
-La app muestra inmediatamente si la respuesta elegida es correcta o incorrecta.
-Las opciones tambien se barajan por intento, por lo que la respuesta correcta no
-queda fija en la misma letra.
-No hay cuota fija de verdadero/falso ni de ABCD: el tipo de pregunta depende del
-resultado aleatorio de cada intento.
-Al terminar las 25 respuestas, el boton `Enviar examen` abre un dashboard
-flotante con calificacion, aciertos, fallos, preguntas marcadas, tiempo total,
-tiempo promedio y revision pregunta por pregunta. Desde ese panel se puede
-revisar cada pregunta, la respuesta elegida, la correcta y la explicacion.
-El banco fue recalibrado para evitar pistas obvias por longitud o especificidad
-de la respuesta correcta, y sus explicaciones fueron ampliadas para la revision.
 
 ## Formato JSON
 
@@ -66,7 +68,7 @@ formato recomendado es:
         { "id": "D", "text": "Opcion D" }
       ],
       "answer": "B",
-      "explanation": "Explicacion breve."
+      "explanation": "Explicacion de la respuesta correcta."
     }
   ]
 }
