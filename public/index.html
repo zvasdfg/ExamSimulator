@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simulador SecDevOps</title>
+    <meta
+      name="description"
+      content="Simulador web de examenes basado en bancos de preguntas JSON."
+    />
+    <script>
+      try {
+        if (localStorage.getItem("exam-simulator-theme") === "dark") {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch (error) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/foundation-sites@6.9.0/dist/css/foundation.min.css"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x grid-margin-y align-middle">
+          <div class="cell small-12 medium-auto">
+            <p class="eyebrow">Simulador de examenes</p>
+            <h1>SecDevOps y redes cloud</h1>
+          </div>
+          <div class="cell small-12 medium-shrink">
+            <div class="header-controls">
+              <label class="theme-toggle" for="theme-toggle">
+                <span class="theme-label">Modo oscuro</span>
+                <span class="switch tiny">
+                  <input
+                    id="theme-toggle"
+                    class="switch-input"
+                    type="checkbox"
+                    name="theme-toggle"
+                  />
+                  <span class="switch-paddle">
+                    <span class="show-for-sr">Modo oscuro</span>
+                  </span>
+                </span>
+              </label>
+              <label class="attempt-size-control" for="attempt-size">
+                <span>Preguntas</span>
+                <input id="attempt-size" type="number" min="1" max="120" value="25" inputmode="numeric" />
+              </label>
+              <div class="button-group stacked-for-small app-actions">
+                <input id="json-input" type="file" accept="application/json,.json" hidden />
+                <button id="load-json" type="button" class="button secondary hollow">
+                  Cargar JSON
+                </button>
+                <button id="new-attempt" type="button" class="button primary">
+                  Nuevo intento
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="statusbar">
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x grid-margin-y small-up-1 medium-up-2 large-up-4">
+          <div class="cell">
+            <div class="callout stat-callout">
+              <span>Banco</span>
+              <strong id="source-label">secdevops-unir.json</strong>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="callout stat-callout">
+              <span>Preguntas</span>
+              <strong id="bank-status">Cargando...</strong>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="callout stat-callout">
+              <span>Avance</span>
+              <strong id="progress-status">0/25 respondidas</strong>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="callout stat-callout">
+              <span>Puntaje</span>
+              <strong id="score-status">0 correctas - 0%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="grid-container app-shell">
+      <div class="grid-x grid-margin-x grid-margin-y">
+        <section class="cell small-12 large-8">
+          <article class="card exam-panel">
+            <div class="card-section question-head">
+              <div class="label-row">
+                <span id="topic-badge" class="label primary">Tema</span>
+                <span id="type-badge" class="label secondary">ABCD</span>
+                <span id="marked-badge" class="label warning hidden">Marcada</span>
+              </div>
+              <div class="grid-x grid-margin-x grid-margin-y align-middle question-title-row">
+                <div class="cell small-12 medium-auto">
+                  <p id="question-counter" class="counter">Pregunta 1 de 25</p>
+                  <h2 id="question-text">Cargando pregunta...</h2>
+                </div>
+                <div class="cell small-12 medium-shrink">
+                  <button id="mark-review" type="button" class="button clear secondary compact">
+                    Revisar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-section question-body">
+              <div id="options" class="options"></div>
+              <div id="feedback" class="feedback callout hidden"></div>
+            </div>
+
+            <div class="card-section question-footer">
+              <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div id="progress-fill" class="progress-meter"></div>
+              </div>
+              <div class="button-group stacked-for-small nav-actions">
+                <button id="prev-question" type="button" class="button secondary hollow">
+                  Anterior
+                </button>
+                <button id="next-question" type="button" class="button secondary hollow">
+                  Siguiente
+                </button>
+                <button id="next-pending" type="button" class="button warning">
+                  Pendiente
+                </button>
+                <button id="submit-exam" type="button" class="button primary">
+                  Enviar examen
+                </button>
+                <button id="view-results" type="button" class="button secondary hollow hidden">
+                  Ver reporte
+                </button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <aside class="cell small-12 large-4 side">
+          <section class="card">
+            <div class="card-section">
+              <div class="score-head">
+                <div>
+                  <span>Resultado</span>
+                  <strong id="score-big">0%</strong>
+                </div>
+                <div class="callout score-box">
+                  <span>Aciertos</span>
+              <strong id="score-count">0/25</strong>
+                </div>
+              </div>
+              <div class="grid-x grid-margin-x small-up-1 medium-up-3 large-up-3 mini-stats">
+                <div class="cell">
+                  <div class="callout success">
+                    <strong id="correct-count">0</strong>
+                    <span>Correctas</span>
+                  </div>
+                </div>
+                <div class="cell">
+                  <div class="callout alert">
+                    <strong id="wrong-count">0</strong>
+                    <span>Fallos</span>
+                  </div>
+                </div>
+                <div class="cell">
+                  <div class="callout warning">
+                    <strong id="marked-count">0</strong>
+                    <span>Revisar</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-section">
+              <div class="card-title">
+                <h3>Navegacion</h3>
+                <span id="pending-count">25 pendientes</span>
+              </div>
+              <div id="question-grid" class="question-grid"></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-section">
+              <h3>Banco activo</h3>
+              <p id="bank-title" class="bank-title">Sin banco</p>
+              <div class="grid-x grid-margin-x small-up-2 bank-grid">
+                <div class="cell">
+                  <div class="callout">
+                    <span>Total</span>
+                    <strong id="bank-total">0</strong>
+                  </div>
+                </div>
+                <div class="cell">
+                  <div class="callout">
+                    <span>Intento</span>
+                    <strong id="attempt-total">0</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+      </div>
+    </main>
+
+    <div id="result-overlay" class="result-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
+      <section id="result-dashboard" class="dashboard card" aria-live="polite">
+        <div class="dashboard-toolbar">
+          <div>
+            <p class="eyebrow">Dashboard de resultado</p>
+            <h2 id="result-title">Resumen del intento</h2>
+            <p id="result-status" class="dashboard-status">
+              Envia el examen para ver las metricas finales.
+            </p>
+          </div>
+          <button id="close-dashboard" type="button" class="button clear secondary compact">
+            Cerrar
+          </button>
+        </div>
+
+        <div class="dashboard-scroll">
+          <div class="dashboard-head">
+            <div class="callout dashboard-score">
+              <span>Calificacion</span>
+              <strong id="result-score">0%</strong>
+            </div>
+            <div class="grid-x grid-margin-x small-up-1 medium-up-3 large-up-6 metric-grid">
+              <div class="cell">
+                <div class="callout">
+                  <span>Respondidas</span>
+                  <strong id="result-answered">0/25</strong>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="callout success">
+                  <span>Correctas</span>
+                  <strong id="result-correct">0</strong>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="callout alert">
+                  <span>Fallos</span>
+                  <strong id="result-wrong">0</strong>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="callout secondary">
+                  <span>Marcadas</span>
+                  <strong id="result-marked">0</strong>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="callout">
+                  <span>Tiempo total</span>
+                  <strong id="result-total-time">0:00</strong>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="callout">
+                  <span>Promedio</span>
+                  <strong id="result-average-time">0:00</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-x grid-margin-x grid-margin-y review-grid">
+            <section class="cell small-12 large-4 callout dashboard-section">
+              <div class="card-title">
+                <h3>Preguntas</h3>
+                <span id="result-pending">0 pendientes</span>
+              </div>
+              <div id="review-question-list" class="review-question-list"></div>
+            </section>
+            <section class="cell small-12 large-8 callout dashboard-section review-detail">
+              <h3 id="review-question-title">Detalle</h3>
+              <div id="review-question-detail"></div>
+            </section>
+          </div>
+
+          <p id="result-meta" class="result-meta"></p>
+        </div>
+      </section>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

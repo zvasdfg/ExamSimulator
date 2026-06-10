@@ -1,0 +1,3113 @@
+{
+  "title": "SecDevOps y Administracion de Redes para Cloud - UNIR",
+  "description": "Banco de preguntas basado en el PDF SecDevOps y Administracion de Redes para Cloud. Incluye preguntas de repaso y escenarios con enfoque de examen de maestria, distractores balanceados y explicaciones ampliadas para revision posterior.",
+  "version": "2.2.0",
+  "schema": {
+    "questionFields": [
+      "id",
+      "type",
+      "topic",
+      "prompt",
+      "options",
+      "answer",
+      "explanation",
+      "difficulty"
+    ],
+    "answerFormat": "La respuesta correcta coincide con el id de una opcion."
+  },
+  "questions": [
+    {
+      "id": "secdevops-001",
+      "type": "multiple_choice",
+      "topic": "SecDevOps",
+      "prompt": "Cual es el objetivo principal de SecDevOps?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Integrar seguridad solo despues de liberar"
+        },
+        {
+          "id": "B",
+          "text": "Integrar seguridad en DevOps desde el inicio"
+        },
+        {
+          "id": "C",
+          "text": "Separar seguridad de desarrollo y operaciones"
+        },
+        {
+          "id": "D",
+          "text": "Cambiar automatizacion por auditorias aisladas"
+        }
+      ],
+      "answer": "B",
+      "explanation": "SecDevOps incorpora seguridad al ciclo de desarrollo y operaciones desde el inicio. La respuesta correcta se sostiene en esta idea: \"Integrar seguridad en DevOps desde el inicio\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-002",
+      "type": "true_false",
+      "topic": "SecDevOps",
+      "prompt": "En SecDevOps, la seguridad debe agregarse solo cuando el producto ya esta listo para produccion.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "La seguridad no va al final; se integra desde el inicio y durante todo el pipeline. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-003",
+      "type": "multiple_choice",
+      "topic": "SecDevOps",
+      "prompt": "Que representa la seguridad basada en pruebas dentro de SecDevOps?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Revisiones manuales ejecutadas fuera del pipeline"
+        },
+        {
+          "id": "B",
+          "text": "Controles automaticos integrados en el pipeline"
+        },
+        {
+          "id": "C",
+          "text": "Documentacion de codigo sin ejecucion de pruebas"
+        },
+        {
+          "id": "D",
+          "text": "Monitoreo posterior sin controles preventivos"
+        }
+      ],
+      "answer": "B",
+      "explanation": "La seguridad basada en pruebas automatiza controles dentro del flujo CI/CD. La respuesta correcta se sostiene en esta idea: \"Controles automaticos integrados en el pipeline\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-004",
+      "type": "multiple_choice",
+      "topic": "Respuesta a incidentes",
+      "prompt": "Cual suele ser la ultima fase de la respuesta a incidentes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Contencion y aislamiento inicial del evento"
+        },
+        {
+          "id": "B",
+          "text": "Erradicacion tecnica de la causa raiz"
+        },
+        {
+          "id": "C",
+          "text": "Deteccion y clasificacion del incidente"
+        },
+        {
+          "id": "D",
+          "text": "Revision posterior de lecciones aprendidas"
+        }
+      ],
+      "answer": "D",
+      "explanation": "Tras resolver el incidente, se revisa lo aprendido para mejorar procesos y controles. La respuesta correcta se sostiene en esta idea: \"Revision posterior de lecciones aprendidas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En respuesta a incidentes, importa ubicar la accion dentro del ciclo: detectar, contener, erradicar, recuperar y aprender no son fases intercambiables. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-005",
+      "type": "multiple_choice",
+      "topic": "Redes",
+      "prompt": "Que protocolo pertenece principalmente a la capa de red del modelo TCP/IP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TCP"
+        },
+        {
+          "id": "B",
+          "text": "UDP"
+        },
+        {
+          "id": "C",
+          "text": "IP"
+        },
+        {
+          "id": "D",
+          "text": "HTTP"
+        }
+      ],
+      "answer": "C",
+      "explanation": "IP realiza direccionamiento logico y encaminamiento en la capa de red. La respuesta correcta se sostiene en esta idea: \"IP\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-006",
+      "type": "true_false",
+      "topic": "Redes",
+      "prompt": "TCP y UDP son protocolos de la capa de transporte.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Ambos operan en transporte; TCP es fiable y UDP es no orientado a conexion. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-007",
+      "type": "multiple_choice",
+      "topic": "Redes",
+      "prompt": "Si una IP destino esta fuera de la red local, a donde se envia el paquete?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Al gateway predeterminado"
+        },
+        {
+          "id": "B",
+          "text": "A todos los hosts por broadcast siempre"
+        },
+        {
+          "id": "C",
+          "text": "Al servidor DNS directamente"
+        },
+        {
+          "id": "D",
+          "text": "A la direccion MAC de loopback"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El gateway se encarga de encaminar trafico hacia redes externas. La respuesta correcta se sostiene en esta idea: \"Al gateway predeterminado\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-008",
+      "type": "multiple_choice",
+      "topic": "Redes",
+      "prompt": "Que significa 0.0.0.0/0 como destino en una tabla de rutas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ruta por defecto para cualquier destino IPv4"
+        },
+        {
+          "id": "B",
+          "text": "Ruta local limitada a la interfaz loopback"
+        },
+        {
+          "id": "C",
+          "text": "Host unico definido con mascara de 32 bits"
+        },
+        {
+          "id": "D",
+          "text": "Destino multicast usado para grupos especificos"
+        }
+      ],
+      "answer": "A",
+      "explanation": "0.0.0.0/0 cubre todas las direcciones IPv4 y se usa como ruta por defecto. La respuesta correcta se sostiene en esta idea: \"Ruta por defecto para cualquier destino IPv4\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-009",
+      "type": "multiple_choice",
+      "topic": "Redes",
+      "prompt": "Que tipo de envio entrega un paquete a todos los hosts de una red?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Unicast"
+        },
+        {
+          "id": "B",
+          "text": "Anycast"
+        },
+        {
+          "id": "C",
+          "text": "Broadcast"
+        },
+        {
+          "id": "D",
+          "text": "Loopback"
+        }
+      ],
+      "answer": "C",
+      "explanation": "Broadcast se dirige a todos los hosts del segmento o dominio correspondiente. La respuesta correcta se sostiene en esta idea: \"Broadcast\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-010",
+      "type": "multiple_choice",
+      "topic": "Redes",
+      "prompt": "Que tipo de envio se dirige al host mas cercano entre varios posibles?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Anycast"
+        },
+        {
+          "id": "B",
+          "text": "Broadcast"
+        },
+        {
+          "id": "C",
+          "text": "Multicast obligatorio"
+        },
+        {
+          "id": "D",
+          "text": "ARP"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Anycast entrega al nodo mas cercano segun la metrica de red. La respuesta correcta se sostiene en esta idea: \"Anycast\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-011",
+      "type": "multiple_choice",
+      "topic": "ARP e ICMP",
+      "prompt": "Para que sirve ARP en una red local?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Resolver una direccion IP a direccion MAC"
+        },
+        {
+          "id": "B",
+          "text": "Cifrar trafico HTTP antes de enviarlo"
+        },
+        {
+          "id": "C",
+          "text": "Asignar puertos dinamicos de transporte"
+        },
+        {
+          "id": "D",
+          "text": "Traducir nombres DNS a direcciones IPv6"
+        }
+      ],
+      "answer": "A",
+      "explanation": "ARP descubre la MAC asociada a una IP dentro de la red local. La respuesta correcta se sostiene en esta idea: \"Resolver una direccion IP a direccion MAC\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-012",
+      "type": "true_false",
+      "topic": "ARP e ICMP",
+      "prompt": "ARP usa broadcast para descubrir la direccion MAC asociada a una IP local.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "La solicitud ARP se difunde para que responda el host propietario de la IP. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-013",
+      "type": "true_false",
+      "topic": "ARP e ICMP",
+      "prompt": "ICMP se encapsula en IP.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "ICMP viaja encapsulado dentro de paquetes IP. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-014",
+      "type": "multiple_choice",
+      "topic": "Direccionamiento IP",
+      "prompt": "Cuantos bits tiene una direccion IPv4?",
+      "options": [
+        {
+          "id": "A",
+          "text": "16 bits"
+        },
+        {
+          "id": "B",
+          "text": "32 bits"
+        },
+        {
+          "id": "C",
+          "text": "64 bits"
+        },
+        {
+          "id": "D",
+          "text": "128 bits"
+        }
+      ],
+      "answer": "B",
+      "explanation": "IPv4 usa direcciones de 32 bits. La respuesta correcta se sostiene en esta idea: \"32 bits\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-015",
+      "type": "multiple_choice",
+      "topic": "Direccionamiento IP",
+      "prompt": "Cuantos bits tiene una direccion IPv6?",
+      "options": [
+        {
+          "id": "A",
+          "text": "32 bits"
+        },
+        {
+          "id": "B",
+          "text": "64 bits"
+        },
+        {
+          "id": "C",
+          "text": "96 bits"
+        },
+        {
+          "id": "D",
+          "text": "128 bits"
+        }
+      ],
+      "answer": "D",
+      "explanation": "IPv6 amplia el espacio de direcciones a 128 bits. La respuesta correcta se sostiene en esta idea: \"128 bits\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-016",
+      "type": "multiple_choice",
+      "topic": "NAT",
+      "prompt": "Como distingue NAT a varios dispositivos internos que comparten una IP publica?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Mediante puertos y traducciones de sesion"
+        },
+        {
+          "id": "B",
+          "text": "Mediante nombres de dominio obligatorios"
+        },
+        {
+          "id": "C",
+          "text": "Mediante una direccion IPv6 unica para todos"
+        },
+        {
+          "id": "D",
+          "text": "Mediante claves privadas de SSH"
+        }
+      ],
+      "answer": "A",
+      "explanation": "NAT/PAT usa puertos para diferenciar conexiones de varios equipos internos. La respuesta correcta se sostiene en esta idea: \"Mediante puertos y traducciones de sesion\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-017",
+      "type": "true_false",
+      "topic": "NAT",
+      "prompt": "NAT permite que varios dispositivos internos compartan una IP publica.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Una funcion comun de NAT es compartir una IP publica entre multiples hosts privados. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-018",
+      "type": "multiple_choice",
+      "topic": "Transporte",
+      "prompt": "Cual afirmacion describe mejor a TCP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "No orientado a conexion y sin acuses de recibo"
+        },
+        {
+          "id": "B",
+          "text": "Fiable, orientado a conexion y con handshake"
+        },
+        {
+          "id": "C",
+          "text": "Usado solo por DNS y consultas UDP"
+        },
+        {
+          "id": "D",
+          "text": "Sin control de orden ni recuperacion de datos"
+        }
+      ],
+      "answer": "B",
+      "explanation": "TCP establece conexion, confirma recepcion y mantiene orden mediante mecanismos de control. La respuesta correcta se sostiene en esta idea: \"Fiable, orientado a conexion y con handshake\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-019",
+      "type": "multiple_choice",
+      "topic": "Transporte",
+      "prompt": "Cual afirmacion describe mejor a UDP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Orientado a conexion y con handshake inicial"
+        },
+        {
+          "id": "B",
+          "text": "No orientado a conexion, sin ACK ni orden garantizado"
+        },
+        {
+          "id": "C",
+          "text": "Reservado solo para HTTPS y sesiones TLS con certificados"
+        },
+        {
+          "id": "D",
+          "text": "Mas fiable que TCP para cualquier trafico de aplicacion"
+        }
+      ],
+      "answer": "B",
+      "explanation": "UDP es simple, no establece conexion y no garantiza entrega ordenada. La respuesta correcta se sostiene en esta idea: \"No orientado a conexion, sin ACK ni orden garantizado\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-020",
+      "type": "multiple_choice",
+      "topic": "Puertos",
+      "prompt": "Cual es el puerto por defecto de HTTP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "22"
+        },
+        {
+          "id": "B",
+          "text": "53"
+        },
+        {
+          "id": "C",
+          "text": "80"
+        },
+        {
+          "id": "D",
+          "text": "443"
+        }
+      ],
+      "answer": "C",
+      "explanation": "HTTP usa TCP puerto 80 por defecto. La respuesta correcta se sostiene en esta idea: \"80\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-021",
+      "type": "multiple_choice",
+      "topic": "Puertos",
+      "prompt": "Cual es el puerto por defecto de HTTPS?",
+      "options": [
+        {
+          "id": "A",
+          "text": "21"
+        },
+        {
+          "id": "B",
+          "text": "22"
+        },
+        {
+          "id": "C",
+          "text": "80"
+        },
+        {
+          "id": "D",
+          "text": "443"
+        }
+      ],
+      "answer": "D",
+      "explanation": "HTTPS usa TLS sobre TCP en el puerto 443 por defecto. La respuesta correcta se sostiene en esta idea: \"443\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-022",
+      "type": "multiple_choice",
+      "topic": "DNS",
+      "prompt": "Que puerto usa principalmente DNS para consultas comunes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "UDP 53"
+        },
+        {
+          "id": "B",
+          "text": "TCP 22"
+        },
+        {
+          "id": "C",
+          "text": "UDP 123"
+        },
+        {
+          "id": "D",
+          "text": "TCP 443"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Las consultas DNS comunes usan UDP puerto 53. La respuesta correcta se sostiene en esta idea: \"UDP 53\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-023",
+      "type": "multiple_choice",
+      "topic": "DNS",
+      "prompt": "Que tipo de registro DNS se usa para consultar una direccion IPv6?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A"
+        },
+        {
+          "id": "B",
+          "text": "MX"
+        },
+        {
+          "id": "C",
+          "text": "AAAA"
+        },
+        {
+          "id": "D",
+          "text": "CNAME obligatorio"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El registro AAAA devuelve direcciones IPv6. La respuesta correcta se sostiene en esta idea: \"AAAA\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-024",
+      "type": "multiple_choice",
+      "topic": "Correo",
+      "prompt": "Que protocolo se usa principalmente para enviar correo electronico?",
+      "options": [
+        {
+          "id": "A",
+          "text": "POP3"
+        },
+        {
+          "id": "B",
+          "text": "SMTP"
+        },
+        {
+          "id": "C",
+          "text": "NTP"
+        },
+        {
+          "id": "D",
+          "text": "ARP"
+        }
+      ],
+      "answer": "B",
+      "explanation": "SMTP se usa para envio de correo; POP3 se usa para recuperarlo. La respuesta correcta se sostiene en esta idea: \"SMTP\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-025",
+      "type": "multiple_choice",
+      "topic": "Correo",
+      "prompt": "Que protocolo se asocia a la descarga o recuperacion de correo segun el PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "SMTP"
+        },
+        {
+          "id": "B",
+          "text": "POP"
+        },
+        {
+          "id": "C",
+          "text": "ICMP"
+        },
+        {
+          "id": "D",
+          "text": "IPSec AH"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF trata POP como protocolo de descarga de mensajes nuevos; tambien menciona IMAP como alternativa. La respuesta correcta se sostiene en esta idea: \"POP\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-026",
+      "type": "multiple_choice",
+      "topic": "FTP",
+      "prompt": "Cual es el puerto de control por defecto de FTP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "21"
+        },
+        {
+          "id": "B",
+          "text": "22"
+        },
+        {
+          "id": "C",
+          "text": "53"
+        },
+        {
+          "id": "D",
+          "text": "123"
+        }
+      ],
+      "answer": "A",
+      "explanation": "FTP usa el puerto 21 para el canal de control. La respuesta correcta se sostiene en esta idea: \"21\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-027",
+      "type": "multiple_choice",
+      "topic": "NTP",
+      "prompt": "Para que se usa NTP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Sincronizar relojes entre sistemas de red"
+        },
+        {
+          "id": "B",
+          "text": "Enviar correo desde clientes a servidores"
+        },
+        {
+          "id": "C",
+          "text": "Resolver direcciones IP a direcciones MAC"
+        },
+        {
+          "id": "D",
+          "text": "Crear credenciales permanentes de IAM"
+        }
+      ],
+      "answer": "A",
+      "explanation": "NTP sincroniza el reloj de sistemas en red. La respuesta correcta se sostiene en esta idea: \"Sincronizar relojes entre sistemas de red\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-028",
+      "type": "multiple_choice",
+      "topic": "NTP",
+      "prompt": "Que transporte y puerto usa NTP normalmente?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TCP 80"
+        },
+        {
+          "id": "B",
+          "text": "UDP 123"
+        },
+        {
+          "id": "C",
+          "text": "UDP 53"
+        },
+        {
+          "id": "D",
+          "text": "TCP 3389"
+        }
+      ],
+      "answer": "B",
+      "explanation": "NTP usa UDP puerto 123. La respuesta correcta se sostiene en esta idea: \"UDP 123\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-029",
+      "type": "true_false",
+      "topic": "HTTP",
+      "prompt": "HTTPS aporta confidencialidad, integridad y autenticacion.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "HTTPS usa TLS para proteger el canal y autenticar el servidor mediante certificados. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-030",
+      "type": "multiple_choice",
+      "topic": "Firewalls",
+      "prompt": "Cual es la funcion principal de un firewall?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Controlar acceso a servicios segun reglas"
+        },
+        {
+          "id": "B",
+          "text": "Reemplazar DNS y resolver nombres de host"
+        },
+        {
+          "id": "C",
+          "text": "Asignar direcciones MAC de forma central"
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar pruebas unitarias del codigo"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Un firewall filtra trafico entre redes o hosts segun politicas de seguridad. La respuesta correcta se sostiene en esta idea: \"Controlar acceso a servicios segun reglas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-031",
+      "type": "multiple_choice",
+      "topic": "Firewalls",
+      "prompt": "Que tipo de firewall evalua paquetes sin mantener estado de sesiones?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Packet filter"
+        },
+        {
+          "id": "B",
+          "text": "Stateful packet filter"
+        },
+        {
+          "id": "C",
+          "text": "Application gateway"
+        },
+        {
+          "id": "D",
+          "text": "LoadBalancer"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Un packet filter sin estado decide con datos como IP, protocolo y puerto. La respuesta correcta se sostiene en esta idea: \"Packet filter\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-032",
+      "type": "multiple_choice",
+      "topic": "Firewalls",
+      "prompt": "Que tipo de firewall mantiene informacion del estado de las conexiones?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Packet filter sin estado"
+        },
+        {
+          "id": "B",
+          "text": "Stateful packet filter"
+        },
+        {
+          "id": "C",
+          "text": "ARP resolver"
+        },
+        {
+          "id": "D",
+          "text": "NTP daemon"
+        }
+      ],
+      "answer": "B",
+      "explanation": "Un firewall stateful considera el estado de la sesion para tomar decisiones. La respuesta correcta se sostiene en esta idea: \"Stateful packet filter\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-033",
+      "type": "multiple_choice",
+      "topic": "Firewalls",
+      "prompt": "Que tipo de firewall opera con logica de capa de aplicacion?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Gateway o proxy de capa de aplicacion"
+        },
+        {
+          "id": "B",
+          "text": "Cache ARP con resolucion local de MAC"
+        },
+        {
+          "id": "C",
+          "text": "NAT estatico con traduccion de direcciones"
+        },
+        {
+          "id": "D",
+          "text": "Cliente ICMP para diagnostico de red"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Un application gateway inspecciona o media trafico a nivel de aplicacion. La respuesta correcta se sostiene en esta idea: \"Gateway o proxy de capa de aplicacion\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-034",
+      "type": "multiple_choice",
+      "topic": "VPN",
+      "prompt": "Que significa VPN?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Virtual Private Network"
+        },
+        {
+          "id": "B",
+          "text": "Verified Public Name"
+        },
+        {
+          "id": "C",
+          "text": "Virtual Packet Number"
+        },
+        {
+          "id": "D",
+          "text": "Versioned Pipeline Node"
+        }
+      ],
+      "answer": "A",
+      "explanation": "VPN significa Virtual Private Network. La respuesta correcta se sostiene en esta idea: \"Virtual Private Network\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-035",
+      "type": "true_false",
+      "topic": "VPN",
+      "prompt": "Una VPN crea una conexion segura sobre una red publica.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Las VPN usan tunelizacion y mecanismos criptograficos para proteger trafico. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-036",
+      "type": "multiple_choice",
+      "topic": "IPSec",
+      "prompt": "Que cabecera IPSec ofrece autenticacion e integridad, pero no confidencialidad?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ESP"
+        },
+        {
+          "id": "B",
+          "text": "AH"
+        },
+        {
+          "id": "C",
+          "text": "ARP"
+        },
+        {
+          "id": "D",
+          "text": "DNSSEC"
+        }
+      ],
+      "answer": "B",
+      "explanation": "AH autentica e integra; ESP se asocia con confidencialidad. La respuesta correcta se sostiene en esta idea: \"AH\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-037",
+      "type": "multiple_choice",
+      "topic": "Linux firewall",
+      "prompt": "Que herramienta se usa comunmente para configurar el firewall de Linux?",
+      "options": [
+        {
+          "id": "A",
+          "text": "iptables"
+        },
+        {
+          "id": "B",
+          "text": "ntpdate"
+        },
+        {
+          "id": "C",
+          "text": "kubectl get"
+        },
+        {
+          "id": "D",
+          "text": "aws iam"
+        }
+      ],
+      "answer": "A",
+      "explanation": "iptables permite definir reglas de filtrado en Linux. La respuesta correcta se sostiene en esta idea: \"iptables\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-038",
+      "type": "multiple_choice",
+      "topic": "Linux firewall",
+      "prompt": "Que cadena de iptables representa trafico dirigido hacia el propio host?",
+      "options": [
+        {
+          "id": "A",
+          "text": "INPUT"
+        },
+        {
+          "id": "B",
+          "text": "OUTPUT"
+        },
+        {
+          "id": "C",
+          "text": "FORWARD"
+        },
+        {
+          "id": "D",
+          "text": "PREROUTING solamente"
+        }
+      ],
+      "answer": "A",
+      "explanation": "INPUT procesa paquetes cuyo destino es el host local. La respuesta correcta se sostiene en esta idea: \"INPUT\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-039",
+      "type": "multiple_choice",
+      "topic": "AWS EC2",
+      "prompt": "Que puerto se usa por defecto para SSH en una instancia EC2 Linux?",
+      "options": [
+        {
+          "id": "A",
+          "text": "22"
+        },
+        {
+          "id": "B",
+          "text": "80"
+        },
+        {
+          "id": "C",
+          "text": "443"
+        },
+        {
+          "id": "D",
+          "text": "3389"
+        }
+      ],
+      "answer": "A",
+      "explanation": "SSH usa el puerto 22 por defecto. La respuesta correcta se sostiene en esta idea: \"22\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-040",
+      "type": "multiple_choice",
+      "topic": "AWS EC2",
+      "prompt": "Que puerto se usa por defecto para RDP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "21"
+        },
+        {
+          "id": "B",
+          "text": "53"
+        },
+        {
+          "id": "C",
+          "text": "3389"
+        },
+        {
+          "id": "D",
+          "text": "8080"
+        }
+      ],
+      "answer": "C",
+      "explanation": "RDP usa el puerto 3389 por defecto. La respuesta correcta se sostiene en esta idea: \"3389\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-041",
+      "type": "multiple_choice",
+      "topic": "AWS IAM",
+      "prompt": "Que permisos tiene por defecto un usuario IAM sin politicas asociadas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Todos los permisos de lectura"
+        },
+        {
+          "id": "B",
+          "text": "Permisos solo sobre EC2"
+        },
+        {
+          "id": "C",
+          "text": "Ningun permiso"
+        },
+        {
+          "id": "D",
+          "text": "Permisos de administrador temporales"
+        }
+      ],
+      "answer": "C",
+      "explanation": "IAM aplica denegacion por defecto salvo permisos allow explicitos. La respuesta correcta se sostiene en esta idea: \"Ningun permiso\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-042",
+      "type": "multiple_choice",
+      "topic": "AWS IAM",
+      "prompt": "Que credenciales se asocian al acceso programatico en AWS?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Access key y secret key"
+        },
+        {
+          "id": "B",
+          "text": "Usuario y PIN de consola solamente"
+        },
+        {
+          "id": "C",
+          "text": "Puerto 443 y certificado TLS"
+        },
+        {
+          "id": "D",
+          "text": "ARN y bucket S3 como contrasena"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El acceso programatico usa access key id y secret access key. La respuesta correcta se sostiene en esta idea: \"Access key y secret key\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-043",
+      "type": "multiple_choice",
+      "topic": "AWS IAM",
+      "prompt": "Cual es la estructura general de un ARN?",
+      "options": [
+        {
+          "id": "A",
+          "text": "arn:partition:service:region:account-id:resource-type/resource-id"
+        },
+        {
+          "id": "B",
+          "text": "arn:partition:account:service:region:resource-id/resource-type"
+        },
+        {
+          "id": "C",
+          "text": "https://service/region/account-id/resource-type/resource-id/arn"
+        },
+        {
+          "id": "D",
+          "text": "partition:service:account-id:region:resource-type:resource-id"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Ese es el formato general indicado para Amazon Resource Names. La respuesta correcta se sostiene en esta idea: \"arn:partition:service:region:account-id:resource-type/resource-id\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-044",
+      "type": "multiple_choice",
+      "topic": "AWS seguridad",
+      "prompt": "Que servicio AWS registra llamadas a la API para auditoria?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Amazon Inspector"
+        },
+        {
+          "id": "B",
+          "text": "AWS CloudTrail"
+        },
+        {
+          "id": "C",
+          "text": "Amazon Detective"
+        },
+        {
+          "id": "D",
+          "text": "AWS IAM Access Analyzer solamente"
+        }
+      ],
+      "answer": "B",
+      "explanation": "CloudTrail registra eventos y llamadas API para revision y auditoria. La respuesta correcta se sostiene en esta idea: \"AWS CloudTrail\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-045",
+      "type": "multiple_choice",
+      "topic": "AWS seguridad",
+      "prompt": "Que servicio AWS se asocia con escaneo o evaluacion de vulnerabilidades?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Amazon Inspector"
+        },
+        {
+          "id": "B",
+          "text": "Amazon Detective"
+        },
+        {
+          "id": "C",
+          "text": "AWS CloudTrail"
+        },
+        {
+          "id": "D",
+          "text": "AWS Organizations"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Amazon Inspector evalua vulnerabilidades y exposiciones. La respuesta correcta se sostiene en esta idea: \"Amazon Inspector\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-046",
+      "type": "multiple_choice",
+      "topic": "AWS seguridad",
+      "prompt": "Que servicio AWS ayuda a investigar causa e impacto de incidentes mediante logs?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Amazon Detective"
+        },
+        {
+          "id": "B",
+          "text": "Amazon Route 53"
+        },
+        {
+          "id": "C",
+          "text": "Amazon S3 Glacier"
+        },
+        {
+          "id": "D",
+          "text": "AWS CodeBuild solamente"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Detective analiza y procesa logs para investigar incidentes. La respuesta correcta se sostiene en esta idea: \"Amazon Detective\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-047",
+      "type": "true_false",
+      "topic": "AWS seguridad",
+      "prompt": "El visor de eventos de CloudTrail conserva registros por un maximo aproximado de tres meses si no se crea un trail.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF indica que el visor de eventos guarda registros por un maximo de tres meses; para extender el historico se crea un trail hacia S3. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-048",
+      "type": "multiple_choice",
+      "topic": "Kubernetes",
+      "prompt": "Que es un Pod en Kubernetes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Grupo de contenedores que comparten contexto"
+        },
+        {
+          "id": "B",
+          "text": "Balanceador externo creado por defecto"
+        },
+        {
+          "id": "C",
+          "text": "Politica de permisos aplicada por IAM"
+        },
+        {
+          "id": "D",
+          "text": "Registro DNS AAAA publicado en la VNet"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Un Pod agrupa uno o mas contenedores con recursos compartidos. La respuesta correcta se sostiene en esta idea: \"Grupo de contenedores que comparten contexto\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-049",
+      "type": "true_false",
+      "topic": "Kubernetes",
+      "prompt": "Los contenedores del mismo Pod comparten IP, hostname y puertos.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Los contenedores de un Pod comparten el espacio de red del Pod. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion."
+    },
+    {
+      "id": "secdevops-050",
+      "type": "multiple_choice",
+      "topic": "Kubernetes",
+      "prompt": "Que recurso ofrece un punto de entrada estable para pods?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Pod"
+        },
+        {
+          "id": "B",
+          "text": "Service"
+        },
+        {
+          "id": "C",
+          "text": "ConfigMap solamente"
+        },
+        {
+          "id": "D",
+          "text": "NamespaceSelector"
+        }
+      ],
+      "answer": "B",
+      "explanation": "Un Service expone una direccion estable para uno o mas pods. La respuesta correcta se sostiene en esta idea: \"Service\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-051",
+      "type": "multiple_choice",
+      "topic": "Kubernetes",
+      "prompt": "Que tipo de Service reserva un puerto en todos los nodos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ClusterIP"
+        },
+        {
+          "id": "B",
+          "text": "NodePort"
+        },
+        {
+          "id": "C",
+          "text": "Ingress"
+        },
+        {
+          "id": "D",
+          "text": "NetworkPolicy"
+        }
+      ],
+      "answer": "B",
+      "explanation": "NodePort abre un puerto en cada nodo del cluster. La respuesta correcta se sostiene en esta idea: \"NodePort\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-052",
+      "type": "multiple_choice",
+      "topic": "Kubernetes",
+      "prompt": "Que recurso se usa para entrada HTTP/HTTPS con un controlador o balanceador unico?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Recurso Ingress con controlador HTTP/HTTPS"
+        },
+        {
+          "id": "B",
+          "text": "Service ClusterIP solo para trafico interno"
+        },
+        {
+          "id": "C",
+          "text": "RoleBinding para permisos del namespace"
+        },
+        {
+          "id": "D",
+          "text": "PersistentVolume para almacenamiento estable"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Ingress enruta entradas HTTP/HTTPS normalmente mediante un controlador. La respuesta correcta se sostiene en esta idea: \"Recurso Ingress con controlador HTTP/HTTPS\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-053",
+      "type": "multiple_choice",
+      "topic": "Kubernetes RBAC",
+      "prompt": "Cuales son sujetos validos en RBAC de Kubernetes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Usuarios, cuentas de servicio y grupos"
+        },
+        {
+          "id": "B",
+          "text": "Direcciones IP, puertos y protocolos"
+        },
+        {
+          "id": "C",
+          "text": "Contenedores, imagenes y volumenes"
+        },
+        {
+          "id": "D",
+          "text": "Mascaras, rutas y reglas de firewall"
+        }
+      ],
+      "answer": "A",
+      "explanation": "RBAC asigna permisos a usuarios, service accounts y grupos. La respuesta correcta se sostiene en esta idea: \"Usuarios, cuentas de servicio y grupos\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-054",
+      "type": "multiple_choice",
+      "topic": "Kubernetes RBAC",
+      "prompt": "Que recurso asigna un rol a nivel de cluster?",
+      "options": [
+        {
+          "id": "A",
+          "text": "RoleBinding aplicado a un namespace"
+        },
+        {
+          "id": "B",
+          "text": "ClusterRoleBinding de alcance global"
+        },
+        {
+          "id": "C",
+          "text": "NodePort expuesto en todos los nodos"
+        },
+        {
+          "id": "D",
+          "text": "podSelector usado para elegir pods"
+        }
+      ],
+      "answer": "B",
+      "explanation": "ClusterRoleBinding vincula permisos con alcance de cluster. La respuesta correcta se sostiene en esta idea: \"ClusterRoleBinding de alcance global\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-055",
+      "type": "multiple_choice",
+      "topic": "Kubernetes RBAC",
+      "prompt": "Que operacion HTTP se asocia a obtener un objeto en Kubernetes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "POST"
+        },
+        {
+          "id": "B",
+          "text": "GET"
+        },
+        {
+          "id": "C",
+          "text": "DELETE"
+        },
+        {
+          "id": "D",
+          "text": "PATCH solamente"
+        }
+      ],
+      "answer": "B",
+      "explanation": "La operacion obtener se corresponde con GET. La respuesta correcta se sostiene en esta idea: \"GET\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-056",
+      "type": "multiple_choice",
+      "topic": "CI/CD",
+      "prompt": "Cuando inicia normalmente un pipeline DevOps segun el material?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Al enviar codigo al repositorio del proyecto"
+        },
+        {
+          "id": "B",
+          "text": "Tras completar una auditoria externa anual"
+        },
+        {
+          "id": "C",
+          "text": "Cuando se elimina el repositorio principal"
+        },
+        {
+          "id": "D",
+          "text": "Al configurar registros DNS del servicio"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El flujo se dispara con cambios de codigo enviados al repositorio. La respuesta correcta se sostiene en esta idea: \"Al enviar codigo al repositorio del proyecto\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-057",
+      "type": "multiple_choice",
+      "topic": "Proteccion de ramas",
+      "prompt": "Segun el PDF, que control reduce el riesgo de commits directos sobre la rama master o principal?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Proteccion de ramas y control de acceso basado en roles"
+        },
+        {
+          "id": "B",
+          "text": "Permitir commits directos para acelerar el despliegue"
+        },
+        {
+          "id": "C",
+          "text": "Eliminar la revision de pares antes de integrar cambios"
+        },
+        {
+          "id": "D",
+          "text": "Mover las pruebas automaticas despues de produccion"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF menciona proteccion de ramas para evitar operaciones sensibles, como anadir commits directamente a la rama master, junto con RBAC. La respuesta correcta se sostiene en esta idea: \"Proteccion de ramas y control de acceso basado en roles\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-058",
+      "type": "multiple_choice",
+      "topic": "CI/CD",
+      "prompt": "Las pruebas automaticas se asocian principalmente con:",
+      "options": [
+        {
+          "id": "A",
+          "text": "Continuous Integration"
+        },
+        {
+          "id": "B",
+          "text": "ARP broadcast"
+        },
+        {
+          "id": "C",
+          "text": "RDP manual"
+        },
+        {
+          "id": "D",
+          "text": "Solo despliegue en produccion"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Continuous Integration ejecuta validaciones automaticas sobre cambios de codigo. La respuesta correcta se sostiene en esta idea: \"Continuous Integration\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-059",
+      "type": "multiple_choice",
+      "topic": "Pruebas",
+      "prompt": "Que son los unit tests?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Pruebas de unidades pequenas del codigo"
+        },
+        {
+          "id": "B",
+          "text": "Reglas locales de firewall con estado"
+        },
+        {
+          "id": "C",
+          "text": "Consultas DNS sobre registros AAAA"
+        },
+        {
+          "id": "D",
+          "text": "Roles IAM creados sin politicas"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Los unit tests validan unidades pequenas de funcionalidad. La respuesta correcta se sostiene en esta idea: \"Pruebas de unidades pequenas del codigo\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-060",
+      "type": "multiple_choice",
+      "topic": "Proteccion CI/CD",
+      "prompt": "Que medidas ayudan a proteger un pipeline CI/CD?",
+      "options": [
+        {
+          "id": "A",
+          "text": "MFA, RBAC, firmas, ramas protegidas y auditoria"
+        },
+        {
+          "id": "B",
+          "text": "Quitar auditoria para acelerar despliegues"
+        },
+        {
+          "id": "C",
+          "text": "Permitir commits anonimos en rama principal"
+        },
+        {
+          "id": "D",
+          "text": "Desactivar pruebas y controles automaticos"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El material lista esas practicas como controles para proteger CI/CD. La respuesta correcta se sostiene en esta idea: \"MFA, RBAC, firmas, ramas protegidas y auditoria\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En SecDevOps, el foco esta en integrar controles verificables dentro del flujo de entrega, no en agregarlos como revision tardia o actividad aislada. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente."
+    },
+    {
+      "id": "secdevops-061",
+      "type": "multiple_choice",
+      "topic": "Modelos de red",
+      "prompt": "En una conexion HTTPS vista por capas, cual razonamiento es mas correcto para analizar el trafico de extremo a extremo?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fisica cifra HTTP, transporte enruta por IP y enlace valida certificados"
+        },
+        {
+          "id": "B",
+          "text": "Aplicacion genera HTTPS, TCP usa 443, IP encamina y enlace entrega tramas"
+        },
+        {
+          "id": "C",
+          "text": "Enlace mantiene TLS completo y red selecciona el puerto del servicio"
+        },
+        {
+          "id": "D",
+          "text": "OSI sustituye a TCP/IP y evita analizar aplicacion, transporte y red"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF usa una conexion HTTPS para explicar encapsulacion: aplicacion, transporte, red, enlace y fisica tienen responsabilidades diferentes. La respuesta correcta se sostiene en esta idea: \"Aplicacion genera HTTPS, TCP usa 443, IP encamina y enlace entrega tramas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-062",
+      "type": "multiple_choice",
+      "topic": "Modelos de red",
+      "prompt": "Por que el modelo OSI sigue siendo util aunque sus protocolos no se implementaran ampliamente en la industria?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Porque reemplazo por completo a TCP/IP en redes actuales"
+        },
+        {
+          "id": "B",
+          "text": "Porque define el unico transporte posible para Internet"
+        },
+        {
+          "id": "C",
+          "text": "Porque sirve como modelo conceptual para razonar por capas"
+        },
+        {
+          "id": "D",
+          "text": "Porque elimina encapsulacion entre servicios de red"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF distingue entre utilidad conceptual de OSI y adopcion practica de TCP/IP. La respuesta correcta se sostiene en esta idea: \"Porque sirve como modelo conceptual para razonar por capas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-063",
+      "type": "multiple_choice",
+      "topic": "Capa fisica",
+      "prompt": "Un enlace sufre perturbaciones aleatorias que alteran la senal y generan errores intermitentes. Que concepto describe mejor el problema?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TDMA"
+        },
+        {
+          "id": "B",
+          "text": "Ventana deslizante"
+        },
+        {
+          "id": "C",
+          "text": "Gateway de circuito"
+        },
+        {
+          "id": "D",
+          "text": "Ruido"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF define el ruido como perturbacion aleatoria capaz de afectar la senal. La respuesta correcta se sostiene en esta idea: \"Ruido\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-064",
+      "type": "multiple_choice",
+      "topic": "Capa fisica",
+      "prompt": "Un operador divide el tiempo en intervalos y asigna a cada comunicacion un turno completo de uso del canal. Que tecnica esta aplicando?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TDMA"
+        },
+        {
+          "id": "B",
+          "text": "NAT"
+        },
+        {
+          "id": "C",
+          "text": "ARP"
+        },
+        {
+          "id": "D",
+          "text": "CSRF"
+        }
+      ],
+      "answer": "A",
+      "explanation": "TDMA reparte el flujo de tiempo en intervalos; cada emisor aprovecha el ancho de banda durante su turno. La respuesta correcta se sostiene en esta idea: \"TDMA\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-065",
+      "type": "multiple_choice",
+      "topic": "Conmutacion",
+      "prompt": "Que diferencia central justifica el uso de conmutacion de paquetes en redes IP frente a conmutacion de circuitos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Circuitos reservan un canal dedicado durante la sesion completa"
+        },
+        {
+          "id": "B",
+          "text": "Paquetes no requieren una ruta exclusiva reservada todo el tiempo"
+        },
+        {
+          "id": "C",
+          "text": "Mensajes se almacenan completos antes de reenviar cada dato"
+        },
+        {
+          "id": "D",
+          "text": "Telefonia analogica usa paquetes IP sin conmutadores"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF describe IP como red de conmutacion de paquetes, mas flexible que reservar una ruta exclusiva. La respuesta correcta se sostiene en esta idea: \"Paquetes no requieren una ruta exclusiva reservada todo el tiempo\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-066",
+      "type": "multiple_choice",
+      "topic": "Capa de enlace",
+      "prompt": "Una paridad simple detecta bien un bit alterado, pero falla si se alteran dos bits y la paridad vuelve a coincidir. Que conclusion es correcta?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La paridad detecta y corrige cualquier cantidad de errores"
+        },
+        {
+          "id": "B",
+          "text": "La paridad reemplaza a TCP para controlar flujo entre hosts"
+        },
+        {
+          "id": "C",
+          "text": "La paridad puede fallar si varios bits cambian compensando el resultado"
+        },
+        {
+          "id": "D",
+          "text": "La paridad solo se aplica en protocolos de aplicacion cifrados"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF advierte que la comprobacion de paridad simple puede no detectar errores multiples. La respuesta correcta se sostiene en esta idea: \"La paridad puede fallar si varios bits cambian compensando el resultado\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-067",
+      "type": "multiple_choice",
+      "topic": "Capa de enlace",
+      "prompt": "Si un receptor detecta una trama corrupta y pide retransmision en lugar de reconstruirla localmente, que modelo aplica?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Correccion de errores hacia adelante"
+        },
+        {
+          "id": "B",
+          "text": "Anycast"
+        },
+        {
+          "id": "C",
+          "text": "Stateful filtering"
+        },
+        {
+          "id": "D",
+          "text": "Correccion de errores hacia atras"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF diferencia correccion hacia atras como solicitud de retransmision al detectar error. La respuesta correcta se sostiene en esta idea: \"Correccion de errores hacia atras\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-068",
+      "type": "multiple_choice",
+      "topic": "Control de flujo",
+      "prompt": "En ventana deslizante, por que el rendimiento puede superar a stop-and-wait?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Permite varias tramas pendientes antes de recibir todos los ACK"
+        },
+        {
+          "id": "B",
+          "text": "Elimina todos los ACK y confirma datos mediante registros DNS"
+        },
+        {
+          "id": "C",
+          "text": "Obliga a enviar una sola trama y esperar siempre su confirmacion"
+        },
+        {
+          "id": "D",
+          "text": "Opera solo en la capa de aplicacion y no afecta al enlace"
+        }
+      ],
+      "answer": "A",
+      "explanation": "La ventana deslizante permite tener varias tramas en vuelo y desplazar la ventana cuando llegan ACK. La respuesta correcta se sostiene en esta idea: \"Permite varias tramas pendientes antes de recibir todos los ACK\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-069",
+      "type": "true_false",
+      "topic": "Modelos de red",
+      "prompt": "TCP/IP se definio como modelo despues de que sus protocolos ya tuvieran implementaciones practicas.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF contrasta esto con OSI: TCP/IP se consolido alrededor de protocolos ya implementados. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-070",
+      "type": "multiple_choice",
+      "topic": "Capa de red",
+      "prompt": "Un router recibe un paquete IP mayor que la MTU del siguiente enlace y el bit DF esta activo. Que comportamiento es esperable?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fragmenta el paquete aunque el bit DF este activo"
+        },
+        {
+          "id": "B",
+          "text": "Convierte el paquete a UDP-Lite antes de reenviarlo"
+        },
+        {
+          "id": "C",
+          "text": "Descarta el paquete y notifica el problema cuando corresponde"
+        },
+        {
+          "id": "D",
+          "text": "Lo envia por broadcast para evitar la restriccion MTU"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El bit DF indica no fragmentar; si no cabe por MTU, el paquete no puede reenviarse fragmentado. La respuesta correcta se sostiene en esta idea: \"Descarta el paquete y notifica el problema cuando corresponde\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-071",
+      "type": "multiple_choice",
+      "topic": "Capa de red",
+      "prompt": "Un host necesita comunicarse con una IP fuera de su subred. Que entrada o decision es clave en su tabla de rutas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Consultar ARP para todos los routers de Internet"
+        },
+        {
+          "id": "B",
+          "text": "Abrir un puerto UDP dinamico en DNS"
+        },
+        {
+          "id": "C",
+          "text": "Crear una NetworkPolicy para cada destino"
+        },
+        {
+          "id": "D",
+          "text": "Enviar el trafico al gateway hacia redes externas"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF explica que si la comunicacion sale de la subred se usa el gateway correspondiente. La respuesta correcta se sostiene en esta idea: \"Enviar el trafico al gateway hacia redes externas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-072",
+      "type": "multiple_choice",
+      "topic": "Direccionamiento",
+      "prompt": "Que representa una ruta 0.0.0.0/0 en tablas de red o grupos de seguridad cloud?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Cualquier origen o destino IPv4, segun contexto"
+        },
+        {
+          "id": "B",
+          "text": "Solo la direccion local de loopback"
+        },
+        {
+          "id": "C",
+          "text": "Un unico host IPv4 con mascara /32"
+        },
+        {
+          "id": "D",
+          "text": "Un registro DNS usado para correo"
+        }
+      ],
+      "answer": "A",
+      "explanation": "0.0.0.0/0 cubre todo el espacio IPv4 y aparece como ruta o origen/destino por defecto. La respuesta correcta se sostiene en esta idea: \"Cualquier origen o destino IPv4, segun contexto\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En fundamentos de redes, el razonamiento correcto identifica la capa responsable y el mecanismo concreto: direccionamiento, encapsulacion, MTU, rutas, tramas y control de errores cumplen funciones distintas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-073",
+      "type": "multiple_choice",
+      "topic": "NAT",
+      "prompt": "Por que FTP puede presentar problemas con NAT, especialmente en modo activo?",
+      "options": [
+        {
+          "id": "A",
+          "text": "FTP usa TCP, pero no publica IP ni puertos en el control"
+        },
+        {
+          "id": "B",
+          "text": "FTP puede incluir IP/puertos en comandos y abrir canales adicionales"
+        },
+        {
+          "id": "C",
+          "text": "NAT traduce direcciones, pero no puede ver conexiones TCP nuevas"
+        },
+        {
+          "id": "D",
+          "text": "FTP obliga a usar IPv6 y evita traduccion en clientes privados"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF menciona que FTP usa multiples conexiones y puede incluir IP/puertos en el cuerpo, lo que complica NAT. La respuesta correcta se sostiene en esta idea: \"FTP puede incluir IP/puertos en comandos y abrir canales adicionales\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-074",
+      "type": "true_false",
+      "topic": "NAT",
+      "prompt": "Un host interno detras de NAT suele ser accesible publicamente aunque nunca haya iniciado una conexion ni exista una regla de publicacion.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF indica que los hosts internos no quedan disponibles publicamente salvo mecanismos o conexiones previamente establecidas. La afirmacion debe evaluarse contra el alcance real del concepto, evitando aceptar formulaciones absolutas si contradicen el comportamiento descrito en el material. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. En preguntas verdadero/falso, el error frecuente es ignorar matices como \"solo\", \"siempre\" o \"unicamente\", que cambian por completo la validez tecnica de la afirmacion.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-075",
+      "type": "multiple_choice",
+      "topic": "TCP",
+      "prompt": "Un servicio presenta perdidas intermitentes. Que mecanismo TCP ayuda a detectar datos no recibidos y ordenar la comunicacion?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ARP y resolucion local de direcciones MAC"
+        },
+        {
+          "id": "B",
+          "text": "Registros MX y prioridad de servidores correo"
+        },
+        {
+          "id": "C",
+          "text": "NetworkPolicy con reglas de egreso"
+        },
+        {
+          "id": "D",
+          "text": "Secuencias, ACK y temporizadores de retransmision"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF describe TCP como fiable, con numeros de secuencia, ACK, temporizadores y control de ventana. La respuesta correcta se sostiene en esta idea: \"Secuencias, ACK y temporizadores de retransmision\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-076",
+      "type": "multiple_choice",
+      "topic": "UDP",
+      "prompt": "Por que una aplicacion de audio o video en tiempo real puede preferir UDP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reduce establecimiento y tolera perdidas mejor que retrasos acumulados"
+        },
+        {
+          "id": "B",
+          "text": "Garantiza entrega, orden y retransmision igual que TCP en tiempo real"
+        },
+        {
+          "id": "C",
+          "text": "Cifra automaticamente el flujo sin usar TLS, DTLS ni claves previas"
+        },
+        {
+          "id": "D",
+          "text": "Crea sesiones IAM temporales para cada paquete de audio o video"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF explica que UDP se usa cuando la garantia de entrega no es imprescindible o no compensa el retardo. La respuesta correcta se sostiene en esta idea: \"Reduce establecimiento y tolera perdidas mejor que retrasos acumulados\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-077",
+      "type": "multiple_choice",
+      "topic": "Transporte",
+      "prompt": "Que afirmacion compara correctamente UDP-Lite o SCTP con TCP/UDP segun el tema de transporte?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TCP y UDP son los unicos transportes definidos en redes IP modernas"
+        },
+        {
+          "id": "B",
+          "text": "Protocolos alternativos combinan rasgos para necesidades concretas"
+        },
+        {
+          "id": "C",
+          "text": "UDP-Lite pertenece a capa fisica y reemplaza Ethernet"
+        },
+        {
+          "id": "D",
+          "text": "SCTP elimina puertos y no requiere identificacion de sesiones"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF menciona UDP-Lite y SCTP para matizar que TCP y UDP no agotan todos los protocolos de transporte. La respuesta correcta se sostiene en esta idea: \"Protocolos alternativos combinan rasgos para necesidades concretas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-078",
+      "type": "multiple_choice",
+      "topic": "DNS",
+      "prompt": "Por que DNS usa UDP/53 para consultas comunes pero TCP puede aparecer entre servidores?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TCP solo aparece cuando el registro consultado es AAAA"
+        },
+        {
+          "id": "B",
+          "text": "UDP se reserva para correo SMTP y no participa en resolucion de nombres"
+        },
+        {
+          "id": "C",
+          "text": "UDP agiliza consultas simples; TCP sirve en transferencias de zona"
+        },
+        {
+          "id": "D",
+          "text": "TCP reemplaza completamente a DNS cuando la aplicacion usa HTTPS"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF explica UDP/53 para consultas y TCP para comunicaciones como transferencias de zona. La respuesta correcta se sostiene en esta idea: \"UDP agiliza consultas simples; TCP sirve en transferencias de zona\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-079",
+      "type": "multiple_choice",
+      "topic": "SMTP",
+      "prompt": "Un cliente de correo envia mensajes al servidor de salida. Segun el PDF, que puerto TCP es habitual para clientes SMTP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "110"
+        },
+        {
+          "id": "B",
+          "text": "21"
+        },
+        {
+          "id": "C",
+          "text": "123"
+        },
+        {
+          "id": "D",
+          "text": "587"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF indica TCP 587 para envio desde clientes y TCP 25 para intercambio entre servidores. La respuesta correcta se sostiene en esta idea: \"587\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-080",
+      "type": "multiple_choice",
+      "topic": "POP",
+      "prompt": "Un cliente necesita descargar mensajes nuevos de correo con POP. Que puerto identifica el PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Puerto TCP 110 para recuperar correo POP"
+        },
+        {
+          "id": "B",
+          "text": "Puerto UDP 53 para resolver nombres DNS"
+        },
+        {
+          "id": "C",
+          "text": "Puerto TCP 21 para control de FTP"
+        },
+        {
+          "id": "D",
+          "text": "Puerto UDP 123 para sincronizar NTP"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF indica que POP funciona sobre TCP 110. La respuesta correcta se sostiene en esta idea: \"Puerto TCP 110 para recuperar correo POP\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-081",
+      "type": "multiple_choice",
+      "topic": "FTP",
+      "prompt": "En una red con clientes detras de NAT y firewalls, por que el modo pasivo de FTP suele ser mas viable que el activo?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Porque elimina el canal de control TCP usado por FTP"
+        },
+        {
+          "id": "B",
+          "text": "Porque cliente inicia tambien la conexion de datos al puerto indicado"
+        },
+        {
+          "id": "C",
+          "text": "Porque cambia todo el intercambio a UDP y evita reglas de puertos"
+        },
+        {
+          "id": "D",
+          "text": "Porque obliga al firewall a aceptar trafico entrante general sin filtros"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF explica que en modo activo el servidor intenta conectar al puerto abierto por el cliente, lo que falla tras NAT/firewall. La respuesta correcta se sostiene en esta idea: \"Porque cliente inicia tambien la conexion de datos al puerto indicado\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-082",
+      "type": "multiple_choice",
+      "topic": "HTTP y REST",
+      "prompt": "Una API REST se ajusta al estandar HTTP y devuelve 5xx. Que interpretacion es mas precisa?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Indica necesariamente un error de autenticacion del cliente"
+        },
+        {
+          "id": "B",
+          "text": "Significa que el recurso fue movido permanentemente"
+        },
+        {
+          "id": "C",
+          "text": "La peticion puede ser valida, pero el servidor fallo al procesarla"
+        },
+        {
+          "id": "D",
+          "text": "Senala que el metodo HTTP no existe en APIs REST"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF clasifica 5xx como errores de servidor; REST aprovecha semantica HTTP. La respuesta correcta se sostiene en esta idea: \"La peticion puede ser valida, pero el servidor fallo al procesarla\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-083",
+      "type": "multiple_choice",
+      "topic": "NTP",
+      "prompt": "Por que NTP no depende de TCP para sincronizar tiempo?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TCP no soporta el patron cliente-servidor usado por NTP"
+        },
+        {
+          "id": "B",
+          "text": "NTP funciona solo en capa de enlace y no puede usar redes IP"
+        },
+        {
+          "id": "C",
+          "text": "UDP garantiza menor perdida de paquetes y orden estricto que TCP"
+        },
+        {
+          "id": "D",
+          "text": "TCP agrega establecimiento y gestion que afectan precision temporal"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF indica que NTP usa UDP/123 y no TCP por el retardo adicional que introduciria TCP. La respuesta correcta se sostiene en esta idea: \"TCP agrega establecimiento y gestion que afectan precision temporal\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En protocolos, el criterio de examen es reconocer capa, puerto, estado de conexion y garantia ofrecida; mezclar transporte, aplicacion y seguridad suele llevar a respuestas incorrectas. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-084",
+      "type": "multiple_choice",
+      "topic": "TLS",
+      "prompt": "Durante una comunicacion protegida con SSL/TLS, que combinacion conceptual es correcta?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Asimetrica valida/negocia claves; simetrica protege datos con eficiencia"
+        },
+        {
+          "id": "B",
+          "text": "Solo la clave privada del cliente cifra todo el trafico de la sesion"
+        },
+        {
+          "id": "C",
+          "text": "TLS evita autenticar servidores mediante certificados de confianza"
+        },
+        {
+          "id": "D",
+          "text": "HTTPS ofrece compresion, pero no integridad ni autenticidad de datos"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF explica el uso de criptografia asimetrica y simetrica para equilibrar autenticacion, confidencialidad y coste. La respuesta correcta se sostiene en esta idea: \"Asimetrica valida/negocia claves; simetrica protege datos con eficiencia\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-085",
+      "type": "multiple_choice",
+      "topic": "Arquitectura firewall",
+      "prompt": "Que caracteriza a una arquitectura dual-homed?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Firewall de una interfaz que inspecciona solo consultas DNS"
+        },
+        {
+          "id": "B",
+          "text": "Host/firewall con dos interfaces separa red interna y externa"
+        },
+        {
+          "id": "C",
+          "text": "Subred Kubernetes donde dos pods comparten una IP fija"
+        },
+        {
+          "id": "D",
+          "text": "Grupo IAM que concede dos permisos Allow globales"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF presenta dual-homed como arquitectura con interfaces conectadas a redes distintas para controlar el paso. La respuesta correcta se sostiene en esta idea: \"Host/firewall con dos interfaces separa red interna y externa\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-086",
+      "type": "multiple_choice",
+      "topic": "Arquitectura firewall",
+      "prompt": "Que aporta una DMZ o subred perimetral en una arquitectura de firewall?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Hace publicos por defecto todos los hosts internos"
+        },
+        {
+          "id": "B",
+          "text": "Reemplaza reglas de firewall mediante ARP local"
+        },
+        {
+          "id": "C",
+          "text": "Expone servicios publicos sin mezclar red interna e Internet"
+        },
+        {
+          "id": "D",
+          "text": "Cifra todo trafico de aplicacion automaticamente"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF describe la DMZ como zona para servicios publicos y seguridad adicional entre redes. La respuesta correcta se sostiene en esta idea: \"Expone servicios publicos sin mezclar red interna e Internet\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-087",
+      "type": "multiple_choice",
+      "topic": "Firewalls",
+      "prompt": "Por que un gateway de aplicacion puede ofrecer mas seguridad y auditoria que un filtro de paquetes simple?",
+      "options": [
+        {
+          "id": "A",
+          "text": "No inspecciona aplicacion ni transporte, solo cabeceras IP"
+        },
+        {
+          "id": "B",
+          "text": "Solo revisa direcciones MAC en el segmento local"
+        },
+        {
+          "id": "C",
+          "text": "No consume recursos ni agrega complejidad operacional"
+        },
+        {
+          "id": "D",
+          "text": "Entiende aplicacion, actua como proxy y registra actividad"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF indica que los gateways de aplicacion son proxies seguros y generan registros utiles para auditoria. La respuesta correcta se sostiene en esta idea: \"Entiende aplicacion, actua como proxy y registra actividad\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-088",
+      "type": "multiple_choice",
+      "topic": "Firewalls",
+      "prompt": "Un firewall mantiene informacion de sesiones validas sin procesar completamente datos de aplicacion. Que tipo encaja mejor?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Filtro de paquetes con estado de sesion"
+        },
+        {
+          "id": "B",
+          "text": "Gateway proxy de capa de aplicacion"
+        },
+        {
+          "id": "C",
+          "text": "Proxy ARP para resolucion local"
+        },
+        {
+          "id": "D",
+          "text": "Cliente NTP para sincronizacion"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El filtro con estado mantiene estado de sesiones y opera sin procesar la aplicacion completa. La respuesta correcta se sostiene en esta idea: \"Filtro de paquetes con estado de sesion\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-089",
+      "type": "multiple_choice",
+      "topic": "iptables",
+      "prompt": "Quieres permitir SSH y HTTP pero bloquear lo demas hacia el host. Que enfoque es coherente con el PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Borrar reglas ACCEPT y dejar INPUT aceptando todo"
+        },
+        {
+          "id": "B",
+          "text": "Aceptar SSH/HTTP y aplicar DROP como politica o regla final"
+        },
+        {
+          "id": "C",
+          "text": "Usar solo OUTPUT para trafico que llega al host"
+        },
+        {
+          "id": "D",
+          "text": "Configurar DNS AAAA para bloquear puertos"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF muestra reglas ACCEPT para puertos 22/80 y luego politica predeterminada o regla final DROP. La respuesta correcta se sostiene en esta idea: \"Aceptar SSH/HTTP y aplicar DROP como politica o regla final\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-090",
+      "type": "multiple_choice",
+      "topic": "AWS EC2",
+      "prompt": "Que diferencia clave hay entre security groups de AWS EC2 e iptables en una instancia?",
+      "options": [
+        {
+          "id": "A",
+          "text": "iptables se ejecuta fuera de la instancia y SG dentro del kernel local"
+        },
+        {
+          "id": "B",
+          "text": "Security groups no filtran por protocolo ni puerto de servicio"
+        },
+        {
+          "id": "C",
+          "text": "Security groups filtran fuera de la VM; iptables filtra en el SO invitado"
+        },
+        {
+          "id": "D",
+          "text": "iptables requiere CloudTrail para aceptar paquetes entrantes"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF compara security groups con iptables y destaca que se ejecutan fuera de la instancia. La respuesta correcta se sostiene en esta idea: \"Security groups filtran fuera de la VM; iptables filtra en el SO invitado\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-091",
+      "type": "multiple_choice",
+      "topic": "AWS Client VPN",
+      "prompt": "En el caso practico de AWS Client VPN, que componente actua como servidor al que se conectan los clientes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Route 53 hosted zone"
+        },
+        {
+          "id": "B",
+          "text": "ClusterRoleBinding"
+        },
+        {
+          "id": "C",
+          "text": "Application Security Group"
+        },
+        {
+          "id": "D",
+          "text": "Client VPN endpoint"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF denomina VPN endpoint al punto de finalizacion que recibe conexiones de clientes VPN. La respuesta correcta se sostiene en esta idea: \"Client VPN endpoint\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-092",
+      "type": "multiple_choice",
+      "topic": "AWS Client VPN",
+      "prompt": "Que condicion debe respetar el rango del que reciben IP los clientes VPN en el caso practico?",
+      "options": [
+        {
+          "id": "A",
+          "text": "CIDR cliente definido para endpoint y coherente con VPC/subred/SG"
+        },
+        {
+          "id": "B",
+          "text": "Rango publico 0.0.0.0/0 asignado directamente al cliente"
+        },
+        {
+          "id": "C",
+          "text": "Puerto TCP 110 usado como pool de direcciones VPN"
+        },
+        {
+          "id": "D",
+          "text": "ARN de IAM utilizado como bloque de direccionamiento"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF muestra Client IPv4 CIDR, asociacion a subred y grupo de seguridad para controlar trafico del cliente VPN. La respuesta correcta se sostiene en esta idea: \"CIDR cliente definido para endpoint y coherente con VPC/subred/SG\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-093",
+      "type": "multiple_choice",
+      "topic": "IPSec",
+      "prompt": "Si se requiere confidencialidad ademas de autenticacion e integridad en IPSec, que conclusion es correcta?",
+      "options": [
+        {
+          "id": "A",
+          "text": "AH cifra contenido y ESP solo aporta autenticacion"
+        },
+        {
+          "id": "B",
+          "text": "AH no da confidencialidad; para cifrado debe usarse ESP"
+        },
+        {
+          "id": "C",
+          "text": "IPSec opera unicamente en capa de aplicacion"
+        },
+        {
+          "id": "D",
+          "text": "PPTP reemplaza siempre a IPSec para cifrar datos"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF diferencia AH y contenido con encapsulado de seguridad; AH no aporta confidencialidad. La respuesta correcta se sostiene en esta idea: \"AH no da confidencialidad; para cifrado debe usarse ESP\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-094",
+      "type": "multiple_choice",
+      "topic": "VPN",
+      "prompt": "Por que L2TP puede atravesar firewalls con menos problemas que PPTP en algunos escenarios descritos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "L2TP elimina cifrado y por eso no requiere firewall"
+        },
+        {
+          "id": "B",
+          "text": "PPTP solo funciona si toda la red usa IPv6"
+        },
+        {
+          "id": "C",
+          "text": "L2TP usa UDP; PPTP separa control TCP y datos GRE"
+        },
+        {
+          "id": "D",
+          "text": "L2TP no encapsula trafico, solo lo enruta"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF indica que PPTP usa GRE y L2TP usa UDP, lo que puede ser mas compatible con firewalls. La respuesta correcta se sostiene en esta idea: \"L2TP usa UDP; PPTP separa control TCP y datos GRE\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En seguridad de red, la respuesta debe justificarse por el punto donde se aplica el control: filtrado, traduccion, cifrado, proxy, segmentacion o inspeccion no son equivalentes. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-095",
+      "type": "multiple_choice",
+      "topic": "Azure VNet",
+      "prompt": "Que afirmacion describe correctamente el alcance de una Azure VNet segun el PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Es global y cubre todas las regiones automaticamente por defecto"
+        },
+        {
+          "id": "B",
+          "text": "Conecta solo redes on-premise, no recursos desplegados en Azure"
+        },
+        {
+          "id": "C",
+          "text": "No admite subredes ni grupos de seguridad asociados a interfaces"
+        },
+        {
+          "id": "D",
+          "text": "Es regional dentro de una suscripcion y puede conectarse a otras VNets"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF indica que VNet tiene alcance de una region y de una suscripcion, y permite conectividad segura. La respuesta correcta se sostiene en esta idea: \"Es regional dentro de una suscripcion y puede conectarse a otras VNets\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-096",
+      "type": "multiple_choice",
+      "topic": "Azure VNet",
+      "prompt": "Por que el PDF recomienda no agotar todo el espacio de direcciones de una VNet con subredes iniciales?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reservar espacio permite ampliar o crear subredes futuras"
+        },
+        {
+          "id": "B",
+          "text": "Azure permite una sola subred por cada VNet creada"
+        },
+        {
+          "id": "C",
+          "text": "Las subredes de Azure deben ser siempre /32"
+        },
+        {
+          "id": "D",
+          "text": "Una VNet no tiene rango CIDR propio ni espacio ampliable"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF recomienda dejar espacio no asignado dentro del rango de la VNet para crecimiento. La respuesta correcta se sostiene en esta idea: \"Reservar espacio permite ampliar o crear subredes futuras\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-097",
+      "type": "multiple_choice",
+      "topic": "Azure seguridad",
+      "prompt": "Que diferencia practica hay entre Application Security Group y Network Security Group en Azure?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ASG contiene reglas de filtrado; NSG agrupa VMs por aplicacion"
+        },
+        {
+          "id": "B",
+          "text": "ASG agrupa VMs logicamente; NSG define reglas de filtrado"
+        },
+        {
+          "id": "C",
+          "text": "ASG sustituye DNS privado; NSG reemplaza certificados TLS"
+        },
+        {
+          "id": "D",
+          "text": "ASG y NSG son equivalentes y ambos terminan TLS"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF crea ASG para clasificar servidores y NSG como firewall virtual con reglas por puertos y prioridades. La respuesta correcta se sostiene en esta idea: \"ASG agrupa VMs logicamente; NSG define reglas de filtrado\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-098",
+      "type": "multiple_choice",
+      "topic": "Azure seguridad",
+      "prompt": "En un NSG de Azure, por que importa la prioridad de una regla?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La prioridad define el tamano final de la subred"
+        },
+        {
+          "id": "B",
+          "text": "La prioridad cifra sesiones RDP antes de aplicar reglas"
+        },
+        {
+          "id": "C",
+          "text": "Las reglas se evaluan por prioridad, no por posicion visual"
+        },
+        {
+          "id": "D",
+          "text": "Las reglas sin prioridad son las unicas aplicadas a HTTP"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF indica que el orden de reglas esta determinado por prioridad. La respuesta correcta se sostiene en esta idea: \"Las reglas se evaluan por prioridad, no por posicion visual\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-099",
+      "type": "multiple_choice",
+      "topic": "Azure arquitectura",
+      "prompt": "En el caso practico con servidor de salto y servidor web, cual decision reduce exposicion directa del servidor web?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Abrir RDP publico al servidor web y restringir HTTP en la VNet"
+        },
+        {
+          "id": "B",
+          "text": "Eliminar NSG y delegar todo filtrado al balanceador"
+        },
+        {
+          "id": "C",
+          "text": "Usar POP en lugar de HTTP para reducir exposicion web"
+        },
+        {
+          "id": "D",
+          "text": "Publicar HTTP al web y administrar por bastion, salto o VPN"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF muestra un servidor de salto y reglas que limitan trafico hacia el servidor web. La respuesta correcta se sostiene en esta idea: \"Publicar HTTP al web y administrar por bastion, salto o VPN\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-100",
+      "type": "multiple_choice",
+      "topic": "Azure conectividad",
+      "prompt": "Que diferencia principal separa Azure ExpressRoute de una VPN site-to-site segun el PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ExpressRoute usa proveedor dedicado y evita Internet publico"
+        },
+        {
+          "id": "B",
+          "text": "ExpressRoute funciona como consulta DNS empresarial sobre UDP/53"
+        },
+        {
+          "id": "C",
+          "text": "VPN site-to-site no requiere dispositivo local ni tunel cifrado"
+        },
+        {
+          "id": "D",
+          "text": "ExpressRoute solo entrega correo mediante POP y puertos TCP bajos"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF compara ExpressRoute con un servicio tipo MPLS fuera de Internet publico. La respuesta correcta se sostiene en esta idea: \"ExpressRoute usa proveedor dedicado y evita Internet publico\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-101",
+      "type": "multiple_choice",
+      "topic": "Juniper vSRX",
+      "prompt": "Por que Juniper vSRX se presenta como firewall de nueva generacion en el caso practico?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Solo permite reglas por direccion MAC y puerto local"
+        },
+        {
+          "id": "B",
+          "text": "Integra firewall avanzado, router, VPN, NAT e IPS"
+        },
+        {
+          "id": "C",
+          "text": "Elimina la necesidad de VNet en despliegues cloud"
+        },
+        {
+          "id": "D",
+          "text": "Funciona exclusivamente como servidor DNS autoritativo"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF enumera capacidades de vSRX: firewall avanzado, router, VPN, NAT e IPS. La respuesta correcta se sostiene en esta idea: \"Integra firewall avanzado, router, VPN, NAT e IPS\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-102",
+      "type": "multiple_choice",
+      "topic": "Azure ARM",
+      "prompt": "Que ventaja aporta una plantilla ARM en el despliegue de un firewall Juniper en Azure?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Evita definir rangos, subredes y dependencias"
+        },
+        {
+          "id": "B",
+          "text": "Convierte reglas Junos directamente a politicas IAM"
+        },
+        {
+          "id": "C",
+          "text": "Declara recursos, parametros y dependencias repetibles"
+        },
+        {
+          "id": "D",
+          "text": "Reemplaza JSON por configuracion manual en portal"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF usa plantillas ARM y parametros como nombres, rangos de VNet y subredes. La respuesta correcta se sostiene en esta idea: \"Declara recursos, parametros y dependencias repetibles\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-103",
+      "type": "multiple_choice",
+      "topic": "Azure ARM",
+      "prompt": "En una plantilla ARM, por que el orden escrito de los recursos no necesariamente coincide con el orden de creacion?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Azure ignora dependencias y crea recursos al azar"
+        },
+        {
+          "id": "B",
+          "text": "Las VNets se crean siempre despues de las maquinas"
+        },
+        {
+          "id": "C",
+          "text": "Los recursos se ordenan alfabeticamente por nombre"
+        },
+        {
+          "id": "D",
+          "text": "El motor crea recursos segun dependencias declaradas"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF indica que el motor de Azure resuelve el orden de creacion segun dependencias. La respuesta correcta se sostiene en esta idea: \"El motor crea recursos segun dependencias declaradas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Azure, el analisis debe separar conectividad, filtrado y automatizacion: VNet y subred delimitan alcance, NSG/ASG expresan control de trafico y ARM formaliza despliegues repetibles. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-104",
+      "type": "multiple_choice",
+      "topic": "AWS IAM",
+      "prompt": "Un usuario IAM autenticado no tiene ninguna directiva aplicada. Que debe concluirse al evaluar una accion?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Sin politica Allow, no puede ejecutar acciones sobre recursos"
+        },
+        {
+          "id": "B",
+          "text": "Recibe lectura global por defecto sobre todos los servicios"
+        },
+        {
+          "id": "C",
+          "text": "Puede asumir cualquier rol IAM sin relacion de confianza"
+        },
+        {
+          "id": "D",
+          "text": "Puede usar EC2 por defecto aunque no tenga permisos S3"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF indica explicitamente que por defecto un usuario sin directiva no tiene permiso para ninguna accion sobre ningun recurso. La respuesta correcta se sostiene en esta idea: \"Sin politica Allow, no puede ejecutar acciones sobre recursos\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-105",
+      "type": "multiple_choice",
+      "topic": "AWS IAM",
+      "prompt": "Que campos son esenciales para entender una declaracion de una directiva IAM?",
+      "options": [
+        {
+          "id": "A",
+          "text": "TTL, MX y AAAA"
+        },
+        {
+          "id": "B",
+          "text": "Effect, Action y Resource"
+        },
+        {
+          "id": "C",
+          "text": "SYN, ACK y FIN"
+        },
+        {
+          "id": "D",
+          "text": "podSelector, namespaceSelector y cidr"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF explica que Effect habilita o deniega, Action define acciones y Resource define recursos. La respuesta correcta se sostiene en esta idea: \"Effect, Action y Resource\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-106",
+      "type": "multiple_choice",
+      "topic": "AWS IAM",
+      "prompt": "Por que los roles IAM son preferibles a distribuir claves estaticas en instancias EC2?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Los roles eliminan la necesidad de politicas IAM"
+        },
+        {
+          "id": "B",
+          "text": "Las claves deben escribirse en user data permanente"
+        },
+        {
+          "id": "C",
+          "text": "AWS entrega credenciales temporales y las rota via metadatos"
+        },
+        {
+          "id": "D",
+          "text": "Los roles sirven solo para usuarios humanos de consola"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF explica que los roles evitan el problema de distribuir y rotar claves en AMIs o user data. La respuesta correcta se sostiene en esta idea: \"AWS entrega credenciales temporales y las rota via metadatos\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-107",
+      "type": "multiple_choice",
+      "topic": "AWS IAM",
+      "prompt": "En rotacion de access keys para una cuenta de servicio, que secuencia es mas segura?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Borrar primero la clave antigua y despues crear la nueva"
+        },
+        {
+          "id": "B",
+          "text": "Publicar ambas claves en user data permanente"
+        },
+        {
+          "id": "C",
+          "text": "Compartir una unica clave entre todos los usuarios"
+        },
+        {
+          "id": "D",
+          "text": "Crear nueva, actualizar consumidores, validar y retirar antigua"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF describe un proceso de rotacion con dos claves activas temporalmente para evitar cortes. La respuesta correcta se sostiene en esta idea: \"Crear nueva, actualizar consumidores, validar y retirar antigua\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-108",
+      "type": "multiple_choice",
+      "topic": "CloudTrail",
+      "prompt": "Necesitas conservar y consultar eventos CloudTrail mas alla del visor de tres meses. Que diseno corresponde al PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Crear trail a S3 y consultar con Athena o alarmas si aplica"
+        },
+        {
+          "id": "B",
+          "text": "Usar solo el visor de eventos de consola indefinidamente"
+        },
+        {
+          "id": "C",
+          "text": "Instalar agente Inspector en cada rol IAM usado"
+        },
+        {
+          "id": "D",
+          "text": "Configurar POP en puerto 110 para guardar logs"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF indica que para extender el historico se crea un trail hacia S3 y se pueden usar Athena/alarmas. La respuesta correcta se sostiene en esta idea: \"Crear trail a S3 y consultar con Athena o alarmas si aplica\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-109",
+      "type": "multiple_choice",
+      "topic": "Amazon Inspector",
+      "prompt": "Que diferencia las evaluaciones de equipo de las evaluaciones de red en Inspector?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Evaluacion de equipo revisa logs; red crea usuarios IAM"
+        },
+        {
+          "id": "B",
+          "text": "Equipo busca vulnerabilidades/config; red analiza exposicion"
+        },
+        {
+          "id": "C",
+          "text": "Ambas evaluaciones reemplazan CloudTrail y Detective"
+        },
+        {
+          "id": "D",
+          "text": "Las evaluaciones de red solo revisan servicios POP"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF menciona evaluaciones de equipo y red, orientadas a vulnerabilidades, configuracion y exposicion. La respuesta correcta se sostiene en esta idea: \"Equipo busca vulnerabilidades/config; red analiza exposicion\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-110",
+      "type": "multiple_choice",
+      "topic": "Amazon Detective",
+      "prompt": "En una investigacion de seguridad, donde aporta mas valor Amazon Detective segun el PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutando parches automaticos en cada instancia EC2"
+        },
+        {
+          "id": "B",
+          "text": "Bloqueando paquetes directamente en la capa de enlace"
+        },
+        {
+          "id": "C",
+          "text": "Relacionando hallazgos para triage, alcance e investigacion"
+        },
+        {
+          "id": "D",
+          "text": "Sustituyendo MFA y control de acceso en repositorios"
+        }
+      ],
+      "answer": "C",
+      "explanation": "Detective se alimenta de logs y ayuda a investigar causa, impacto y relaciones de incidentes. La respuesta correcta se sostiene en esta idea: \"Relacionando hallazgos para triage, alcance e investigacion\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En AWS, conviene diferenciar identidad, auditoria, evaluacion e investigacion: IAM autoriza, CloudTrail registra eventos, Inspector evalua exposicion/vulnerabilidades y Detective ayuda a correlacionar hallazgos. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-111",
+      "type": "multiple_choice",
+      "topic": "Kubernetes networking",
+      "prompt": "Que propiedad de red de pods facilita la comunicacion interna en Kubernetes segun el PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Todos los pods comparten la IP del nodo obligatoriamente"
+        },
+        {
+          "id": "B",
+          "text": "Pods se comunican solo mediante DNS externo"
+        },
+        {
+          "id": "C",
+          "text": "Cada pod requiere una VPN IPSec independiente"
+        },
+        {
+          "id": "D",
+          "text": "Cada pod obtiene IP propia y se comunica sin NAT interno"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF describe una red de pods donde cada pod tiene IP propia y no hay NAT entre pods. La respuesta correcta se sostiene en esta idea: \"Cada pod obtiene IP propia y se comunica sin NAT interno\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-112",
+      "type": "multiple_choice",
+      "topic": "Kubernetes Service",
+      "prompt": "Por que un Service resuelve el problema de pods que cambian de IP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Mantiene entrada estable y endpoints actualizados por etiquetas"
+        },
+        {
+          "id": "B",
+          "text": "Fija para siempre la IP interna de cada pod creado por el scheduler"
+        },
+        {
+          "id": "C",
+          "text": "Desactiva el scheduler para evitar cambios de IP durante despliegues"
+        },
+        {
+          "id": "D",
+          "text": "Convierte automaticamente todos los pods en servicios LoadBalancer"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF explica que Service ofrece entrada permanente y actualiza registros segun pods disponibles. La respuesta correcta se sostiene en esta idea: \"Mantiene entrada estable y endpoints actualizados por etiquetas\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-113",
+      "type": "multiple_choice",
+      "topic": "Kubernetes Service",
+      "prompt": "Que limitacion tiene un Service tipo ClusterIP para exponer una aplicacion web a clientes externos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "No puede seleccionar pods mediante etiquetas ni endpoints dinamicos"
+        },
+        {
+          "id": "B",
+          "text": "Solo es accesible dentro del cluster, no para clientes externos"
+        },
+        {
+          "id": "C",
+          "text": "No tiene IP virtual interna dentro del cluster ni nombre estable"
+        },
+        {
+          "id": "D",
+          "text": "Siempre crea un balanceador externo publico para publicar HTTP"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF indica que ClusterIP recibe IP del cluster y es para consumo interno. La respuesta correcta se sostiene en esta idea: \"Solo es accesible dentro del cluster, no para clientes externos\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-114",
+      "type": "multiple_choice",
+      "topic": "Kubernetes Service",
+      "prompt": "Por que LoadBalancer se describe como extension de NodePort?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Elimina puertos de nodos y no usa recursos Service"
+        },
+        {
+          "id": "B",
+          "text": "Solo funciona en clusters sin proveedor cloud"
+        },
+        {
+          "id": "C",
+          "text": "Agrega balanceador cloud sobre exposicion NodePort"
+        },
+        {
+          "id": "D",
+          "text": "Requiere NetworkPolicy vacia para enrutar trafico"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF explica que LoadBalancer crea un recurso cloud y se apoya en NodePort. La respuesta correcta se sostiene en esta idea: \"Agrega balanceador cloud sobre exposicion NodePort\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-115",
+      "type": "multiple_choice",
+      "topic": "Kubernetes Ingress",
+      "prompt": "Que flujo describe mejor la entrada HTTP mediante Ingress?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ARP resuelve la MAC de cada pod desde Internet"
+        },
+        {
+          "id": "B",
+          "text": "Cliente abre RDP 3389 directamente contra contenedores"
+        },
+        {
+          "id": "C",
+          "text": "CloudTrail selecciona el pod destino para HTTP"
+        },
+        {
+          "id": "D",
+          "text": "DNS apunta al Ingress; Host guia al Service y pods"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF describe resolucion DNS, cabecera Host y controlador Ingress enrutando hacia servicios/pods. La respuesta correcta se sostiene en esta idea: \"DNS apunta al Ingress; Host guia al Service y pods\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-116",
+      "type": "multiple_choice",
+      "topic": "Kubernetes NetworkPolicy",
+      "prompt": "Una NetworkPolicy sin reglas y con podSelector vacio se aplica en un namespace. Que efecto busca el ejemplo del PDF?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Denegar por defecto trafico hacia pods seleccionados"
+        },
+        {
+          "id": "B",
+          "text": "Permitir trafico libre entre todos los namespaces"
+        },
+        {
+          "id": "C",
+          "text": "Crear un LoadBalancer publico para cada pod"
+        },
+        {
+          "id": "D",
+          "text": "Asignar cluster-admin a todos los ServiceAccount"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF muestra una politica inicial de denegacion por defecto con podSelector vacio y sin reglas. La respuesta correcta se sostiene en esta idea: \"Denegar por defecto trafico hacia pods seleccionados\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-117",
+      "type": "multiple_choice",
+      "topic": "Kubernetes NetworkPolicy",
+      "prompt": "Quieres permitir trafico solo desde pods concretos de otro namespace. Que combinacion de selectores es adecuada?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ipBlock.cidr sirve para seleccionar verbos RBAC"
+        },
+        {
+          "id": "B",
+          "text": "namespaceSelector elige namespace y podSelector elige pods"
+        },
+        {
+          "id": "C",
+          "text": "ClusterRoleBinding define puertos TCP permitidos"
+        },
+        {
+          "id": "D",
+          "text": "ARN selecciona etiquetas internas de Kubernetes"
+        }
+      ],
+      "answer": "B",
+      "explanation": "El PDF muestra que NetworkPolicy puede combinar namespaceSelector y podSelector. La respuesta correcta se sostiene en esta idea: \"namespaceSelector elige namespace y podSelector elige pods\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-118",
+      "type": "multiple_choice",
+      "topic": "Kubernetes NetworkPolicy",
+      "prompt": "Como se expresa en NetworkPolicy un origen basado en rango IP externo?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Mediante ARN y Action de una politica IAM"
+        },
+        {
+          "id": "B",
+          "text": "Mediante MX y AAAA de una zona DNS"
+        },
+        {
+          "id": "C",
+          "text": "Mediante ipBlock con un rango CIDR"
+        },
+        {
+          "id": "D",
+          "text": "Mediante banderas TCP SYN y FIN"
+        }
+      ],
+      "answer": "C",
+      "explanation": "El PDF muestra ipBlock.cidr para especificar subredes con notacion CIDR. La respuesta correcta se sostiene en esta idea: \"Mediante ipBlock con un rango CIDR\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-119",
+      "type": "multiple_choice",
+      "topic": "Kubernetes API",
+      "prompt": "En el flujo de acceso a la API de Kubernetes, que diferencia hay entre autenticacion fallida y autorizacion denegada?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ambas condiciones devuelven codigo HTTP 200"
+        },
+        {
+          "id": "B",
+          "text": "Autorizacion fallida se corrige con ARP local"
+        },
+        {
+          "id": "C",
+          "text": "Autenticacion fallida crea un ClusterRoleBinding"
+        },
+        {
+          "id": "D",
+          "text": "Sin autenticar devuelve 401; sin autorizacion devuelve 403"
+        }
+      ],
+      "answer": "D",
+      "explanation": "El PDF indica HTTPS en 6443, autenticacion y autorizacion; 401 si no autentica y 403 si no autorizado. La respuesta correcta se sostiene en esta idea: \"Sin autenticar devuelve 401; sin autorizacion devuelve 403\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "secdevops-120",
+      "type": "multiple_choice",
+      "topic": "Kubernetes RBAC",
+      "prompt": "Que conjunto representa correctamente los elementos de RBAC?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Recursos, verbos, sujetos, roles y bindings"
+        },
+        {
+          "id": "B",
+          "text": "Puertos, TTL, checksum y tamano MTU"
+        },
+        {
+          "id": "C",
+          "text": "Registros MX, AAAA, CNAME y PTR"
+        },
+        {
+          "id": "D",
+          "text": "Security group, VNet y ExpressRoute"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El PDF describe recursos, acciones mapeadas a verbos HTTP, sujetos y asociaciones de roles. La respuesta correcta se sostiene en esta idea: \"Recursos, verbos, sujetos, roles y bindings\". Esa opcion conserva el mecanismo y el alcance que pide la pregunta. En Kubernetes, la clave es distinguir entre abstracciones de red, autorizacion y exposicion: Pod, Service, Ingress, RBAC y NetworkPolicy resuelven problemas distintos aunque aparezcan en el mismo despliegue. Los distractores pueden sonar relacionados, pero desplazan la respuesta hacia otra capa, otro servicio, otro puerto o una consecuencia que el material no atribuye a ese componente.",
+      "difficulty": "maestria"
+    }
+  ],
+  "examLevel": "maestria"
+}
