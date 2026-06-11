@@ -2,6 +2,7 @@ const DEFAULT_BANK_URL = "/question-banks/secdevops-unir.json";
 const THEME_STORAGE_KEY = "exam-simulator-theme";
 const DEFAULT_EXAM_SIZE = 25;
 const OPTION_IDS = ["A", "B", "C", "D", "E", "F"];
+const THEMES = ["light", "dark", "oled"];
 
 const state = {
   bank: null,
@@ -31,7 +32,7 @@ const els = {
   loadJson: document.querySelector("#load-json"),
   jsonInput: document.querySelector("#json-input"),
   newAttempt: document.querySelector("#new-attempt"),
-  themeToggle: document.querySelector("#theme-toggle"),
+  themeOptions: document.querySelectorAll("[data-theme-choice]"),
   attemptSize: document.querySelector("#attempt-size"),
   topicBadge: document.querySelector("#topic-badge"),
   typeBadge: document.querySelector("#type-badge"),
@@ -101,7 +102,11 @@ function syncAttemptSizeInput() {
 
 function getStoredTheme() {
   try {
-    return localStorage.getItem(THEME_STORAGE_KEY) === "dark" ? "dark" : "light";
+    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    if (storedTheme === "extra-dark" || storedTheme === "black") {
+      return "oled";
+    }
+    return THEMES.includes(storedTheme) ? storedTheme : "light";
   } catch (error) {
     return "light";
   }
@@ -114,20 +119,22 @@ function saveTheme(theme) {
 }
 
 function applyTheme(theme) {
-  const normalizedTheme = theme === "dark" ? "dark" : "light";
+  const normalizedTheme = THEMES.includes(theme) ? theme : "light";
   state.theme = normalizedTheme;
 
   if (document.documentElement) {
-    if (normalizedTheme === "dark") {
-      document.documentElement.dataset.theme = "dark";
-    } else {
+    if (normalizedTheme === "light") {
       document.documentElement.removeAttribute("data-theme");
+    } else {
+      document.documentElement.dataset.theme = normalizedTheme;
     }
   }
 
-  if (els.themeToggle) {
-    els.themeToggle.checked = normalizedTheme === "dark";
-  }
+  els.themeOptions.forEach((button) => {
+    const active = button.dataset.themeChoice === normalizedTheme;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
 }
 
 function normalizeOptions(rawOptions, rawType, rawAnswer) {
@@ -891,10 +898,12 @@ els.attemptSize.addEventListener("change", () => {
   state.requestedExamSize = clampExamSize(els.attemptSize.value);
   syncAttemptSizeInput();
 });
-els.themeToggle.addEventListener("change", () => {
-  const theme = els.themeToggle.checked ? "dark" : "light";
-  applyTheme(theme);
-  saveTheme(theme);
+els.themeOptions.forEach((button) => {
+  button.addEventListener("click", () => {
+    const theme = button.dataset.themeChoice;
+    applyTheme(theme);
+    saveTheme(state.theme);
+  });
 });
 els.markReview.addEventListener("click", () => {
   const question = state.attempt[state.currentIndex];

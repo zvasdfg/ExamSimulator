@@ -52,6 +52,33 @@
   --app-shadow: rgb(0 0 0 / 26%);
 }
 
+:root[data-theme="oled"] {
+  color-scheme: dark;
+  --app-bg: #000000;
+  --app-ink: #f5f7fa;
+  --app-muted: #aeb7c2;
+  --app-line: #242424;
+  --app-surface: #030303;
+  --app-surface-soft: #0b0b0b;
+  --app-hover: #101820;
+  --app-dark: #000000;
+  --app-status-bg: #000000;
+  --app-on-dark: #ffffff;
+  --app-muted-on-dark: #aeb7c2;
+  --app-primary: #1779ba;
+  --app-green: #66d98f;
+  --app-green-soft: #071d10;
+  --app-green-ink: #c9f7d8;
+  --app-red: #ff7a7a;
+  --app-red-soft: #220808;
+  --app-red-ink: #ffd6d6;
+  --app-amber: #ffd166;
+  --app-amber-soft: #231804;
+  --app-amber-ink: #fff1bf;
+  --app-progress-bg: #191919;
+  --app-shadow: rgb(0 0 0 / 70%);
+}
+
 body {
   background: var(--app-bg);
   color: var(--app-ink);
@@ -144,14 +171,15 @@ button:disabled {
 
 .theme-toggle {
   display: inline-flex;
-  min-height: 2.45rem;
+  min-height: 2.85rem;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.35rem;
   border: 1px solid var(--app-line);
-  border-radius: 8px;
+  border-radius: 999px;
   background: var(--app-surface-soft);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 4%);
   margin: 0;
-  padding: 0.35rem 0.75rem;
+  padding: 0.28rem;
 }
 
 .attempt-size-control {
@@ -184,29 +212,61 @@ button:disabled {
   font-weight: 800;
 }
 
-.theme-label {
+.theme-option {
+  display: inline-flex;
+  width: 2.7rem;
+  min-width: 2.7rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: var(--app-muted);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
-.theme-toggle .switch {
-  margin-bottom: 0;
-}
-
-.theme-toggle .switch-paddle {
-  margin-bottom: 0;
-}
-
-.theme-toggle .switch-paddle,
-.theme-toggle .switch-paddle::after {
+  padding: 0;
   transition:
     background 160ms ease,
-    left 160ms ease;
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
-.theme-toggle .switch-input:checked ~ .switch-paddle {
-  background: var(--app-primary);
+.theme-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.theme-icon-filled {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.theme-option:hover,
+.theme-option:focus {
+  background: var(--app-hover);
+  color: var(--app-ink);
+}
+
+.theme-option.active {
+  background: var(--app-surface);
+  box-shadow:
+    0 1px 2px var(--app-shadow),
+    inset 0 0 0 1px var(--app-line);
+  color: var(--app-primary);
+}
+
+.theme-option.active[data-theme-choice="oled"] {
+  background: #000000;
+  color: #ffffff;
+}
+
+.theme-option:active {
+  transform: translateY(1px);
 }
 
 .label.primary,
@@ -882,6 +942,14 @@ h3 {
   .attempt-size-control {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .theme-toggle {
+    width: 100%;
+  }
+
+  .theme-option {
+    flex: 1;
   }
 
   .question-footer,

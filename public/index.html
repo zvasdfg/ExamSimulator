@@ -10,8 +10,9 @@
     />
     <script>
       try {
-        if (localStorage.getItem("exam-simulator-theme") === "dark") {
-          document.documentElement.dataset.theme = "dark";
+        const savedTheme = localStorage.getItem("exam-simulator-theme");
+        if (savedTheme === "dark" || savedTheme === "oled") {
+          document.documentElement.dataset.theme = savedTheme;
         }
       } catch (error) {}
     </script>
@@ -31,20 +32,55 @@
           </div>
           <div class="cell small-12 medium-shrink">
             <div class="header-controls">
-              <label class="theme-toggle" for="theme-toggle">
-                <span class="theme-label">Modo oscuro</span>
-                <span class="switch tiny">
-                  <input
-                    id="theme-toggle"
-                    class="switch-input"
-                    type="checkbox"
-                    name="theme-toggle"
-                  />
-                  <span class="switch-paddle">
-                    <span class="show-for-sr">Modo oscuro</span>
-                  </span>
-                </span>
-              </label>
+              <div id="theme-control" class="theme-toggle" role="group" aria-label="Tema visual">
+                <button
+                  type="button"
+                  class="theme-option"
+                  data-theme-choice="light"
+                  aria-label="Tema claro, sol"
+                  aria-pressed="true"
+                  title="Sol"
+                >
+                  <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2" />
+                    <path d="M12 20v2" />
+                    <path d="m4.93 4.93 1.41 1.41" />
+                    <path d="m17.66 17.66 1.41 1.41" />
+                    <path d="M2 12h2" />
+                    <path d="M20 12h2" />
+                    <path d="m6.34 17.66-1.41 1.41" />
+                    <path d="m19.07 4.93-1.41 1.41" />
+                  </svg>
+                  <span class="show-for-sr">Claro</span>
+                </button>
+                <button
+                  type="button"
+                  class="theme-option"
+                  data-theme-choice="dark"
+                  aria-label="Tema oscuro, luna creciente"
+                  aria-pressed="false"
+                  title="Luna creciente"
+                >
+                  <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 3a6.7 6.7 0 0 0 8.65 8.65A8.6 8.6 0 1 1 12 3Z" />
+                  </svg>
+                  <span class="show-for-sr">Oscuro</span>
+                </button>
+                <button
+                  type="button"
+                  class="theme-option"
+                  data-theme-choice="oled"
+                  aria-label="Tema OLED, luna nueva"
+                  aria-pressed="false"
+                  title="Luna nueva"
+                >
+                  <svg class="theme-icon theme-icon-filled" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="7" />
+                  </svg>
+                  <span class="show-for-sr">OLED</span>
+                </button>
+              </div>
               <label class="attempt-size-control" for="attempt-size">
                 <span>Preguntas</span>
                 <input id="attempt-size" type="number" min="1" max="120" value="25" inputmode="numeric" />
