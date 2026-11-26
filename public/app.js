@@ -11,6 +11,7 @@ import { applyTheme, getStoredTheme, saveTheme } from "./js/theme.js";
 import { formatDuration } from "./js/view-utils.js";
 
 const DEFAULT_BANK = "secdevops-unir.json";
+const APP_NAME = "Simulador de exámenes";
 const byId = (id) => document.getElementById(id);
 const examLayout = byId("exam-layout");
 const preparation = byId("preparation-view");
@@ -66,9 +67,9 @@ function bankSummary() {
 }
 
 function renderBank(summary) {
-  const title = summary?.title ?? "Portal de práctica";
+  const title = summary?.title ?? APP_NAME;
   byId("app-title").textContent = title;
-  document.title = `${title} | Lumbre`;
+  document.title = title === APP_NAME ? APP_NAME : `${title} | ${APP_NAME}`;
   byId("bank-meta").hidden = !summary;
   if (!summary) return;
   byId("bank-count").textContent = summary.total === 1 ? "1 pregunta" : `${summary.total} preguntas`;
@@ -148,6 +149,7 @@ function renderStage(focus = false) {
     }
   }
   byId("leave-attempt").hidden = preparing;
+  byId("bank-bar").classList.toggle("is-compact", !preparing);
   byId("bank-actions").hidden = !preparing;
   preparation.hidden = !preparing || !hasContent;
   submission.hidden = !reviewing;

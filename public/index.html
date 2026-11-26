@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Portal de práctica con bancos de preguntas y revisión de resultados." />
-    <title>Portal de práctica | Lumbre</title>
-    <link rel="icon" href="./assets/brand/lumbre-mark.png" />
+    <title>Simulador de exámenes</title>
+    <link rel="icon" href="./assets/brand/exam-mark.png" />
     <script>
       try {
         const theme = localStorage.getItem("exam-simulator-theme");
@@ -26,11 +26,10 @@
       <div class="grid-container page-width topbar">
         <div class="brand">
           <span class="brand-mark">
-            <img class="brand-light" src="./assets/brand/lumbre-mark.png" alt="" width="42" height="42" />
-            <img class="brand-inverse" src="./assets/brand/lumbre-mark-inverse.png" alt="" width="42" height="42" />
+            <img class="brand-light" src="./assets/brand/exam-mark.png" alt="" width="42" height="42" />
+            <img class="brand-inverse" src="./assets/brand/exam-mark-inverse.png" alt="" width="42" height="42" />
           </span>
-          <span class="brand-wordmark">Lumbre</span>
-          <span class="brand-context">Portal de práctica</span>
+          <span class="brand-wordmark">Simulador</span>
         </div>
         <div class="header-actions">
           <div class="theme-toggle" role="group" aria-label="Tema visual">
@@ -52,11 +51,11 @@
         </div>
       </div>
 
-      <div class="bank-bar">
+      <div id="bank-bar" class="bank-bar">
         <div class="grid-container page-width bank-inner">
           <div class="bank-heading">
             <p class="kicker">Banco activo</p>
-            <h1 id="app-title">Portal de práctica</h1>
+            <h1 id="app-title">Simulador de exámenes</h1>
             <p id="bank-meta" class="bank-meta" hidden>
               <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#book-open"></use></svg>
               <span id="bank-count"></span>
@@ -81,19 +80,22 @@
       <noscript><p class="empty-state">Activa JavaScript para realizar el examen.</p></noscript>
 
       <ol id="attempt-steps" class="workflow-steps" aria-label="Etapas del intento" hidden>
-        <li data-step="prepare">Preparación</li>
-        <li data-step="answering">Práctica</li>
-        <li data-step="reviewing">Revisión</li>
-        <li data-step="submitted">Resultado</li>
+        <li data-step="prepare">Preparación<span class="step-position"> · 1 de 4</span></li>
+        <li data-step="answering">Práctica<span class="step-position"> · 2 de 4</span></li>
+        <li data-step="reviewing">Revisión<span class="step-position"> · 3 de 4</span></li>
+        <li data-step="submitted">Resultado<span class="step-position"> · 4 de 4</span></li>
       </ol>
       <p id="storage-status" class="form-notice storage-status" role="status" hidden></p>
 
       <div id="preparation-view" class="preparation-view" hidden>
         <section class="workflow-section" aria-labelledby="preparation-title">
           <h2 id="preparation-title" tabindex="-1">Preparar intento</h2>
-          <form id="attempt-form" novalidate hidden>
-            <div class="stepper-row">
+          <form id="attempt-form" class="attempt-form" novalidate hidden>
+            <div>
               <label for="attempt-size">Preguntas por intento</label>
+              <p id="attempt-range" class="field-hint"></p>
+            </div>
+            <div class="attempt-size-controls">
               <div class="stepper">
                 <button id="decrease-size" class="btn icon-button" type="button" aria-label="Reducir cantidad" title="Reducir cantidad">
                   <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#minus"></use></svg>
@@ -103,12 +105,11 @@
                   <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#plus"></use></svg>
                 </button>
               </div>
-            </div>
-            <p id="attempt-range" class="field-hint"></p>
-            <div id="size-presets" class="size-presets" role="group" aria-label="Cantidades sugeridas">
-              <button class="btn btn-outline" type="button" data-size="10" aria-pressed="false">10</button>
-              <button class="btn btn-outline" type="button" data-size="25" aria-pressed="false">25</button>
-              <button class="btn btn-outline" type="button" data-size="50" aria-pressed="false">50</button>
+              <div id="size-presets" class="size-presets" role="group" aria-label="Cantidades sugeridas">
+                <button class="btn btn-outline" type="button" data-size="10" aria-pressed="false">10</button>
+                <button class="btn btn-outline" type="button" data-size="25" aria-pressed="false">25</button>
+                <button class="btn btn-outline" type="button" data-size="50" aria-pressed="false">50</button>
+              </div>
             </div>
             <div class="workflow-actions">
               <button id="start-attempt" class="btn btn-primary" type="submit">

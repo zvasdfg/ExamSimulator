@@ -301,16 +301,7 @@ button:disabled {
 }
 
 .brand-wordmark {
-  font: italic 850 1.35rem/1 var(--font-display);
-  text-transform: uppercase;
-}
-
-.brand-context {
-  padding-inline-start: .8rem;
-  border-inline-start: 1px solid var(--line);
-  color: var(--muted);
-  font-size: .875rem;
-  font-weight: 700;
+  font: 750 1.125rem/1.15 var(--font-display);
 }
 
 .header-actions {
@@ -388,6 +379,32 @@ button:disabled {
   font-size: 2.2rem;
   font-weight: 800;
   line-height: 1.14;
+}
+
+.bank-bar.is-compact {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.bank-bar.is-compact .bank-inner {
+  display: block;
+  padding-block: .5rem;
+}
+
+.bank-bar.is-compact .bank-heading {
+  display: block;
+}
+
+.bank-bar.is-compact :is(.kicker, .bank-meta) {
+  display: none;
+}
+
+.bank-bar.is-compact h1 {
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bank-meta,
@@ -477,12 +494,12 @@ button:disabled {
   color: var(--accent);
 }
 
-.storage-status {
-  margin: 0 0 1rem;
+.step-position {
+  display: none;
 }
 
-.bank-inner:has(.bank-actions[hidden]) {
-  grid-template-columns: minmax(0, 1fr);
+.storage-status {
+  margin: 0 0 1rem;
 }
 
 .bank-actions[hidden] + .bank-error {
@@ -508,8 +525,14 @@ button:disabled {
   font-size: 1.65rem;
 }
 
-form#attempt-form {
+.attempt-form {
+  display: grid;
   max-width: 27rem;
+  gap: .9rem;
+}
+
+.attempt-form .workflow-actions {
+  margin-top: .15rem;
 }
 
 .workflow-actions {
@@ -1156,14 +1179,14 @@ form#attempt-form {
   min-width: 6rem;
 }
 
-.stepper-row {
+.attempt-size-controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: .55rem;
+  gap: .55rem .8rem;
 }
 
-.stepper-row label {
+.attempt-form label {
   color: var(--ink);
   font-size: .9rem;
   font-weight: 800;
@@ -1212,7 +1235,7 @@ form#attempt-form {
 }
 
 .field-hint {
-  margin-top: .35rem;
+  margin-top: .15rem;
   color: var(--muted);
   font-size: .825rem;
 }
@@ -1221,7 +1244,6 @@ form#attempt-form {
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
-  margin-top: .8rem;
 }
 
 .size-presets .btn {
@@ -1573,10 +1595,6 @@ form#attempt-form {
 }
 
 @media (max-width: 42rem) {
-  .brand-context {
-    display: none;
-  }
-
   .bank-inner {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: .5rem .7rem;
@@ -1620,6 +1638,29 @@ form#attempt-form {
     padding-block: .95rem 2rem;
   }
 
+  .workflow-steps {
+    display: block;
+    margin-bottom: .85rem;
+  }
+
+  .workflow-steps li {
+    margin: 0;
+    padding: 0 0 .5rem;
+    border: 0;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .workflow-steps li:not([aria-current="step"]) {
+    display: none;
+  }
+
+  .step-position {
+    display: inline;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
   .preparation-view {
     grid-template-columns: minmax(0, 1fr);
     gap: .6rem;
@@ -1627,6 +1668,10 @@ form#attempt-form {
 
   .saved-attempts {
     grid-row: 1;
+  }
+
+  .attempt-form .workflow-actions {
+    flex-direction: column;
   }
 
   .submission-list button {
@@ -1783,10 +1828,6 @@ form#attempt-form {
     height: 2rem;
   }
 
-  .brand-wordmark {
-    font-size: 1.17rem;
-  }
-
   .theme-toggle {
     grid-template-columns: repeat(3, 1.95rem);
   }
@@ -1807,6 +1848,12 @@ form#attempt-form {
 
   .new-attempt-short {
     display: inline;
+  }
+}
+
+@media (max-width: 24rem) {
+  .topbar:has(.new-attempt:not([hidden])) .brand-wordmark {
+    display: none;
   }
 }
 
