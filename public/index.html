@@ -317,11 +317,11 @@
             <span id="result-answered"></span>
           </div>
           <dl class="report-metrics">
+            <div class="report-timing"><dt>Tiempo total</dt><dd id="result-total-time"></dd></div>
+            <div class="report-timing"><dt>Promedio por pregunta</dt><dd id="result-average-time"></dd></div>
             <div><dt>Aciertos</dt><dd id="result-correct"></dd></div>
             <div><dt>Fallos</dt><dd id="result-wrong"></dd></div>
             <div><dt>Marcadas</dt><dd id="result-marked"></dd></div>
-            <div><dt>Tiempo total</dt><dd id="result-total-time"></dd></div>
-            <div><dt>Promedio por pregunta</dt><dd id="result-average-time"></dd></div>
           </dl>
         </div>
         <section class="review" aria-labelledby="review-title">
@@ -333,16 +333,36 @@
           </div>
           <div class="review-layout">
             <nav id="review-question-list" class="review-list" aria-label="Preguntas para revisar"></nav>
+            <div id="review-mobile-nav" class="review-mobile-nav" role="group" aria-label="Navegar preguntas" hidden>
+              <button id="review-prev" class="btn btn-outline icon-button" type="button" aria-label="Pregunta anterior" title="Pregunta anterior">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow-left"></use></svg>
+              </button>
+              <label class="show-for-sr" for="review-question-select">Elegir pregunta</label>
+              <select id="review-question-select"></select>
+              <button id="review-next" class="btn btn-outline icon-button" type="button" aria-label="Pregunta siguiente" title="Pregunta siguiente">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow-right"></use></svg>
+              </button>
+            </div>
             <p id="review-empty" class="review-empty" role="status" hidden></p>
             <article id="review-detail" class="review-detail" aria-labelledby="review-question-title">
-              <h4 id="review-question-title" tabindex="-1"></h4>
+              <header class="review-detail-header">
+                <h4 id="review-question-title" aria-live="polite"></h4>
+                <p class="review-time">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#clock"></use></svg>
+                  <span>Tiempo: <strong id="review-question-time"></strong></span>
+                </p>
+              </header>
               <p id="review-question-meta" class="review-meta"></p>
               <p id="review-question-text" class="review-prompt"></p>
-              <ul id="review-options" class="review-options"></ul>
+              <ul id="review-options" class="review-options" aria-label="Respuesta correcta y tu respuesta"></ul>
               <div class="review-explanation">
                 <h5>Explicación</h5>
                 <p id="review-explanation"></p>
               </div>
+              <details id="review-other-options" class="review-other-options" hidden>
+                <summary>Ver otras opciones</summary>
+                <ul id="review-distractors" class="review-options"></ul>
+              </details>
             </article>
           </div>
         </section>

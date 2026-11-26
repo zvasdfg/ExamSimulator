@@ -1311,6 +1311,7 @@ button:disabled {
 .report-body {
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
   padding: 1.1rem 1.2rem 1.2rem;
 }
 
@@ -1405,6 +1406,10 @@ button:disabled {
   padding: .2rem;
 }
 
+.review-mobile-nav {
+  display: none;
+}
+
 .review-item {
   display: grid;
   min-height: 3.15rem;
@@ -1479,9 +1484,34 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
+.review-detail-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .25rem .65rem;
+}
+
 .review-detail h4 {
   font-size: 1.125rem;
-  scroll-margin-block-start: .6rem;
+}
+
+.review-time {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.review-time .icon {
+  width: .95rem;
+  height: .95rem;
+}
+
+.review-time strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
 .review-meta,
@@ -1509,9 +1539,9 @@ button:disabled {
 
 .review-option {
   display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: .5rem .65rem;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: start;
+  gap: .65rem;
   padding: .5rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -1519,10 +1549,10 @@ button:disabled {
 }
 
 .review-option-label {
-  display: inline-flex;
-  max-width: 9rem;
+  display: flex;
   align-items: center;
-  gap: .2rem;
+  gap: .25rem;
+  margin-bottom: .15rem;
   font-size: .78rem;
   font-weight: 800;
 }
@@ -1548,8 +1578,28 @@ button:disabled {
 }
 
 .review-explanation p {
+  max-width: 72ch;
+  font-size: .94rem;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.review-other-options {
+  margin-top: .7rem;
+  border-top: 1px solid var(--line);
+}
+
+.review-other-options summary {
+  min-height: 2.75rem;
+  padding-block: .65rem;
+  color: var(--accent);
   font-size: .875rem;
-  line-height: 1.6;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.review-other-options .review-options {
+  margin-block: .25rem 0;
 }
 
 .result-meta {
@@ -1589,7 +1639,7 @@ button:disabled {
     grid-column: span 2;
   }
 
-  .report-metrics > div:nth-last-child(-n + 2) {
+  .report-metrics .report-timing {
     grid-column: span 3;
   }
 }
@@ -1767,11 +1817,24 @@ button:disabled {
 
   .report {
     width: calc(100% - 1rem);
-    max-height: calc(100dvh - 1rem);
+    max-height: calc(100dvh - 1.5rem);
   }
 
   .report-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
+  }
+
+  .report-header p {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: .8rem;
+    line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .report-body {
+    padding-block: .8rem 1rem;
   }
 
   .report-overview,
@@ -1780,36 +1843,86 @@ button:disabled {
   }
 
   .report-score {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
+    gap: .1rem .7rem;
+    padding: .65rem .7rem;
   }
 
   .report-score strong {
     grid-area: 1 / 2 / span 2 / 3;
-    font-size: 2.35rem;
+    margin-block: 0;
+    font-size: 2rem;
   }
 
   .report-metrics > div {
-    padding: .55rem;
+    gap: .2rem;
+    padding: .5rem .55rem;
+  }
+
+  .report-metrics dt {
+    font-size: .78rem;
+    line-height: 1.35;
+  }
+
+  .report-metrics dd {
+    font-size: 1.15rem;
+  }
+
+  .report-timing dd {
+    font-size: 1.28rem;
+  }
+
+  .report .review-filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .report .review-filters .btn {
+    min-width: 0;
+    padding-inline: .2rem;
+    font-size: .825rem;
+  }
+
+  .review-layout {
+    gap: .55rem;
   }
 
   .review-list {
-    max-height: 11.2rem;
+    display: none;
+  }
+
+  .review-mobile-nav {
+    position: sticky;
+    z-index: 1;
+    inset-block-start: 0;
+    display: grid;
+    min-height: 3.5rem;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: .45rem;
+    padding-block: .3rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .review-mobile-nav select {
+    width: 100%;
+    min-width: 0;
+    height: 2.75rem;
+    margin: 0;
+    padding: .45rem .55rem;
+    border: 1px solid var(--control-line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+    font: 750 1rem/1.3 var(--font-body);
+    appearance: auto;
   }
 
   .review-detail {
-    padding: .75rem 0 0;
+    padding: .3rem 0 0;
     border-inline-start: 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .review-option {
-    grid-template-columns: 2rem minmax(0, 1fr);
-  }
-
-  .review-option-label {
-    grid-column: 2;
-    max-width: none;
   }
 }
 

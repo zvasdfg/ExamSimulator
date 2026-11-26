@@ -8,17 +8,25 @@ const submissionDate = new Intl.DateTimeFormat("es-MX", {
 export function createResultView(dialog) {
   const byId = (id) => dialog.querySelector(`#${id}`);
   const list = byId("review-question-list");
+  const mobileNav = byId("review-mobile-nav");
+  const reportBody = dialog.querySelector(".report-body");
+  const picker = byId("review-question-select");
+  const previous = byId("review-prev");
+  const next = byId("review-next");
   const emptyState = byId("review-empty");
   const detail = byId("review-detail");
   const detailTitle = byId("review-question-title");
+  const otherOptionsToggle = byId("review-other-options");
   const filterButtons = dialog.querySelectorAll("[data-review-filter]");
   let entries = [];
+  let visibleEntries = [];
   let filter = "all";
   let selectedIndex = 0;
 
   function renderOption(option, question, result) {
     const row = document.createElement("li");
     const letter = document.createElement("span");
+    const content = document.createElement("div");
     const text = document.createElement("span");
     const labels = document.createElement("span");
     const isCorrect = option.id === question.answer;
@@ -36,7 +44,8 @@ export function createResultView(dialog) {
         isCorrect && isSelected ? "Tu respuesta, correcta" : isCorrect ? "Respuesta correcta" : "Tu respuesta",
       );
     }
-    row.append(letter, text, labels);
+    content.append(labels, text);
+    row.append(letter, content);
     return row;
   }
 
@@ -45,29 +54,40 @@ export function createResultView(dialog) {
     selectedIndex = index;
     list.querySelector("[aria-current]")?.removeAttribute("aria-current");
     list.querySelector(`[data-review-index="${index}"]`)?.setAttribute("aria-current", "true");
+    picker.value = String(index);
+    const position = visibleEntries.indexOf(entry);
+    previous.disabled = position <= 0;
+    next.disabled = position >= visibleEntries.length - 1;
     detailTitle.textContent = `Pregunta ${index + 1}`;
+    byId("review-question-time").textContent = formatDuration(result.time);
     byId("review-question-meta").textContent = [
       question.topic,
       questionTypeLabel(question),
-      `Tiempo: ${formatDuration(result.time)}`,
       marked ? "Marcada" : "",
     ].filter(Boolean).join(" · ");
     byId("review-question-text").textContent = question.prompt;
+    const keyOptions = [result.correctOption, result.isCorrect ? null : result.selectedOption].filter(Boolean);
+    const otherOptions = question.options.filter(({ id }) => id !== question.answer && id !== result.selected);
     byId("review-options").replaceChildren(
-      ...question.options.map((option) => renderOption(option, question, result)),
+      ...keyOptions.map((option) => renderOption(option, question, result)),
     );
     byId("review-explanation").textContent = question.explanation;
+    otherOptionsToggle.open = false;
+    otherOptionsToggle.hidden = otherOptions.length === 0;
+    byId("review-distractors").replaceChildren(
+      ...otherOptions.map((option) => renderOption(option, question, result)),
+    );
   }
 
   function renderList() {
-    const visible = entries.filter((entry) => {
+    visibleEntries = entries.filter((entry) => {
       if (filter === "wrong") return !entry.result.isCorrect;
       if (filter === "marked") return entry.marked;
       return true;
     });
-    const current = visible.find((entry) => entry.index === selectedIndex) || visible[0];
+    const current = visibleEntries.find((entry) => entry.index === selectedIndex) || visibleEntries[0];
 
-    list.replaceChildren(...visible.map(({ index, result, marked }) => {
+    list.replaceChildren(...visibleEntries.map(({ index, result, marked }) => {
       const button = document.createElement("button");
       const number = document.createElement("span");
       const info = document.createElement("span");
@@ -93,7 +113,9 @@ export function createResultView(dialog) {
       }
       return button;
     }));
+    picker.replaceChildren(...visibleEntries.map(({ index }) => new Option(`Pregunta ${index + 1}`, index)));
     list.hidden = !current;
+    mobileNav.hidden = !current;
     detail.hidden = !current;
     emptyState.hidden = Boolean(current);
     if (current) {
@@ -118,13 +140,26 @@ export function createResultView(dialog) {
 
   list.addEventListener("click", (event) => {
     const button = event.target.closest("[data-review-index]");
-    if (!button) return;
-    showQuestion(entries[Number(button.dataset.reviewIndex)]);
-    if (window.matchMedia("(max-width: 42rem)").matches) {
-      detailTitle.focus({ preventScroll: true });
-      detailTitle.scrollIntoView({ block: "start" });
-    }
+    if (button) showQuestion(entries[Number(button.dataset.reviewIndex)]);
   });
+
+  function navigateMobile(entry) {
+    if (!entry) return;
+    showQuestion(entry);
+    const { top, bottom } = mobileNav.getBoundingClientRect();
+    if (detail.getBoundingClientRect().top < bottom) {
+      reportBody.scrollTop += mobileNav.parentElement.getBoundingClientRect().top - top;
+    }
+  }
+
+  function stepQuestion(offset) {
+    const position = visibleEntries.findIndex(({ index }) => index === selectedIndex);
+    navigateMobile(visibleEntries[position + offset]);
+  }
+
+  picker.addEventListener("change", () => navigateMobile(entries[Number(picker.value)]));
+  previous.addEventListener("click", () => stepQuestion(-1));
+  next.addEventListener("click", () => stepQuestion(1));
 
   return {
     open({ bank, entries: submittedEntries, submittedAt, duration, stats }) {
@@ -141,7 +176,7 @@ export function createResultView(dialog) {
       selectedIndex = 0;
       setFilter("all");
       dialog.showModal();
-      dialog.querySelector(".report-body").scrollTop = 0;
+      reportBody.scrollTop = 0;
     },
   };
 }
