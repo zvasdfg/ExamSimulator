@@ -3,14 +3,13 @@ import { createAttemptSession, newAttemptDraft } from "./js/attempt-session.js";
 import { ATTEMPT_STORAGE_KEY, createAttemptStore } from "./js/attempt-store.js";
 import { normalizeBank } from "./js/bank-normalizer.js";
 import { assertValidBank } from "./js/bank-validator.js";
-import { DEFAULT_EXAM_SIZE } from "./js/constants.js";
+import { DEFAULT_BANK, DEFAULT_EXAM_SIZE } from "./js/constants.js";
 import { createExamView } from "./js/exam-view.js";
 import { createResultView } from "./js/result-view.js";
 import { createSubmissionView } from "./js/submission-view.js";
 import { applyTheme, getStoredTheme, saveTheme } from "./js/theme.js";
 import { formatDuration } from "./js/view-utils.js";
 
-const DEFAULT_BANK = "secdevops-unir.json";
 const APP_NAME = "Simulador de exámenes";
 const byId = (id) => document.getElementById(id);
 const examLayout = byId("exam-layout");

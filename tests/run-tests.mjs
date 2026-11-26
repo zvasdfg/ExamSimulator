@@ -9,6 +9,7 @@ import {
 } from "../public/js/attempt-engine.js";
 import { createAttemptSession, newAttemptDraft } from "../public/js/attempt-session.js";
 import { ATTEMPT_STORAGE_KEY, createAttemptStore } from "../public/js/attempt-store.js";
+import { DEFAULT_BANK } from "../public/js/constants.js";
 import { getQuestionResult, getStats } from "../public/js/scoring.js";
 import { normalizeTheme } from "../public/js/theme.js";
 
@@ -17,14 +18,15 @@ function constantRandom(value) {
 }
 
 function testDefaultBank() {
-  return readFile(new URL("../public/question-banks/secdevops-unir.json", import.meta.url), "utf8")
+  return readFile(new URL(`../public/question-banks/${DEFAULT_BANK}`, import.meta.url), "utf8")
     .then((contents) => {
       const bank = normalizeBank(JSON.parse(contents));
       const validation = assertValidBank(bank);
 
       assert.equal(bank.questions.length, 120);
       assert.equal(validation.errors.length, 0);
-      assert.ok(bank.title.includes("SecDevOps"));
+      assert.match(bank.title, /^Contenedores\b/i);
+      assert.equal(bank.examLevel, "maestria");
     });
 }
 

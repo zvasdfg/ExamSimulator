@@ -1,0 +1,3152 @@
+{
+  "title": "Contenedores y orquestación — Examen de práctica de maestría",
+  "description": "Banco de 120 reactivos basado en los microtests y el examen previo de Contenedores. Incluye casos de Docker, Compose, Swarm, Kubernetes, seguridad y observabilidad, con explicaciones para estudiar el razonamiento de cada respuesta.",
+  "version": "1.0.0",
+  "examLevel": "maestria",
+  "questions": [
+    {
+      "id": "q-001",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Un proceso lee /etc/api/politica.yaml en un bind mount de directorio marcado de solo lectura. En el host se edita el archivo y después el proceso lo vuelve a abrir. ¿Qué comportamiento es esperable?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El proceso puede leer el cambio del host, pero no escribir por ese montaje."
+        },
+        {
+          "id": "B",
+          "text": "El modo de solo lectura impide también que el host modifique su archivo original."
+        },
+        {
+          "id": "C",
+          "text": "El proceso ve el cambio cuando Docker copie el directorio a su capa de escritura."
+        },
+        {
+          "id": "D",
+          "text": "Docker congela la versión que había cuando se inició el contenedor."
+        }
+      ],
+      "answer": "A",
+      "explanation": "El modo de solo lectura se aplica a través de ese montaje dentro del contenedor. El host conserva acceso según sus propios permisos y el directorio montado refleja sus actualizaciones. El proceso verá el nuevo contenido al volver a abrir el archivo si la aplicación lo relee. Una copia en la imagen o una aplicación que cachea el contenido producirían comportamientos distintos.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-002",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Una base de datos de pruebas usa el filesystem escribible del contenedor. Debe sobrevivir a la sustitución de la imagen en el mismo Engine y tener respaldo independiente. ¿Qué cambio cumple ambos requisitos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Aumentar el espacio de la capa escribible y conservar una copia de la imagen."
+        },
+        {
+          "id": "B",
+          "text": "Colocar su directorio de datos en un volumen nombrado y respaldar el volumen."
+        },
+        {
+          "id": "C",
+          "text": "Replicar la imagen en otro registro y aplicar la misma etiqueta al nuevo contenedor."
+        },
+        {
+          "id": "D",
+          "text": "Guardar la configuración en un bind mount y dejar los datos en el filesystem actual."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Al montar el directorio de datos en un volumen, el motor administra su ciclo de vida por separado. El contenedor nuevo puede montar el mismo volumen. La copia de seguridad debe incluir el contenido y respetar la consistencia que exige la base de datos, por ejemplo usando su mecanismo de exportación o deteniendo escrituras antes de copiar.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-003",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "La CLI apunta a un Docker Engine remoto y el operador pasa un TAR de imagen local por la entrada estándar de docker load. Después crea un contenedor con esa imagen desde la misma CLI. ¿Dónde quedan los dos objetos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ambos quedan en el equipo de la CLI porque el archivo TAR está en el disco local."
+        },
+        {
+          "id": "B",
+          "text": "La imagen queda en la CLI y el Engine remoto accede al TAR cada vez que lo necesita."
+        },
+        {
+          "id": "C",
+          "text": "Ambos quedan en el Engine remoto, que recibe el TAR y conserva la imagen cargada."
+        },
+        {
+          "id": "D",
+          "text": "La imagen queda en el registro del Engine y el contenedor queda en el equipo de la CLI."
+        }
+      ],
+      "answer": "C",
+      "explanation": "La CLI lee el TAR local y envía sus datos por la API al daemon seleccionado. Es ese Engine quien carga y cataloga la imagen y crea el contenedor posterior. La ubicación del archivo de origen es independiente de la del catálogo. Si otro Engine necesita la imagen, se le debe transferir por otra carga o mediante un registro.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-004",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un CronJob importa datos cada diez minutos y a veces la importación toma quince. Si la ejecución anterior sigue activa, se quiere omitir el nuevo inicio en ese instante y dejar que termine la activa. ¿Qué política declarativa corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Allow con una fecha límite breve para cada inicio programado."
+        },
+        {
+          "id": "B",
+          "text": "Replace en concurrencyPolicy del mismo CronJob."
+        },
+        {
+          "id": "C",
+          "text": "Allow con un único Pod activo por cada Job creado."
+        },
+        {
+          "id": "D",
+          "text": "Forbid en concurrencyPolicy del mismo CronJob."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Forbid evita iniciar otro Job de ese CronJob mientras sigue activo el anterior. Replace interrumpe la ejecución anterior para iniciar la nueva. Limitar el paralelismo de un Job controla sus propios Pods y no coordina Jobs diferentes. Según startingDeadlineSeconds, tras liberar la ejecución activa puede todavía ser elegible un inicio retrasado.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-005",
+      "type": "true_false",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Si kubelet reinicia un contenedor dentro del mismo Pod, los archivos que quedaron en un volumen emptyDir de ese Pod pueden seguir disponibles.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "EmptyDir se crea para la vida del Pod en su nodo. Cada contenedor que lo monte accede a ese espacio, y un reinicio de un contenedor conserva el volumen. Si se elimina el Pod o se lo sustituye por otro objeto en otro nodo, el nuevo Pod obtiene un emptyDir distinto. Para conservar los datos más allá del Pod se requiere almacenamiento persistente.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-006",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "En una VM, Compose debe ejecutar tres instancias de una API detrás de un único proxy. La API declara ports con un puerto fijo del host y las instancias adicionales no arrancan por conflicto. ¿Qué diseño permite escalar y mantener un punto de entrada?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Añadir EXPOSE al Dockerfile y volver a publicar la misma dirección en cada réplica."
+        },
+        {
+          "id": "B",
+          "text": "Conectar cada instancia a otra bridge y conservar el mismo puerto fijo en el host."
+        },
+        {
+          "id": "C",
+          "text": "Mantener el puerto del host en cada instancia y cambiar sus puertos internos."
+        },
+        {
+          "id": "D",
+          "text": "Publicar solo el puerto del proxy y dirigirlo a las réplicas en la red del proyecto."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Cada puerto fijo en la misma dirección del host tiene un único punto de enlace. El proxy puede ser el único servicio que publica un puerto y balancear hacia las réplicas por la red interna. Cambiar sus puertos internos o sus bridges no libera el puerto del host. El proxy debe refrescar los destinos según su mecanismo de descubrimiento.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-007",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Una compilación recibe ARG PERFIL=pruebas para seleccionar una opción del compilador. La aplicación en ejecución busca una variable llamada PERFIL que cambia por entorno. Si se quiere distribuir una sola imagen, ¿qué contrato separa correctamente ambas fases?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Introducir PERFIL con LABEL y dejar que el proceso lo lea de su entorno."
+        },
+        {
+          "id": "B",
+          "text": "Fijar PERFIL con ENV al construir y mantener el mismo valor para todos los despliegues."
+        },
+        {
+          "id": "C",
+          "text": "Mantener ARG para el compilador y proporcionar PERFIL al lanzar el contenedor."
+        },
+        {
+          "id": "D",
+          "text": "Declarar ARG al final del Dockerfile y permitir que el runtime herede su valor."
+        }
+      ],
+      "answer": "C",
+      "explanation": "ARG está disponible durante la construcción dentro de su ámbito. Su mera declaración no crea una variable de entorno en el contenedor final. Pasar la configuración al iniciar cada entorno permite reutilizar la misma imagen. ENV podría dar un valor predeterminado que se sobrescribe al ejecutar, mientras que LABEL guarda metadatos de la imagen y no llena el entorno del proceso.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-008",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "La versión 2 cambia un campo obligatorio en la base de datos y el código de la versión 1 ya no puede leer el nuevo esquema. Se necesita poder revertir el Deployment durante una entrega gradual. ¿Qué diseño habilita ese retorno?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Aumentar revisionHistoryLimit y ejecutar rollout undo después de migrar el esquema incompatible."
+        },
+        {
+          "id": "B",
+          "text": "Aplicar una migración compatible con ambas versiones y retirar el campo anterior en otra entrega."
+        },
+        {
+          "id": "C",
+          "text": "Reducir maxUnavailable a cero y permitir que la versión anterior use el nuevo esquema."
+        },
+        {
+          "id": "D",
+          "text": "Almacenar ambas imágenes en el registro y aplicar la migración destructiva antes del rollout."
+        }
+      ],
+      "answer": "B",
+      "explanation": "El historial del Deployment conserva revisiones de la plantilla de Pods. Volver a una revisión anterior recupera la imagen y la configuración de esa plantilla, mientras el esquema persiste fuera de ella. Una migración por expansión y contracción introduce primero un esquema compatible con ambos programas. La eliminación de campos se pospone hasta que ya no sea necesaria la reversión al código anterior.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-009",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un HPA tiene cuatro réplicas listas y mide CPU con objetivo de utilización del 60 %. Cada Pod tiene un contenedor con request de 500m, limit de 1000m y consumo de 450m. Sin métricas ausentes, estabilización ni topes, ¿qué número propone el cálculo base?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Seis réplicas, al usar una utilización actual del 90 %."
+        },
+        {
+          "id": "B",
+          "text": "Tres réplicas, al tomar 1000m como denominador del cálculo."
+        },
+        {
+          "id": "C",
+          "text": "Ocho réplicas, al duplicar la escala cuando supera su objetivo."
+        },
+        {
+          "id": "D",
+          "text": "Cinco réplicas, al añadir una réplica al superar el 60 %."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Con objetivo de tipo Utilization, el HPA divide uso entre request. Aquí 450m dividido entre 500m da 90 %. El cálculo base redondea hacia arriba 4 × 90 ÷ 60, que es 6. El límite de CPU no interviene en ese denominador. En operación real, la tolerancia, las políticas de escalado o la calidad de las métricas pueden cambiar la decisión aplicada.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-010",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "CI publica imágenes aprobadas en el registro de producción y los nodos solo las descargan. Se quiere poder revocar permisos de publicación sin cortar descargas y atribuir cada escritura al pipeline. ¿Qué modelo cumple ambas metas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Una identidad compartida con escritura, rotada por horario en el pipeline y en todos los nodos."
+        },
+        {
+          "id": "B",
+          "text": "Credenciales por nodo con escritura y una identidad de solo lectura para validar el pipeline."
+        },
+        {
+          "id": "C",
+          "text": "Credenciales separadas, escritura para el pipeline en su repositorio y lectura para los nodos."
+        },
+        {
+          "id": "D",
+          "text": "Una identidad de lectura para los nodos y permisos de publicación para todos los desarrolladores."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Separar identidades permite revocar la facultad de publicar sin revocar el acceso de lectura de las cargas. Los permisos de escritura restringidos al repositorio y una identidad de CI auditable vinculan las publicaciones con ese actor. Una cuenta compartida acopla ambas operaciones. Dar escritura a más identidades dificulta atribuir un cambio y aumenta el alcance de una credencial comprometida.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-011",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "En Swarm, la política de actualización reemplaza varias tareas a la vez. Una imagen defectuosa provoca fallos poco después de arrancar y el equipo quiere limitar la exposición y restaurar la versión previa si fallan las primeras tareas. ¿Qué política encaja?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reducir el paralelismo, fijar una ventana de monitorización y elegir rollback ante fallos."
+        },
+        {
+          "id": "B",
+          "text": "Reducir las réplicas, completar la actualización y reemplazar manualmente las tareas fallidas."
+        },
+        {
+          "id": "C",
+          "text": "Aumentar el paralelismo, ampliar el retraso y conservar la actualización aunque fallen tareas."
+        },
+        {
+          "id": "D",
+          "text": "Mantener el paralelismo y dejar que la política de reinicio conserve la especificación nueva."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Configurar pocos reemplazos simultáneos limita cuántas tareas reciben la versión a la vez. La ventana de monitorización debe cubrir la aparición del fallo y la política de fallos debe tener un umbral que lo detecte y dispare el rollback. Reintentar la tarea individual bajo la misma especificación puede repetir el defecto. El rollback cambia la especificación del servicio.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-012",
+      "type": "true_false",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "Una plantilla de máquina virtual puede versionarse y reconstruirse desde código aunque cada instancia arranque su propio sistema operativo invitado.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El versionado depende de cómo se declara y almacena el artefacto. Una VM se puede crear con una plantilla y un proceso de construcción automatizado que fija los insumos y publica versiones atribuibles a un cambio. La distinción arquitectónica con los contenedores es el kernel invitado y su costo operativo, no la posibilidad de versionar una entrega.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-013",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Un servicio Swarm reserva 2 GiB por réplica. Solo hay dos nodos elegibles y a cada uno le quedan 1,5 GiB sin reservar, aunque sus métricas muestran 3 GiB de memoria libre. ¿Qué cambio permite programar una réplica adicional sin reducir su reserva?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Aumentar el límite de memoria de la réplica y conservar las reservas de los nodos."
+        },
+        {
+          "id": "B",
+          "text": "Liberar al menos 0,5 GiB de las reservas contabilizadas en uno de los nodos."
+        },
+        {
+          "id": "C",
+          "text": "Reducir en 0,5 GiB el consumo efectivo de una tarea sin modificar sus reservas."
+        },
+        {
+          "id": "D",
+          "text": "Liberar 0,25 GiB de reservas en cada nodo para alcanzar 0,5 GiB en el clúster."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Las reservas se contabilizan por nodo. La réplica se ejecutará en un solo destino que debe poder cubrir sus 2 GiB. Liberar 0,5 GiB de reservas en un nodo eleva allí la capacidad disponible de 1,5 a 2 GiB. Sumar margen de nodos separados o reducir el consumo efectivo no cambia el valor que usa el scheduler para uno de esos destinos.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-014",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "El número de series activas y el uso de memoria en Prometheus crecen tras agregar request_id como etiqueta de un contador HTTP. Cada solicitud genera un identificador distinto. Se necesita seguir investigando solicitudes individuales. ¿Qué rediseño preserva esa capacidad?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Mantener etiquetas acotadas en métricas y usar los identificadores individuales en logs y trazas."
+        },
+        {
+          "id": "B",
+          "text": "Mantener request_id solo en las respuestas fallidas y conservar todas sus series para búsquedas."
+        },
+        {
+          "id": "C",
+          "text": "Sustituir request_id por su hash completo para tener etiquetas más cortas y de tamaño fijo."
+        },
+        {
+          "id": "D",
+          "text": "Mantener request_id en la métrica y aumentar el intervalo entre las recolecciones de Prometheus."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Cada combinación de etiquetas genera una serie temporal. Con un valor por petición, crecen la cardinalidad y la rotación de series aunque el valor se acorte con un hash. Etiquetas como método, plantilla de ruta y código permiten agregar métricas de manera estable. Los logs, las trazas y, cuando son compatibles, los exemplars conservan referencias a solicitudes concretas.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-015",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Una imagen arranca un script que lanza un servidor en segundo plano y termina con código 0. Docker marca el contenedor como Exited aunque el servidor atendía durante el arranque. ¿Qué cambio corrige el ciclo de vida?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Agregar un healthcheck que compruebe el puerto antes de terminar el script."
+        },
+        {
+          "id": "B",
+          "text": "Publicar el puerto y ejecutar el servidor en segundo plano desde el script."
+        },
+        {
+          "id": "C",
+          "text": "Configurar el contenedor para que reinicie cuando el script termine con error."
+        },
+        {
+          "id": "D",
+          "text": "Hacer que el script ejecute el servidor en primer plano mediante exec."
+        }
+      ],
+      "answer": "D",
+      "explanation": "El runtime asocia la duración del contenedor con su proceso principal. Un script que lanza un proceso de fondo y termina deja al contenedor sin ese proceso. Sustituir el script mediante exec por el servidor en primer plano mantiene activo el contenedor y permite entregar al servidor las señales que Docker dirige al proceso principal.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-016",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un servicio y un proxy auxiliar deben comunicarse por localhost y ver el mismo socket Unix en un directorio compartido. También deben programarse juntos. ¿Qué diseño reúne esas propiedades?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutar dos Pods en el mismo namespace y exponer cada uno mediante ClusterIP."
+        },
+        {
+          "id": "B",
+          "text": "Crear dos Deployments y compartir un ConfigMap con la ruta local del socket."
+        },
+        {
+          "id": "C",
+          "text": "Ubicar ambos contenedores en un mismo Pod y montar el mismo volumen en los dos."
+        },
+        {
+          "id": "D",
+          "text": "Crear dos Pods con afinidad al mismo nodo y declarar un Service común para ambos."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Dentro de un Pod, los contenedores comparten el namespace de red y se programan como una unidad en un nodo. El socket Unix necesita además un volumen montado por ambos contenedores. La afinidad entre Pods puede acercar cargas, pero cada Pod conserva su propia red y su ciclo de vida. Un Service proporciona conectividad de red sin compartir archivos.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-017",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "Una imagen ya declara USER 10001. Se exige además que el daemon de Docker y el runtime no se ejecuten como root en el host. ¿Qué cambio aborda el requisito restante?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Asignar a USER el UID del operador y habilitar no-new-privileges en el contenedor."
+        },
+        {
+          "id": "B",
+          "text": "Ejecutar Docker Engine en modo rootless y conservar el usuario de aplicación."
+        },
+        {
+          "id": "C",
+          "text": "Quitar las capabilities del proceso de la aplicación y mantener el daemon actual."
+        },
+        {
+          "id": "D",
+          "text": "Activar userns-remap en el daemon rootful y conservar el usuario de aplicación."
+        }
+      ],
+      "answer": "B",
+      "explanation": "USER cambia la identidad del proceso en el contenedor. Rootless ejecuta el daemon y los contenedores bajo un usuario sin privilegios usando un namespace de usuario. Con userns-remap, el daemon sigue ejecutándose como root aunque los UID de los contenedores se remapeen. Las capabilities y no-new-privileges restringen procesos del contenedor y complementan esa decisión de arquitectura.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-018",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "Cada réplica de una API exporta un histograma clásico de latencia con los mismos límites de buckets. El volumen por réplica varía mucho y se quiere estimar un único p95 para todo el servicio durante cinco minutos. ¿Qué agregación corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Sumar la latencia y el número de muestras por réplica antes de calcular la latencia media."
+        },
+        {
+          "id": "B",
+          "text": "Calcular cada p95 por réplica y promediar esos valores para obtener el p95 de cinco minutos."
+        },
+        {
+          "id": "C",
+          "text": "Calcular tasas por bucket, sumar conservando le y estimar el p95 de la distribución conjunta."
+        },
+        {
+          "id": "D",
+          "text": "Calcular el p95 de cada réplica y ponderarlo por su volumen de tráfico en el periodo."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Los conteos de buckets con los mismos límites se pueden sumar por su etiqueta le. Primero se estima el incremento o tasa de cada contador para manejar reinicios, después se agrega la distribución y se calcula el cuantil. Los p95 calculados antes de agregar pierden información sobre el resto de la distribución, incluso si se ponderan por volumen.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-019",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Dos contenedores en nodos distintos de un Swarm deben comunicarse por una red virtual común. Se quiere también conectar contenedores independientes a esa red durante pruebas. ¿Qué configuración lo permite?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Crear una bridge en cada host con la misma subred y los mismos alias."
+        },
+        {
+          "id": "B",
+          "text": "Redefinir los contenedores como servicios unidos a una overlay privada."
+        },
+        {
+          "id": "C",
+          "text": "Crear una red overlay del clúster con la opción attachable."
+        },
+        {
+          "id": "D",
+          "text": "Crear una red overlay del clúster sin la opción attachable."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Una overlay se extiende entre Engines participantes en el Swarm. Con attachable acepta también contenedores independientes, además de servicios orquestados. Dos bridges con el mismo nombre en hosts distintos son redes locales independientes. El nombre por sí solo no crea conectividad y reutilizar la misma subred incluso puede complicar el enrutamiento.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-020",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Dos ejecuciones de CI usan el mismo Compose en un Engine. La base de datos declara un volumen nombrado sin name ni external, y los servicios carecen de container_name y puertos publicados. ¿Cómo evitar que las dos ejecuciones compartan redes y datos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Cambiar el nombre del archivo YAML antes de cada ejecución en el mismo directorio."
+        },
+        {
+          "id": "B",
+          "text": "Asignar con -p un nombre de proyecto único para cada ejecución en ese Engine."
+        },
+        {
+          "id": "C",
+          "text": "Cambiar el nombre del proyecto únicamente al limpiar los recursos de cada ejecución."
+        },
+        {
+          "id": "D",
+          "text": "Añadir un alias con el número de la ejecución a los servicios de base de datos."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Compose deriva los nombres de muchos recursos gestionados del nombre del proyecto. Con proyectos distintos crea redes y volúmenes propios, dadas las condiciones del caso. Cambiar el nombre del archivo, la etiqueta de la imagen o un alias de red no separa el inventario de Compose. Declarar un nombre explícito o un volumen externo puede eliminar ese aislamiento.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-021",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Un servicio de Compose recibe TIMEOUT mediante environment. Se cambia su valor en compose.yaml, se ejecuta docker compose restart api y la aplicación mantiene el valor anterior. ¿Qué operación aplica la configuración declarada?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Repetir docker compose restart api después de volver a descargar la misma imagen."
+        },
+        {
+          "id": "B",
+          "text": "Reconstruir la imagen con docker compose build y mantener el contenedor actual."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar docker compose start api para cargar el YAML en el proceso existente."
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar docker compose up -d api para que Compose reconcilie el servicio."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Restart detiene e inicia el contenedor existente con sus parámetros originales. Up compara el modelo con el contenedor y lo recrea cuando cambia la configuración aplicable, conservando sus volúmenes montados. Build produce una imagen y no cambia por sí solo el entorno del contenedor activo. La variable de ejecución se fija durante la creación de este.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-022",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "Una aplicación solo necesita escribir caché temporal en /work y datos persistentes en /data. Debe conservar una raíz de solo lectura. ¿Qué especificación cumple el requisito con permisos de escritura limitados?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Dejar la raíz en solo lectura y montar un volumen escribible sobre el árbol de la aplicación."
+        },
+        {
+          "id": "B",
+          "text": "Dejar la raíz escribible, montar /data en solo lectura y guardar la caché en la capa actual."
+        },
+        {
+          "id": "C",
+          "text": "Montar un tmpfs en /work y un volumen escribible en /data, con la raíz en solo lectura."
+        },
+        {
+          "id": "D",
+          "text": "Montar tmpfs en /work y en /data y mantener el filesystem raíz en modo de solo lectura."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Un filesystem raíz de solo lectura puede coexistir con montajes escribibles en rutas concretas. Tmpfs sirve para caché descartable y un volumen separado conserva los datos cuando se reemplaza el contenedor. Un montaje amplio concede escritura a rutas innecesarias. Si /data también vive en un tmpfs, se pierde su contenido cuando ese montaje se desmonta.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-023",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "El Pod A está Pending y no tiene spec.nodeName. Sus eventos dicen que ningún nodo tiene la etiqueta solicitada. El Pod B sí tiene nodo y está en ImagePullBackOff. ¿Qué secuencia de diagnóstico distingue las dos etapas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Revisar permisos del registro para A y reglas de programación pendientes para B."
+        },
+        {
+          "id": "B",
+          "text": "Revisar cuotas ya liberadas para A y el escalado de réplicas del Deployment para B."
+        },
+        {
+          "id": "C",
+          "text": "Revisar el selector del Service para A y la configuración de Ingress para B."
+        },
+        {
+          "id": "D",
+          "text": "Revisar reglas de programación para A y el acceso al registro desde el nodo para B."
+        }
+      ],
+      "answer": "D",
+      "explanation": "El scheduler busca un nodo que cumpla requisitos como etiquetas y capacidad y registra la asignación. En A la programación todavía falla. En el nodo asignado, kubelet solicita al runtime que prepare el Pod y obtenga sus imágenes. ImagePullBackOff indica reintentos espaciados después de un fallo de descarga. Los eventos de B ayudan a distinguir credenciales, referencia y conectividad.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-024",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un lote tiene doce particiones independientes, identificadas por números del 0 al 11. Se necesitan doce finalizaciones, con concurrencia deseada de tres Pods y posibilidad de reintentar una partición concreta. ¿Qué especificación corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Job Indexed con completions=3, parallelism=3 y una partición por índice."
+        },
+        {
+          "id": "B",
+          "text": "Job Indexed con completions=12, parallelism=3 y una partición por índice."
+        },
+        {
+          "id": "C",
+          "text": "Job NonIndexed con completions=12, parallelism=3 y una partición por nombre de Pod."
+        },
+        {
+          "id": "D",
+          "text": "Job Indexed con completions=12, parallelism=12 y reintentos limitados a tres."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Con un Job Indexed, cada finalización tiene un índice que el programa puede usar para seleccionar su partición. Completions fija doce índices y parallelism limita cuántos se intentan procesar a la vez en condiciones normales. Los reintentos pueden volver a ejecutar el mismo índice, por lo que sus escrituras deben ser idempotentes. Un Deployment reconciliaría procesos activos y no un conjunto de resultados.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-025",
+      "type": "true_false",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Tres nodos de kind en un solo equipo proporcionan tolerancia a la caída de ese equipo porque Kubernetes puede reprogramar los Pods en otro nodo del clúster.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "En kind, los nodos del clúster local se ejecutan como contenedores sobre el equipo anfitrión. Se pueden probar decisiones de programación o simular la pérdida de un nodo. El fallo del equipo derriba todos los nodos locales al mismo tiempo. La tolerancia a fallos de infraestructura requiere repartir capacidad en dominios de fallo independientes.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-026",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Un servicio de diagnóstico debe escuchar directamente en dos interfaces de un host Linux. Se propone usar --network host para evitar la traducción de puertos. Ya existe un proceso del host escuchando en 0.0.0.0:9000. ¿Qué implicación debe considerar el equipo al configurar el servicio en ese puerto?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El puerto se reserva en el host solo si se declara con -p, incluso con la red host."
+        },
+        {
+          "id": "B",
+          "text": "El proceso comparte el namespace de red del host y puede chocar con el puerto ocupado."
+        },
+        {
+          "id": "C",
+          "text": "El proceso conserva un namespace de red separado y se puede enlazar al mismo puerto."
+        },
+        {
+          "id": "D",
+          "text": "Docker asigna otro puerto del host de forma automática si encuentra 9000 en uso."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Con red host en Docker Engine para Linux el proceso usa el namespace de red del anfitrión. Si intenta enlazar la misma dirección y puerto con el mismo protocolo, normalmente habrá un conflicto como entre dos procesos del host. En bridge, cada contenedor tiene su propio espacio de red y el conflicto de publicación se controla al asignar puertos del host.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-027",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "El equipo construye imágenes compatibles con OCI usando Docker y quiere ejecutarlas en Kubernetes. Los nodos ya usan containerd mediante CRI. ¿Qué diseño respeta las responsabilidades de cada herramienta?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Publicar la imagen en un registro accesible y referenciarla desde el Pod."
+        },
+        {
+          "id": "B",
+          "text": "Convertir la imagen OCI a un archivo de despliegue antes de usar el registro."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar el cliente Docker como sidecar para que descargue la imagen principal."
+        },
+        {
+          "id": "D",
+          "text": "Instalar Docker Engine en cada nodo para que containerd pueda leer la imagen."
+        }
+      ],
+      "answer": "A",
+      "explanation": "El formato del artefacto y la interfaz del runtime son capas diferentes. Kubelet utiliza CRI para pedir a un runtime compatible que obtenga y ejecute la imagen. Una imagen OCI publicada con Docker puede usarse con containerd si coinciden la plataforma, el acceso al registro y los requisitos de ejecución. El nodo no necesita el mismo constructor que usó CI.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-028",
+      "type": "multiple_choice",
+      "topic": "Administración y API de Docker",
+      "prompt": "Un cliente de la API REST de Docker recibe una respuesta de éxito desde POST /containers/create e imprime el ID. El proceso de la aplicación todavía no existe. ¿Qué explica esa secuencia y qué llamada completa la operación?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Create inicia el proceso. Inspect sobre el ID hace que aparezca en ejecución."
+        },
+        {
+          "id": "B",
+          "text": "Create almacena la configuración. Start sobre el ID inicia el proceso."
+        },
+        {
+          "id": "C",
+          "text": "Create prepara la red. Attach sobre el ID crea el proceso principal en ese contenedor."
+        },
+        {
+          "id": "D",
+          "text": "Create descarga la imagen. El cliente debe repetir la creación con el ID devuelto."
+        }
+      ],
+      "answer": "B",
+      "explanation": "La API permite crear el objeto y arrancarlo en dos operaciones. Create devuelve el ID de la instancia configurada. Start inicializa esa instancia y su proceso principal, mientras inspect permite observar su estado. Un cliente de Go o Python puede usar el SDK para llamar esas operaciones o usar un método de mayor nivel que combine ambas, como hace docker run.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-029",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "En un host Linux con cgroup v2, un proceso recibe SIGKILL cuando el contenedor alcanza 512 MiB. El host todavía tiene 6 GiB disponibles. ¿Qué evidencia confirma que se alcanzó el límite del cgroup y se activó su OOM killer?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El proceso termina con código 137 y su memoria se libera tras el reinicio."
+        },
+        {
+          "id": "B",
+          "text": "El contador oom_kill del cgroup aumenta sin identificar el origen del evento."
+        },
+        {
+          "id": "C",
+          "text": "El registro del kernel identifica un OOM de memoria en el cgroup del contenedor."
+        },
+        {
+          "id": "D",
+          "text": "El RSS del proceso coincide con el límite de memoria en la última muestra."
+        }
+      ],
+      "answer": "C",
+      "explanation": "El registro de un OOM de cgroup permite atribuirlo a ese límite. En cgroup v2, puedes contrastarlo con los eventos max y oom, que registran presión al alcanzar el máximo y fallos de asignación. El contador oom_kill también registra procesos del grupo terminados por OOM de otro origen. El código 137 es compatible con SIGKILL, una señal que puede tener otras causas.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-030",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un almacenamiento CSI ofrece discos por zona. El PVC se aprovisiona en la zona A al crearse y luego el Pod solo es elegible en la zona B. Ambas zonas son válidas para el StorageClass. ¿Cómo evitarías ese desajuste en despliegues nuevos sin fijar de antemano una zona?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Asignar al PVC un selector de etiquetas de la aplicación para que siga a sus Pods."
+        },
+        {
+          "id": "B",
+          "text": "Conservar Immediate y aumentar el tamaño del disco antes de que llegue el Pod."
+        },
+        {
+          "id": "C",
+          "text": "Usar WaitForFirstConsumer en la clase para considerar dónde puede ejecutarse el Pod."
+        },
+        {
+          "id": "D",
+          "text": "Conservar Immediate y usar Retain para que el disco sobreviva a la eliminación del PVC."
+        }
+      ],
+      "answer": "C",
+      "explanation": "WaitForFirstConsumer pospone el enlace o aprovisionamiento hasta que hay un Pod consumidor y permite tener en cuenta sus restricciones de programación. Con Immediate la elección de zona puede ocurrir demasiado pronto. Retain controla qué pasa después de liberar un volumen. El tamaño y el nombre de un PVC no trasladan físicamente un disco de una zona a otra.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-031",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Una compilación multi-stage enlaza un binario dinámicamente con glibc en Debian. El binario se copia a Alpine, que carece de glibc, y allí falla al arrancar aunque el archivo existe y tiene permiso de ejecución. ¿Cuál es la corrección más directa?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Instalar el compilador de Alpine en la etapa final conservando el binario ya generado."
+        },
+        {
+          "id": "B",
+          "text": "Usar una etapa final cuyo cargador y cuyas bibliotecas sean compatibles con el binario."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar el binario con su ruta absoluta y reutilizar el PATH de la etapa de compilación."
+        },
+        {
+          "id": "D",
+          "text": "Copiar los directorios de cabeceras del compilador a la misma ruta de la etapa final."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Un binario enlazado dinámicamente necesita el cargador indicado en el ejecutable y las bibliotecas compatibles disponibles en ejecución. Alpine usa musl por defecto, por lo que copiar el binario no aporta la ABI esperada. Además de elegir un runtime con glibc, se podría recompilar de forma compatible con el destino. Las cabeceras sirven durante la compilación.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-032",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un plan de recuperación respalda etcd, pero ningún volumen de una aplicación de facturación. Se pierde el clúster y el backend de almacenamiento. ¿Qué puede aportar la instantánea de etcd?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Recrear el filesystem de los contenedores y obtener las especificaciones del registro."
+        },
+        {
+          "id": "B",
+          "text": "Restaurar objetos de la API, como Deployments y PVC, y requerir otra copia para sus datos."
+        },
+        {
+          "id": "C",
+          "text": "Restaurar objetos de la API y también reconstruir los bloques de cada disco desde el PVC."
+        },
+        {
+          "id": "D",
+          "text": "Recuperar las imágenes de cada Pod y dejar la configuración a cargo de los workers."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Etcd es el almacén clave-valor del estado de Kubernetes. Guarda objetos como requisitos de almacenamiento y referencias a volúmenes. Los datos escritos en los discos residen en el backend de almacenamiento y requieren su propio respaldo. Una restauración de etcd puede devolver metadatos válidos sobre un volumen cuyo contenido sigue perdido. Las imágenes también tienen su origen propio.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-033",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Un proxy debe recibir tráfico y consultar una API interna. La base de datos debe aceptar conexiones de la API y no del proxy. Se usarán redes bridge de Docker en un solo host y los servicios internos no publicarán puertos. ¿Cómo conectarías los servicios?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Poner al proxy y a la base en una bridge y a la API y al proxy en otra."
+        },
+        {
+          "id": "B",
+          "text": "Poner a los tres servicios en la misma bridge y dar un alias distinto a cada uno."
+        },
+        {
+          "id": "C",
+          "text": "Poner al proxy y a la API en una bridge y a la API y a la base en otra."
+        },
+        {
+          "id": "D",
+          "text": "Poner a la API y a la base en una bridge y publicar sus puertos para el proxy."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Los miembros de una red bridge definida por el usuario pueden comunicarse entre sí. Con dos redes y la API conectada a ambas, el proxy llega a la API y queda fuera de la red que contiene la base de datos. Dar un alias solo cambia cómo se resuelve un nombre. La aplicación y las reglas de acceso siguen importando si la API retransmite tráfico.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-034",
+      "type": "true_false",
+      "topic": "Observabilidad y operación",
+      "prompt": "Un contenedor autónomo de Docker Engine con --restart=always puede permanecer unhealthy si el único fallo es el healthcheck y el proceso principal continúa activo.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "HEALTHCHECK registra el resultado de una prueba en el estado de salud. En un contenedor autónomo, la política de reinicio se aplica cuando el contenedor se detiene según sus condiciones. El paso a unhealthy no finaliza al proceso principal. Un supervisor externo u orquestador puede utilizar la señal de salud para tomar una acción adicional si está configurado para ello.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-035",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "El Compose de desarrollo usa build e image para preparar y nombrar una imagen que solo existe en el Engine local. Al pasar el modelo a docker stack deploy, los workers no encuentran esa imagen. ¿Qué cambio vuelve repetible el despliegue?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Guardar las capas como volumen del manager y montarlas en las tareas del servicio."
+        },
+        {
+          "id": "B",
+          "text": "Construir en CI, publicar en un registro accesible y declarar esa imagen en el stack."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar docker compose build en el manager y dejar build como fuente en el stack."
+        },
+        {
+          "id": "D",
+          "text": "Copiar el Dockerfile a los workers y esperar que cada tarea construya su variante local."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Stack deploy distribuye la especificación del servicio. Los workers obtienen la imagen indicada y build no le ordena a Swarm compilarla en cada nodo. Un registro proporciona un origen común si los nodos tienen conectividad y credenciales cuando correspondan. Referenciar la imagen publicada también permite vincular lo desplegado con un artefacto revisado en CI.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-036",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "En un clúster, el CNI aplica NetworkPolicy. Un worker y una API tienen denegación de ingreso y egreso por defecto. El worker inicia conexiones TCP al puerto 8443 de la API usando su IP de Pod. ¿Qué permisos de red habilitan solo ese intercambio y sus respuestas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Permitir egreso del worker y declarar un Service con el puerto de la API."
+        },
+        {
+          "id": "B",
+          "text": "Permitir ingreso a la API y a su vez egreso de la API hacia el worker."
+        },
+        {
+          "id": "C",
+          "text": "Permitir egreso del worker hacia la API e ingreso a la API desde el worker."
+        },
+        {
+          "id": "D",
+          "text": "Permitir ingreso al worker desde la API y egreso de la API hacia el worker."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Si el origen y el destino están aislados, la conexión requiere que el egreso del origen y el ingreso del destino estén autorizados. Las dos reglas deben seleccionar los Pods y limitar el puerto correspondiente. Las respuestas de una conexión permitida se admiten implícitamente. Declarar un Service proporciona una dirección estable sin sustituir ninguna de esas reglas.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-037",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un equipo usa Amazon EKS con nodos EC2 autogestionados. Debe asignar el mantenimiento del plano de control y el parcheo del sistema operativo de esos nodos. ¿Qué reparto corresponde a ese modelo?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El equipo mantiene sus nodos y debe desplegar, además, las instancias de etcd de EKS."
+        },
+        {
+          "id": "B",
+          "text": "El equipo administra las actualizaciones de control y AWS solo respalda sus datos de etcd."
+        },
+        {
+          "id": "C",
+          "text": "AWS opera el plano de control y el equipo gestiona las actualizaciones de sus nodos EC2."
+        },
+        {
+          "id": "D",
+          "text": "AWS mantiene tanto el plano de control como las actualizaciones de los nodos autogestionados."
+        }
+      ],
+      "answer": "C",
+      "explanation": "En EKS administrado, AWS opera los componentes del plano de control, incluido etcd. Si el equipo eligió nodos autogestionados, conserva la responsabilidad de mantener esos hosts. También gestiona la configuración y acceso de sus cargas. Cambiar a otro modelo de nodos puede modificar las tareas operativas del equipo. La propiedad del plano de control se mantiene en el servicio.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-038",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Dos Pods del mismo nodo escriben en el mismo PVC. El volumen, gestionado por un CSI, usa ReadWriteOnce y se quería limitar la escritura a un solo Pod. El driver admite ReadWriteOncePod. ¿Qué modo expresa ese requisito para el nuevo PVC?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ReadWriteOnce, que permite el montaje de lectura y escritura por un nodo."
+        },
+        {
+          "id": "B",
+          "text": "ReadWriteMany, que permite el montaje de lectura y escritura a varios nodos."
+        },
+        {
+          "id": "C",
+          "text": "ReadOnlyMany, que permite el montaje a varios nodos con acceso de lectura."
+        },
+        {
+          "id": "D",
+          "text": "ReadWriteOncePod, que permite el montaje de lectura y escritura por un Pod."
+        }
+      ],
+      "answer": "D",
+      "explanation": "ReadWriteOnce permite el montaje de lectura y escritura desde un nodo y puede admitir varios Pods en ese mismo nodo. ReadWriteOncePod expresa acceso exclusivo de un Pod cuando el volumen y el CSI lo soportan. ReadWriteMany admite uso concurrente desde varios nodos. La aplicación sigue siendo responsable de su consistencia si el modo de acceso admite varios escritores.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-039",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "Tras una sola solicitud fallida, el porcentaje de error de un servicio de poco tráfico saltó durante un minuto. Se quiere alertar rápido por pérdidas sostenidas y reducir avisos por picos aislados. ¿Qué estrategia se ajusta mejor?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Alertar en cada incremento del contador de errores de cualquiera de las réplicas."
+        },
+        {
+          "id": "B",
+          "text": "Alertar por un número fijo de errores por hora sin considerar el objetivo de servicio."
+        },
+        {
+          "id": "C",
+          "text": "Alertar por consumo del presupuesto de error confirmado en ventanas corta y larga."
+        },
+        {
+          "id": "D",
+          "text": "Alertar por el máximo del porcentaje de error que se observó en el último minuto."
+        }
+      ],
+      "answer": "C",
+      "explanation": "La tasa de consumo relaciona la proporción de errores observada con la que admite el objetivo de servicio. Combinar ventanas permite detectar que un incidente es reciente y, al mismo tiempo, que compromete una fracción significativa del presupuesto. Con poco tráfico hay que considerar cuántas solicitudes sustentan el indicador. El uso de CPU puede ayudar al diagnóstico sin medir el impacto directo.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-040",
+      "type": "true_false",
+      "topic": "Administración y API de Docker",
+      "prompt": "Montar el socket Unix de Docker con la opción de solo lectura en un contenedor que puede conectarse a él reduce automáticamente las operaciones de la API a consultas.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "La marca de solo lectura afecta el montaje del filesystem. Un proceso con permiso para conectarse al socket puede enviar solicitudes sobre esa conexión, incluidas las que cambian objetos si el daemon las autoriza. Para ofrecer solo inventario se necesita limitar las operaciones de la API mediante un intermediario o un mecanismo de autorización adecuado.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-041",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "El equipo quiere buscar incidentes de Pods que ya se eliminaron y filtrar por aplicación y namespace en una interfaz. Planea usar un recolector por nodo, Elasticsearch y Kibana. ¿Qué flujo asigna a cada componente su función?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Elasticsearch indexa solo los eventos actuales y Kibana conserva su historial en las vistas."
+        },
+        {
+          "id": "B",
+          "text": "El recolector envía a Elasticsearch solo nombres de rutas y Kibana relee los archivos locales."
+        },
+        {
+          "id": "C",
+          "text": "El recolector presenta los logs en Kibana y Elasticsearch almacena únicamente métricas por Pod."
+        },
+        {
+          "id": "D",
+          "text": "El recolector envía eventos enriquecidos a Elasticsearch y Kibana consulta esos índices."
+        }
+      ],
+      "answer": "D",
+      "explanation": "El recolector obtiene logs de contenedores, añade metadatos y envía registros a un backend con retención propia. Elasticsearch indexa y consulta los documentos. Kibana presenta búsquedas y vistas a partir de los índices. Separar la retención de la vida de cada Pod permite investigar eventos después de que se elimine su proceso y su directorio local.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-042",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "Una política acepta cualquier imagen con una firma criptográficamente válida. Una auditoría observa que la aplicación de producción debe provenir de un flujo de CI autorizado y de un repositorio concreto. ¿Qué debe verificar el control de admisión?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El resultado del último escaneo y que la sesión contra el registro use TLS."
+        },
+        {
+          "id": "B",
+          "text": "La identidad autorizada del firmante y la procedencia verificable asociada al digest."
+        },
+        {
+          "id": "C",
+          "text": "La validez de cualquier firma pública y la fecha de la última actualización del tag."
+        },
+        {
+          "id": "D",
+          "text": "La antigüedad del repositorio y el uso de una etiqueta de versión semántica."
+        }
+      ],
+      "answer": "B",
+      "explanation": "La verificación de una firma demuestra que una identidad o clave firmó ese contenido. La política debe confiar en identidades o claves específicas. Una atestación de procedencia verificada y vinculada al mismo digest permite comprobar condiciones sobre el origen y el constructor. TLS protege el transporte, mientras que el escaneo describe hallazgos en el contenido.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-043",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "Durante la misma ventana, una réplica atiende 900 solicitudes con 9 errores y otra atiende 100 con 10 errores. Se quiere alertar por la proporción global de solicitudes erróneas. ¿Qué valor y cálculo corresponden?",
+      "options": [
+        {
+          "id": "A",
+          "text": "10 %, al usar como global la tasa de la réplica con mayor proporción de errores."
+        },
+        {
+          "id": "B",
+          "text": "1,9 %, al dividir el total de errores entre las solicitudes de ambas réplicas."
+        },
+        {
+          "id": "C",
+          "text": "1,0 %, al usar la tasa de la réplica con mayor número de solicitudes recibidas."
+        },
+        {
+          "id": "D",
+          "text": "5,5 %, al promediar las tasas de error de las dos réplicas sin ponderarlas."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Hubo 19 errores sobre 1000 solicitudes. Cada petición debe tener el mismo peso en el indicador, con independencia de la réplica que la atendió. Promediar 1 % y 10 % da el mismo peso a réplicas con volúmenes distintos. Con contadores de Prometheus se puede calcular la tasa de cada serie en la misma ventana y sumar antes de dividir.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-044",
+      "type": "true_false",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "docker image prune -a puede eliminar una imagen cuya única referencia restante es un contenedor detenido, porque ese contenedor ya dejó de consumir CPU.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "La condición para eliminar con -a es que ningún contenedor referencie la imagen. Un contenedor detenido todavía existe y conserva esa referencia, aunque su proceso ya haya terminado. Para evaluar si una limpieza liberará espacio hay que revisar qué contenedores dependen de las imágenes y qué capas se comparten con otras imágenes.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-045",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un operador soportaba dos versiones de un recurso. kubectl api-resources muestra v1 como preferida, pero hay manifiestos que aún usan entrega.ejemplo.io/v1beta1. ¿Qué comprobación de solo lectura confirma si esa versión sirve el tipo exacto?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Consultar kubectl version y verificar que el binario cliente y el servidor coincidan."
+        },
+        {
+          "id": "B",
+          "text": "Consultar el Deployment del operador y buscar v1beta1 en la etiqueta de su imagen."
+        },
+        {
+          "id": "C",
+          "text": "Consultar kubectl api-versions y dar por hecho que los recursos de cada versión coinciden."
+        },
+        {
+          "id": "D",
+          "text": "Consultar con kubectl get --raw el descubrimiento de /apis/entrega.ejemplo.io/v1beta1."
+        }
+      ],
+      "answer": "D",
+      "explanation": "El descubrimiento no agregado ofrece un listado de recursos por grupo y versión. Consultar ese endpoint permite comprobar tanto si existe la versión como si expone el tipo buscado. Api-resources suele mostrar la versión preferida y api-versions enumera grupos y versiones. La versión del cliente o la etiqueta del operador son datos de inventario, no el contrato efectivo de esa API.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-046",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "Un equipo usa Docker Desktop en macOS para ejecutar una imagen de Linux. La CLI es un binario de macOS y la aplicación hace llamadas al sistema de Linux. ¿Qué componente aporta el kernel que atiende esas llamadas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El daemon remoto del registro, que traduce las llamadas del proceso Linux."
+        },
+        {
+          "id": "B",
+          "text": "Un entorno Linux virtualizado que Docker Desktop ejecuta en el equipo."
+        },
+        {
+          "id": "C",
+          "text": "Una biblioteca de la CLI que convierte las llamadas de Linux a Darwin."
+        },
+        {
+          "id": "D",
+          "text": "La distribución raíz de la imagen, que arranca su kernel al ejecutar CMD."
+        }
+      ],
+      "answer": "B",
+      "explanation": "En macOS, Docker Desktop aloja los contenedores Linux en una VM con kernel Linux. El proceso contenedorizado usa ese kernel y la CLI se comunica con el Engine. El filesystem de una imagen aporta herramientas y bibliotecas de espacio de usuario. Esta separación también explica por qué Docker Desktop debe gestionar el acceso de la VM a rutas del equipo.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-047",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Una aplicación antigua usaba un volumen gitRepo para poner contenido de una revisión Git en el Pod. En el clúster objetivo ese tipo ya no está disponible. Se quiere obtener la revisión antes de iniciar la aplicación y descartar los archivos al eliminar el Pod. ¿Qué adaptación cumple ambos requisitos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Crear un PVC compartido para todas las revisiones y clonar después de iniciar la aplicación."
+        },
+        {
+          "id": "B",
+          "text": "Usar un sidecar que clone al iniciar junto con la aplicación y escriba en su propio filesystem."
+        },
+        {
+          "id": "C",
+          "text": "Colocar la URL en un ConfigMap y montarlo como directorio con el contenido esperado."
+        },
+        {
+          "id": "D",
+          "text": "Clonar la revisión con un init container a un emptyDir montado también por la aplicación."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Los init containers ordinarios deben terminar satisfactoriamente antes de iniciar los contenedores de aplicación. Ambos pueden montar un emptyDir y el primero puede preparar allí una revisión identificada del repositorio. El volumen dura lo que dura el Pod. Un sidecar paralelo necesita una coordinación adicional y un ConfigMap con una URL no materializa el contenido del repositorio.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-048",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "En Kubernetes, un contenedor se reinició dentro del mismo Pod tras una excepción. Los logs actuales empiezan después del reinicio. Aún no se ha eliminado el Pod. ¿Qué consulta puede mostrar inmediatamente la excepción del proceso anterior?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Consultar kubectl describe node para leer el flujo anterior de la aplicación."
+        },
+        {
+          "id": "B",
+          "text": "Consultar kubectl get events para recuperar el texto que escribió el proceso."
+        },
+        {
+          "id": "C",
+          "text": "Consultar kubectl logs --follow del proceso que arrancó después del reinicio."
+        },
+        {
+          "id": "D",
+          "text": "Consultar kubectl logs --previous para ese contenedor del Pod tras el reinicio."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Kubectl logs --previous pide los logs de la instancia anterior del contenedor, si el nodo aún los retiene. Logs en la instancia actual empieza con su propia ejecución y los eventos muestran transiciones y diagnósticos del clúster. Si el Pod se elimina o el nodo pierde los archivos, un recolector externo ya configurado puede conservar la evidencia.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-049",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Una API viva tarda hasta dos minutos en iniciar. Su liveness actual la reinicia a los 30 segundos. Una vez que inicia, también debe salir de los destinos de tráfico si pierde temporalmente una dependencia, sin reiniciarse por ese fallo externo. ¿Qué diseño de sondas encaja?",
+      "options": [
+        {
+          "id": "A",
+          "text": "startupProbe para proteger el arranque, readiness para tráfico y liveness para bloqueos propios."
+        },
+        {
+          "id": "B",
+          "text": "startupProbe que compruebe el arranque y liveness que falle al perder la dependencia."
+        },
+        {
+          "id": "C",
+          "text": "readiness para inicializar y liveness con una comprobación de todas las dependencias externas."
+        },
+        {
+          "id": "D",
+          "text": "liveness tras una espera de dos minutos y readiness que compruebe solo el proceso local."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Mientras startupProbe no tiene éxito, kubelet pospone las sondas de liveness y readiness. Su tolerancia a fallos debe cubrir el peor tiempo de inicialización previsto. Una vez iniciado, un fallo de readiness retira al Pod del tráfico y permite incorporarlo al recuperarse. Liveness debe detectar bloqueos propios que justifiquen un reinicio. Vincularla a una dependencia puede amplificar una caída externa.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-050",
+      "type": "multiple_choice",
+      "topic": "Administración y API de Docker",
+      "prompt": "Se reemplaza el contenedor de Portainer Server durante una actualización. Los Engines remotos siguen ejecutando cargas, pero la interfaz nueva perdió sus entornos y usuarios configurados. ¿Qué recurso debe conservarse para que el servidor recupere esa configuración?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La etiqueta de la imagen de Portainer que usaba la interfaz antes de actualizar."
+        },
+        {
+          "id": "B",
+          "text": "Los volúmenes de las aplicaciones que se ejecutan en los entornos remotos."
+        },
+        {
+          "id": "C",
+          "text": "El volumen persistente que el contenedor de Portainer Server monta en /data."
+        },
+        {
+          "id": "D",
+          "text": "El socket del Engine local que Portainer monta para atender solicitudes de Docker."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Portainer Server almacena su base de datos en el volumen montado en /data. Al emplear el mismo volumen compatible con la versión, el contenedor sustituto puede recuperar los usuarios y entornos. Los Engines remotos conservan sus propias cargas con independencia de la interfaz. El socket permite comunicarse con un Engine y la imagen distribuye el programa.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-051",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un equipo necesita limitar a 20 la cantidad de Pods del namespace y asignar requests predeterminados a contenedores que los omitan. ¿Qué combinación de recursos responde a ambos requisitos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "LimitRange para el total de Pods y ResourceQuota para los valores predeterminados."
+        },
+        {
+          "id": "B",
+          "text": "LimitRange para ambos requisitos y una clase de prioridad para repartir las reservas."
+        },
+        {
+          "id": "C",
+          "text": "ResourceQuota para el total de Pods y LimitRange para los valores predeterminados."
+        },
+        {
+          "id": "D",
+          "text": "ResourceQuota para ambos requisitos y escalado automático para aplicar los valores."
+        }
+      ],
+      "answer": "C",
+      "explanation": "ResourceQuota limita el uso agregado de recursos dentro de un namespace y puede contar Pods. LimitRange puede añadir requests o límites por defecto al admitir contenedores sin valores explícitos y validar rangos individuales. Los predeterminados también se contabilizan cuando hay una cuota aplicable. Estos controles de admisión no dependen de que un HPA cambie el tamaño de la carga.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-052",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un Deployment declara tres réplicas. Se elimina manualmente un Pod sano y aparece otro con nombre distinto. No hubo cambios en la imagen ni en el manifiesto. ¿Qué explica la sustitución?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Kubelet crea un nuevo objeto Pod con los parámetros del proceso que atendía."
+        },
+        {
+          "id": "B",
+          "text": "El Service detecta un endpoint ausente y crea directamente un Pod adicional."
+        },
+        {
+          "id": "C",
+          "text": "El scheduler restaura el nombre y los archivos del Pod previamente eliminado."
+        },
+        {
+          "id": "D",
+          "text": "El ReplicaSet observa que faltó una réplica y crea un Pod desde su plantilla."
+        }
+      ],
+      "answer": "D",
+      "explanation": "El Deployment administra ReplicaSets y cada ReplicaSet reconcilia sus Pods con su cantidad deseada. Al quedar dos, el controlador crea otro objeto desde la plantilla. El scheduler le asigna un nodo, kubelet lo ejecuta y el Service puede incorporarlo como destino si cumple el selector y la disponibilidad. Esas tareas ocurren en etapas diferentes.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-053",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "Un contenedor de red de un laboratorio Linux debe administrar rutas de su propio namespace. La herramienta requiere CAP_NET_ADMIN. La política permite esa capacidad concreta y exige conservar el aislamiento de red. ¿Qué ajuste encaja?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Conservar la red separada y usar UID 0 con las capabilities predeterminadas."
+        },
+        {
+          "id": "B",
+          "text": "Usar la red del host y mantener las capabilities predeterminadas de Docker."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar en modo privilegiado y mantener un cgroup de recursos exclusivo."
+        },
+        {
+          "id": "D",
+          "text": "Conservar el namespace de red separado y añadir únicamente la capability requerida."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Las capabilities dividen privilegios del kernel en permisos específicos. Ejecutar como root dentro del contenedor no añade por sí mismo CAP_NET_ADMIN a la lista predeterminada de Docker. Conceder la capability necesaria mantiene el alcance más acotado que el modo privilegiado. Con red separada se evita compartir las interfaces y rutas del namespace del host.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-054",
+      "type": "multiple_choice",
+      "topic": "Administración y API de Docker",
+      "prompt": "Una API en ejecución registra un error que exige consultar archivos dentro del contenedor. La terminal del proceso principal se usa en otra sesión. ¿Qué operación abre un proceso de diagnóstico independiente en el mismo contenedor?",
+      "options": [
+        {
+          "id": "A",
+          "text": "docker logs -f con el identificador actual del contenedor de la API."
+        },
+        {
+          "id": "B",
+          "text": "docker exec -it con un intérprete disponible dentro del contenedor."
+        },
+        {
+          "id": "C",
+          "text": "docker run -it con la misma imagen y sin los montajes de la API."
+        },
+        {
+          "id": "D",
+          "text": "docker attach con la entrada estándar conectada al proceso principal."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Docker exec inicia un proceso adicional en la instancia que ya corre y permite examinar el filesystem que esa instancia ve. Requiere que exista el ejecutable solicitado y que el contenedor esté en ejecución. Attach conecta los flujos de la terminal al proceso principal. Un nuevo docker run crea otra instancia con una capa escribible distinta.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-055",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Tres réplicas de un servicio necesitan una identidad DNS individual estable y deben recuperar su propio disco tras reemplazar su Pod. Cada réplica conserva datos distintos. ¿Qué diseño proporciona ambos atributos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Deployment con Service headless y un PVC compartido por todas las réplicas."
+        },
+        {
+          "id": "B",
+          "text": "StatefulSet con Service headless y un PVC por ordinal mediante volumeClaimTemplates."
+        },
+        {
+          "id": "C",
+          "text": "Deployment con Service de IP virtual y un volumen local elegido por nombre de Pod."
+        },
+        {
+          "id": "D",
+          "text": "StatefulSet con Service de IP virtual y un emptyDir asociado a cada instancia."
+        }
+      ],
+      "answer": "B",
+      "explanation": "StatefulSet conserva nombres ordinales y se asocia a un Service headless para gobernar la identidad de red. Una plantilla de PVC permite que cada ordinal tenga su propio volumen persistente. Cuando se reemplaza el Pod, el ordinal puede volver a usar el PVC conforme a la política de retención. Un emptyDir se pierde al eliminar el Pod.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-056",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Una organización tiene servidores Linux propios, usa Ansible con inventarios y quiere instalar un clúster Kubernetes en esos servidores con la misma práctica de automatización. ¿Qué herramienta responde de forma más directa a esa restricción?",
+      "options": [
+        {
+          "id": "A",
+          "text": "kOps con un clúster aprovisionado en una plataforma de nube compatible."
+        },
+        {
+          "id": "B",
+          "text": "Docker Desktop con el clúster local que administra en un equipo."
+        },
+        {
+          "id": "C",
+          "text": "Kubespray con su inventario de los servidores y sus playbooks."
+        },
+        {
+          "id": "D",
+          "text": "Kind con nodos contenedorizados creados en una estación de trabajo."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Kubespray usa Ansible para automatizar el despliegue de Kubernetes en una infraestructura que puede incluir servidores existentes. Kind y Docker Desktop resultan útiles para laboratorios locales. kOps está orientado al ciclo de vida de clústeres en las plataformas que soporta. La decisión del caso depende de reutilizar inventarios y operar hosts propios de manera repetible.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-057",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Una aplicación Swarm consume el secret clave_api_v1. Se debe rotar el valor manteniendo la ruta de lectura esperada en el contenedor. ¿Qué procedimiento respeta el ciclo de vida del secret?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Cambiar el valor mediante una etiqueta del servicio y esperar la sincronización del montaje."
+        },
+        {
+          "id": "B",
+          "text": "Actualizar el contenido del secret existente y reiniciar el daemon de cada worker elegible."
+        },
+        {
+          "id": "C",
+          "text": "Sobrescribir el archivo montado desde una tarea y conservar la referencia al secret anterior."
+        },
+        {
+          "id": "D",
+          "text": "Crear un secret con otro nombre y actualizar el servicio para montarlo en el mismo destino."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Los secrets de Swarm son inmutables. La rotación usa un objeto nuevo y cambia la especificación del servicio. Se puede conservar la ruta que lee la aplicación mediante el destino del montaje, sustituyendo la referencia anterior. Tras comprobar la transición, el objeto anterior se puede retirar cuando ya no esté en uso. Modificar archivos en una tarea no actualiza el objeto de Swarm.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-058",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "Una traza muestra que una API inicia al mismo tiempo una llamada a inventario que dura 420 ms y una a precios que dura 140 ms. La respuesta espera ambas y el resto del tiempo corresponde a procesamiento local estable. ¿Qué intervención reduciría directamente ese tramo de espera?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reducir en partes iguales ambas latencias, porque sus duraciones se suman a la espera."
+        },
+        {
+          "id": "B",
+          "text": "Reducir la duración de precios, que determina cuándo se libera la llamada a inventario."
+        },
+        {
+          "id": "C",
+          "text": "Mover las llamadas a una secuencia fija para que la más rápida libere antes la respuesta."
+        },
+        {
+          "id": "D",
+          "text": "Reducir la duración de inventario, que determina cuándo están disponibles ambos resultados."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Cuando dos operaciones empiezan juntas y ambas deben terminar, la espera la domina la que finaliza más tarde. Aquí inventario sostiene la ruta crítica de la traza. Optimizar precios puede liberar recursos, pero no reduce ese tramo mientras inventario dure más. La cronología y las relaciones entre spans permiten inferir esa dependencia, que un agregado de latencias no muestra.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-059",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Un entorno aislado debe importar una imagen existente preservando sus capas, etiquetas y comando predeterminado. Los datos de aplicación tienen su propio flujo de respaldo. ¿Qué par de operaciones corresponde al transporte del artefacto?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Empaquetar con docker image save y restaurar con docker image import."
+        },
+        {
+          "id": "B",
+          "text": "Usar docker container export en origen y docker image import en destino."
+        },
+        {
+          "id": "C",
+          "text": "Empaquetar con docker image save y restaurar con docker image load."
+        },
+        {
+          "id": "D",
+          "text": "Usar docker container export en origen y docker image load en destino."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Save y load trabajan con el archivo que representa la imagen, con sus capas y metadatos. Export e import trabajan con una instantánea del filesystem del contenedor, que se importa como una imagen nueva con historial y configuración diferentes. El transporte de la imagen es independiente del respaldo de datos montados en volúmenes.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-060",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "Una práctica antigua utilizaba Docker Machine para crear máquinas y administrar sus Engines. Para migrarla, el equipo propone usar únicamente docker context. ¿Qué responsabilidad quedaría sin cubrir?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Aprovisionar las máquinas remotas e instalar o configurar sus Engines."
+        },
+        {
+          "id": "B",
+          "text": "Conservar distintas configuraciones de conexión para un mismo cliente."
+        },
+        {
+          "id": "C",
+          "text": "Identificar el endpoint y los parámetros de acceso de cada Engine."
+        },
+        {
+          "id": "D",
+          "text": "Elegir qué daemon atiende las operaciones de la CLI en cada sesión."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Docker Machine podía aprovisionar hosts e instalar Docker en ellos. Un contexto guarda datos de conexión y permite seleccionar un Engine ya disponible. La migración requiere resolver por separado el aprovisionamiento y la configuración del daemon, por ejemplo con infraestructura como código. El contexto se usa después para dirigir las operaciones administrativas al host correcto.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-061",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "Dos equipos ejecutan el mismo digest en hosts Linux de la misma arquitectura. Un servicio resuelve la URL esperada en pruebas y una URL distinta en producción. La aplicación lee la URL de un archivo montado. ¿Qué compararías primero?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El orden de capas de la imagen y la política de limpieza del Engine."
+        },
+        {
+          "id": "B",
+          "text": "La arquitectura declarada en la imagen y el compilador de la etapa final."
+        },
+        {
+          "id": "C",
+          "text": "El Dockerfile original y la fecha en que el registro recibió la etiqueta."
+        },
+        {
+          "id": "D",
+          "text": "La fuente del montaje y el contenido del archivo visible para el proceso."
+        }
+      ],
+      "answer": "D",
+      "explanation": "El digest identifica el artefacto que se distribuyó. Al montar un archivo durante la ejecución, el runtime hace visible el contenido del montaje en esa ruta. Dos instancias con la misma imagen pueden leer configuraciones distintas. Para reproducir un incidente hay que registrar tanto la identidad de la imagen como los parámetros de ejecución y las fuentes de sus montajes.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-062",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "Un reintento produce eventos de log en cuatro servicios y en Pods cuyos nombres cambiaron durante el despliegue. Los eventos de solicitudes distintas se intercalan. ¿Qué dato permite reconstruir los eventos de la misma solicitud distribuida?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Un trace_id propagado entre servicios y registrado como campo estructurado."
+        },
+        {
+          "id": "B",
+          "text": "Un nombre fijo de Pod registrado en los cuatro servicios antes del despliegue."
+        },
+        {
+          "id": "C",
+          "text": "El digest de la imagen del servicio de entrada anotado en cada evento."
+        },
+        {
+          "id": "D",
+          "text": "Un timestamp redondeado al segundo con el namespace de cada réplica."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Un identificador de contexto propagado viaja con la solicitud y permite reunir en una consulta los eventos que pertenecen a esa traza. Un span_id adicional distingue operaciones o intentos dentro de la misma solicitud. El digest identifica una versión, el Pod identifica una instancia y el timestamp aproxima el orden. Ninguno de esos tres datos identifica por sí solo qué servicios participaron en una solicitud.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-063",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "En un host Linux, un contenedor de diagnóstico ve en ps procesos de otros servicios del host, pero mantiene su propio límite de memoria. ¿Qué cambio explica ambas observaciones?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Comparte el cgroup del host y conserva su namespace de PID."
+        },
+        {
+          "id": "B",
+          "text": "Comparte el namespace de PID del host y conserva su cgroup."
+        },
+        {
+          "id": "C",
+          "text": "Comparte el namespace de red y conserva su cgroup de memoria."
+        },
+        {
+          "id": "D",
+          "text": "Comparte el namespace de montajes del host y mantiene su cgroup."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Los namespaces y los cgroups resuelven problemas distintos. El namespace de PID determina qué procesos son visibles, mientras que el cgroup contabiliza y controla el consumo de recursos. Docker puede compartir el primero con el host sin quitar el límite de memoria. Activar la red del host cambia el namespace de red y deja intacta por sí sola la visibilidad de procesos.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-064",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Auditoría exige cifrar el tráfico de datos entre nodos Linux por una red overlay concreta. Swarm ya autentica con TLS el tráfico de gestión y los servicios no se pueden modificar. ¿Qué ajuste en la configuración de la red atiende ese requisito?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Crear la red overlay con cifrado habilitado y conectar allí los servicios."
+        },
+        {
+          "id": "B",
+          "text": "Rotar la autoridad certificadora de Swarm y mantener la overlay predeterminada."
+        },
+        {
+          "id": "C",
+          "text": "Añadir secretos al servicio y mantener la red de datos sin opciones adicionales."
+        },
+        {
+          "id": "D",
+          "text": "Configurar certificados cliente en la CLI y publicar el puerto en modo ingress."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Swarm protege sus comunicaciones de gestión mediante TLS. El canal de datos de una overlay tiene su propia configuración. La opción encrypted habilita cifrado entre nodos para esa red y puede añadir costo de procesamiento. La rotación de certificados de gestión y la distribución de secretos siguen controlando ámbitos distintos. Si se necesita cifrado hasta cada aplicación, se debe evaluar TLS a nivel de aplicación.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-065",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Una aplicación enlazada estáticamente funciona sobre FROM scratch hasta que hace HTTPS saliente. La aplicación usa las raíces CA del sistema y reporta que no puede verificar el certificado de un servidor válido. ¿Qué insumo falta en la imagen?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Un certificado de cliente para que la aplicación se autentique ante el servidor remoto."
+        },
+        {
+          "id": "B",
+          "text": "El enlazador dinámico de la distribución que se usó para compilar el binario."
+        },
+        {
+          "id": "C",
+          "text": "Un almacén de autoridades certificadoras confiables en la ruta que lee la aplicación."
+        },
+        {
+          "id": "D",
+          "text": "Un certificado de confianza del registro en la configuración del daemon de Docker."
+        }
+      ],
+      "answer": "C",
+      "explanation": "El enlace estático puede resolver dependencias de bibliotecas al arrancar. La verificación TLS usa además datos en ejecución, entre ellos las raíces de confianza. FROM scratch parte de un filesystem vacío. Copiar un conjunto de CA adecuado permite validar la cadena sin trasladar claves privadas ni depender de las credenciales que habilitan el acceso al registro.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-066",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Una API y un worker se ejecutan en el mismo host. El worker usa la IP de la API anotada en el despliegue inicial y deja de conectar tras cada recreación. No se desea publicar la API en el host. ¿Qué cambio elimina la dependencia de esa IP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Cambiar el worker a la red del host y dejar la API en su bridge predeterminada."
+        },
+        {
+          "id": "B",
+          "text": "Guardar las IP en un volumen común y fijar el puerto de escucha en la nueva API."
+        },
+        {
+          "id": "C",
+          "text": "Conectar ambos a una bridge definida por el usuario y resolver la API por su alias."
+        },
+        {
+          "id": "D",
+          "text": "Mantener ambos en la bridge predeterminada y asociar el puerto con EXPOSE."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Una bridge definida por el usuario ofrece resolución DNS por nombre o alias para los contenedores conectados. El contenedor nuevo puede ocupar otra IP y conservar el alias. La comunicación en la red compartida usa el puerto de la aplicación sin necesidad de publicarlo. El alias debe asignarse al contenedor sustituto y los clientes deben resolverlo según el ciclo de reconexión.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-067",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Una aplicación tiene request de CPU de 250m y limit de 500m. Se observa throttling al aumentar la carga, aunque el nodo tiene CPU libre. Debe poder usar más CPU en ráfagas viendo la misma reserva para programación. ¿Qué ajuste responde al objetivo?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Elevar el limit de CPU y conservar el request de CPU actual."
+        },
+        {
+          "id": "B",
+          "text": "Elevar el request de CPU y conservar el limit de CPU actual."
+        },
+        {
+          "id": "C",
+          "text": "Aumentar el número de réplicas sin modificar el límite por proceso."
+        },
+        {
+          "id": "D",
+          "text": "Aumentar el límite de memoria sin cambiar el control de CPU."
+        }
+      ],
+      "answer": "A",
+      "explanation": "El request participa en la programación y en el reparto de CPU bajo contención. El limit impone una cuota al contenedor. Un proceso puede llegar a esa cuota aunque quede CPU libre en el nodo. Aumentarla permite ráfagas mayores sin aumentar la reserva de programación. Añadir réplicas puede distribuir carga, pero cada proceso seguiría sujeto al límite actual.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-068",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Linux/amd64 y Linux/arm64 deben desplegar la misma versión de un agente compilado en código nativo. El equipo quiere ofrecer una sola referencia en el registro para ambas plataformas. ¿Qué debe publicar?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Una imagen arm64 con variables que permitan detectar la CPU durante el inicio."
+        },
+        {
+          "id": "B",
+          "text": "Un índice con un manifiesto por plataforma, cada uno asociado a la variante de imagen nativa."
+        },
+        {
+          "id": "C",
+          "text": "Un manifiesto amd64 con dos etiquetas que indiquen las arquitecturas disponibles."
+        },
+        {
+          "id": "D",
+          "text": "Una única variante de imagen que empaquete bases de amd64 y arm64 en capas superpuestas."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Un índice OCI o una lista de manifiestos puede asociar un mismo nombre a varias variantes de imagen. Cada manifiesto apunta a la configuración y las capas de su variante, que incluye el ejecutable correspondiente. Al descargar, el cliente elige la plataforma. Agregar otra etiqueta o una variable de entorno cambia la selección nominal o la configuración y deja intacta la arquitectura del ejecutable.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-069",
+      "type": "true_false",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un Deployment llamado api puede existir en dos namespaces de un clúster, mientras que los objetos Node se identifican a escala del clúster.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Los namespaces acotan los nombres de recursos que tienen ámbito de namespace, como Deployment, Pod o Service. Un Node tiene ámbito de clúster, igual que un PersistentVolume o una StorageClass. Antes de diagnosticar un nombre repetido o añadir --namespace a una consulta, conviene comprobar el ámbito del tipo de recurso en el descubrimiento de la API.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-070",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Tras etiquetar una imagen como registro.empresa/equipo/api:2.4, un pipeline concluye que la versión quedó disponible en el registro interno. Otro host no la encuentra. ¿Qué operación faltó?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutar docker image save y copiar el TAR al host que ejecuta el registro."
+        },
+        {
+          "id": "B",
+          "text": "Hacer push de la referencia al repositorio equipo/api en registro.empresa."
+        },
+        {
+          "id": "C",
+          "text": "Volver a crear la etiqueta con el mismo nombre de repositorio en el Engine."
+        },
+        {
+          "id": "D",
+          "text": "Hacer push de api:2.4 usando una referencia que omite el nombre del registro."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Etiquetar asocia un nombre a una imagen en el catálogo local. El primer componente de la referencia identifica el registro y equipo/api identifica el repositorio dentro de él. El push carga los blobs que falten y publica el manifiesto bajo la etiqueta. Ejecutar o guardar la imagen en el mismo Engine deja la referencia sin publicar.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-071",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Una imagen declara ENTRYPOINT [\"servidor\"] y CMD [\"--puerto\", \"8080\"], ambos en forma exec. Se ejecuta docker run miapp --puerto 9000. ¿Qué comando recibe el proceso principal?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Se intenta invocar --puerto como programa porque la CLI sustituye ENTRYPOINT."
+        },
+        {
+          "id": "B",
+          "text": "Se invoca servidor con el puerto 9000 y se sustituye el valor de CMD."
+        },
+        {
+          "id": "C",
+          "text": "Se invoca servidor con el puerto 8080 porque CMD tiene prioridad sobre la CLI."
+        },
+        {
+          "id": "D",
+          "text": "Se invoca servidor con ambos valores de puerto, primero 8080 y después 9000."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Los argumentos que siguen a la imagen en docker run sustituyen a CMD. El ENTRYPOINT en forma exec conserva el ejecutable y recibe los nuevos argumentos como parámetros. Esto permite fijar el programa y proporcionar valores predeterminados que el operador puede reemplazar. Para reemplazar el propio punto de entrada se usaría la opción --entrypoint.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-072",
+      "type": "true_false",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "En Docker Compose, un servicio asignado a un perfil desactivado puede arrancar si se indica ese servicio explícitamente como objetivo.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "Los perfiles permiten omitir servicios opcionales en un arranque normal. Al indicar un servicio por nombre, Compose puede iniciarlo sin que se active el perfil de forma explícita. También arranca sus dependencias declaradas cuando la operación lo necesita. Los demás servicios que solo comparten perfil y quedan fuera de esas dependencias se mantienen detenidos.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-073",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "El servicio reportes de Compose define una imagen y un comando predeterminado, sin un ENTRYPOINT propio. Hoy no hay contenedores del servicio en ejecución. Se necesita lanzar un comando distinto para generar un reporte puntual y retirar la instancia al terminar. ¿Qué operación corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutar docker compose restart reportes después de cambiar los argumentos de la tarea."
+        },
+        {
+          "id": "B",
+          "text": "Ejecutar docker compose up --scale reportes=1 para obtener una sola instancia del servicio."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar docker compose exec reportes seguido del comando para generar el reporte."
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar docker compose run --rm reportes seguido del comando para generar el reporte."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Compose run crea un contenedor puntual a partir de la configuración del servicio y permite especificar el comando. --rm lo elimina al terminar. Compose exec requiere un contenedor del servicio ya activo. Start y restart operan sobre instancias existentes con la configuración con la que se crearon, sin convertirlas en una tarea puntual con otros argumentos.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-074",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Un servicio escribe ficheros intermedios en un directorio. Por diseño deben desaparecer cuando se detenga el contenedor y se quiere evitar guardarlos en un volumen en disco. ¿Qué opción encaja en un host Linux?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Escribir en la capa del contenedor y activar limpiezas por antigüedad."
+        },
+        {
+          "id": "B",
+          "text": "Montar un directorio temporal del host y respaldarlo al parar el servicio."
+        },
+        {
+          "id": "C",
+          "text": "Crear un volumen anónimo y usarlo mientras la instancia siga detenida."
+        },
+        {
+          "id": "D",
+          "text": "Montar un tmpfs con límite de tamaño en el directorio de los datos intermedios."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Un tmpfs mantiene los datos en memoria y se desmonta al detener el contenedor, por lo que los archivos no están disponibles al reiniciarlo. Conviene limitar su tamaño porque compite por memoria. Si el requisito incluye que ningún dato llegue al disco, también se debe considerar la configuración de swap del host.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-075",
+      "type": "multiple_choice",
+      "topic": "Administración y API de Docker",
+      "prompt": "En una distribución Linux con systemd, Docker arranca con systemctl start docker y permanece activo hasta que el servidor se reinicia. La unidad existe y está deshabilitada. ¿Cuál es el cambio necesario para iniciar ahora y en futuros arranques normales?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reiniciar la unidad con systemctl restart docker cada vez que cambie su configuración."
+        },
+        {
+          "id": "B",
+          "text": "Recargar los archivos de unidades y ejecutar systemctl start docker para esta sesión."
+        },
+        {
+          "id": "C",
+          "text": "Usar systemctl enable --now docker para activarlo ahora y habilitar su unidad al arranque."
+        },
+        {
+          "id": "D",
+          "text": "Ajustar las políticas de reinicio de los contenedores y volver a iniciar el servicio."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Start cambia el estado de la unidad en la sesión actual. Enable crea los enlaces de dependencia que hacen que se active al alcanzar el objetivo de arranque aplicable y --now también la inicia. Las políticas de reinicio indican al Engine qué hacer con contenedores bajo ciertas condiciones. Para aplicarlas, el propio Engine debe estar disponible.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-076",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "El equipo de pruebas aprobó una imagen para la plataforma de producción. Antes de desplegar, otro trabajo sobrescribe la etiqueta stable con una compilación diferente. ¿Qué referencia garantiza que producción solicite el artefacto aprobado?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La etiqueta stable con una política de descarga cada vez que arranca una instancia."
+        },
+        {
+          "id": "B",
+          "text": "La hora de aprobación en CI junto con la opción de descarga si falta la imagen."
+        },
+        {
+          "id": "C",
+          "text": "El nombre del repositorio acompañado por el digest registrado durante las pruebas."
+        },
+        {
+          "id": "D",
+          "text": "El tag más reciente que coincide con el número de la rama del repositorio Git."
+        }
+      ],
+      "answer": "C",
+      "explanation": "El digest identifica por contenido el manifiesto o índice que se probó. Una etiqueta mutable puede pasar a señalar otro contenido aunque el nombre coincida. Descargar siempre comprueba el destino actual de la etiqueta, que es precisamente lo que cambió. La referencia al digest debe proceder del flujo que vinculó las pruebas con el artefacto.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-077",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Compose ejecuta una migración de esquema mediante un contenedor de duración limitada. La API debe iniciar cuando la migración termine con código 0. ¿Qué condición expresa el contrato?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Configurar la dependencia hacia la migración con la condición service_completed_successfully."
+        },
+        {
+          "id": "B",
+          "text": "Depender del servicio de base de datos con service_healthy para abrir las conexiones."
+        },
+        {
+          "id": "C",
+          "text": "Depender del servicio de migración con service_healthy mientras procesa el esquema."
+        },
+        {
+          "id": "D",
+          "text": "Depender del servicio de migración con service_started y desactivar su reinicio."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Service_completed_successfully permite usar una tarea finita como dependencia y comprobar su salida satisfactoria. Service_started solo confirma el inicio. Una base que acepta conexiones puede tener todavía un esquema antiguo y una migración en marcha puede fallar después de verse saludable. El código de salida conecta el inicio de la API con el resultado real de la migración.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-078",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "En Docker Engine sobre Linux con red bridge, se publica el puerto con -p 127.0.0.1:8080:8080. Dentro del contenedor, el servidor escucha únicamente en 127.0.0.1:8080. Desde el host, la conexión al puerto publicado falla. ¿Qué ajuste puede resolverlo sin ampliar el acceso desde el host?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Hacer que el servidor escuche en la interfaz del contenedor y conservar el mapeo."
+        },
+        {
+          "id": "B",
+          "text": "Cambiar el puerto origen del host y mantener la dirección de escucha de la aplicación."
+        },
+        {
+          "id": "C",
+          "text": "Cambiar el mapeo del host a 0.0.0.0 y mantener la escucha interna en loopback."
+        },
+        {
+          "id": "D",
+          "text": "Añadir EXPOSE 8080 a la imagen y mantener ambos lados del mapeo en loopback."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Cada namespace de red tiene su propio loopback. La publicación recibe tráfico en el host y lo dirige a la dirección del contenedor, donde el servidor debe aceptar conexiones. Escuchar en la interfaz del contenedor, o en todas sus interfaces, corrige el destino interno. Conservar 127.0.0.1 en el lado del host mantiene el alcance del puerto publicado.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-079",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un manifiesto Ingress con reglas de host y ruta se acepta, y sus Services internos funcionan. El clúster de laboratorio no tiene instalado un controlador de Ingress. ¿Qué falta para que las reglas procesen HTTP desde fuera?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Un Service NodePort por cada Pod conservando las reglas como configuración del scheduler."
+        },
+        {
+          "id": "B",
+          "text": "Un HPA sobre el Service que reciba las reglas y amplíe el número de endpoints HTTP."
+        },
+        {
+          "id": "C",
+          "text": "Un controlador que observe la clase del Ingress y configure un punto de entrada alcanzable."
+        },
+        {
+          "id": "D",
+          "text": "Un cambio en kube-proxy para que interprete directamente el host y la ruta de cada Ingress."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Ingress describe reglas HTTP y HTTPS para que un controlador las implemente en un proxy o balanceador. Crear el objeto registra esas reglas, pero hace falta un controlador que las observe y un punto de entrada accesible. NodePort publica un puerto y kube-proxy aplica conectividad de Service a nivel de red. Ninguno interpreta por sí mismo el enrutamiento HTTP por host y ruta.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-080",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un Deployment de cuatro réplicas usa RollingUpdate. La estrategia debe mantener cuatro disponibles y solo puede crear una réplica adicional por encima del objetivo, sin contar Pods en terminación. Hay capacidad para ese margen y las sondas funcionan. ¿Qué parámetros encajan?",
+      "options": [
+        {
+          "id": "A",
+          "text": "maxUnavailable=0 y maxSurge=1."
+        },
+        {
+          "id": "B",
+          "text": "maxUnavailable=1 y maxSurge=1."
+        },
+        {
+          "id": "C",
+          "text": "maxUnavailable=0 y maxSurge=2."
+        },
+        {
+          "id": "D",
+          "text": "maxUnavailable=1 y maxSurge=0."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Con maxUnavailable en cero, la estrategia evita retirar voluntariamente capacidad disponible por debajo del objetivo. maxSurge de uno permite crear una réplica nueva mientras aún existen las cuatro anteriores. Una indisponible permitiría bajar a tres. Los Pods en terminación pueden seguir consumiendo recursos durante su periodo de gracia, así que la capacidad real del nodo debe contemplar ese solapamiento.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-081",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "El kubeconfig contiene dev y prod, que apuntan a clústeres distintos y ambos usan el namespace pagos. Una revisión debe consultar únicamente desarrollo sin cambiar el contexto persistente de otros comandos. ¿Qué opción expresa ese alcance?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutar kubectl config use-context dev y después consultar el namespace pagos."
+        },
+        {
+          "id": "B",
+          "text": "Cambiar el namespace del contexto actual a pagos y volver a ejecutar la consulta."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar la consulta con --context dev y fijar su alcance con --namespace pagos."
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar la consulta con --namespace pagos usando el contexto que esté activo."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Un contexto reúne clúster, credenciales de usuario y namespace opcional. El namespace pagos puede existir en ambos clústeres y usarlo solo no selecciona desarrollo. --context aplica a esa invocación y --namespace fija el alcance dentro del clúster. Use-context, en cambio, cambia el contexto actual que usarán comandos posteriores sin un override.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-082",
+      "type": "multiple_choice",
+      "topic": "Administración y API de Docker",
+      "prompt": "docker version imprime la sección Client y después un error al conectarse con el daemon. Un informe lo interpreta como prueba de que el Engine remoto se actualizó. ¿Qué se puede sostener con esa salida?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Se obtuvo la versión de la CLI, pero falta confirmar la versión del Engine."
+        },
+        {
+          "id": "B",
+          "text": "Se validó la versión empleada por los contenedores activos de ese host remoto."
+        },
+        {
+          "id": "C",
+          "text": "Se confirmó la versión del Engine porque la CLI tomó sus datos del daemon."
+        },
+        {
+          "id": "D",
+          "text": "Se confirmó la versión de la API remota aunque no se logró verificar el runtime."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Docker version puede informar los datos del binario local aun si falla la llamada al servidor. La sección Server, cuando la respuesta llega, contiene los del Engine. Antes de sacar conclusiones sobre una actualización se debe comprobar el endpoint elegido y resolver el error de conexión o permisos. Un dato local aislado no identifica la versión remota.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-083",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Un webhook de Git puede entregar dos veces el mismo evento si CI tardó en responder. El equipo quiere evitar dos publicaciones para la misma revisión sin perder despliegues de revisiones distintas. ¿Qué diseño conserva ambas propiedades?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Descartar eventos recibidos durante una ventana fija desde la primera publicación exitosa."
+        },
+        {
+          "id": "B",
+          "text": "Usar una clave estable por revisión y operación, y registrar su procesamiento de forma atómica."
+        },
+        {
+          "id": "C",
+          "text": "Procesar solo un evento por rama y descartar entregas posteriores de esa misma rama."
+        },
+        {
+          "id": "D",
+          "text": "Permitir cada entrega y usar el instante de recepción como etiqueta de la nueva imagen."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Un webhook notifica eventos y se puede reintentar. Una clave con repositorio, revisión y operación permite distinguir una entrega repetida de una revisión nueva. Registrar de manera atómica la clave impide que dos ejecuciones concurrentes comiencen la misma publicación. La automatización también debe poder reintentar una operación fallida sin confundirla con una publicación completada.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-084",
+      "type": "true_false",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un ConfigMap modificado después del arranque se proyecta automáticamente en un archivo montado con subPath de la misma manera que en el montaje de un directorio completo de ConfigMap.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "Cuando se monta el volumen de ConfigMap como directorio, kubelet puede actualizar su contenido de forma eventual. Un archivo montado mediante subPath no recibe esas actualizaciones por la misma vía. Las variables de entorno procedentes del ConfigMap también se fijan al iniciar el proceso. Para usar nuevos valores, se necesita un montaje compatible con la recarga o recrear las instancias.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-085",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Un Dockerfile copia todo el proyecto antes de ejecutar npm ci. El archivo de bloqueo cambia una vez al mes, pero cada cambio en un texto de la aplicación vuelve a instalar dependencias. ¿Qué ajuste conserva la instalación reproducible y aprovecha mejor la caché?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Copiar el manifiesto y el lockfile, ejecutar npm ci y copiar después el código."
+        },
+        {
+          "id": "B",
+          "text": "Copiar el proyecto completo y separar npm ci en dos instrucciones RUN consecutivas."
+        },
+        {
+          "id": "C",
+          "text": "Copiar el código, instalar las dependencias y añadir el lockfile en otra etapa."
+        },
+        {
+          "id": "D",
+          "text": "Empaquetar el contexto completo y ejecutar npm ci sobre su copia en otra ruta."
+        }
+      ],
+      "answer": "A",
+      "explanation": "La reutilización de la caché depende de los insumos y las instrucciones previas. Si se copia todo el proyecto primero, un cambio de código invalida la capa de copia y las posteriores. Colocar npm ci después de copiar únicamente los archivos de dependencias mantiene la instalación determinada por el lockfile y permite reutilizarla cuando solo cambia la aplicación.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-086",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "En un Swarm de cinco managers, solo dos se pueden comunicar entre sí. Los otros tres están aislados, incluso entre ellos. Los workers siguen accesibles. ¿Qué combinación de observaciones es compatible con ese estado?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Los managers confirman la actualización y las tareas se detienen por falta de quorum."
+        },
+        {
+          "id": "B",
+          "text": "Falla la actualización de servicios y la pérdida de quorum finaliza las tareas de los workers."
+        },
+        {
+          "id": "C",
+          "text": "Los managers confirman la actualización al redefinir el quorum con los dos accesibles."
+        },
+        {
+          "id": "D",
+          "text": "Falla una actualización del servicio y las tareas que ya corrían pueden seguir atendiendo."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Un grupo de cinco managers requiere tres miembros comunicados para mantener el quorum de Raft. Dos managers no pueden confirmar cambios de estado ni programar nuevas tareas de forma normal. Las tareas que ya se ejecutan pueden seguir funcionando en sus nodos. La disponibilidad del plano de control y la continuidad inmediata de los procesos son propiedades distintas.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-087",
+      "type": "true_false",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Un contenedor Linux iniciado con la red none puede mantener comunicación por la interfaz loopback entre sus propios procesos.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "A",
+      "explanation": "El controlador none deja al contenedor sin conectividad de red externa y conserva su interfaz loopback. Dos procesos del mismo contenedor aún pueden intercambiar datos por localhost. La interfaz pertenece a ese namespace, por lo que tampoco establece una ruta hacia el loopback del host ni hacia el de otro contenedor.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-088",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Compose interpola API_PORT desde .env en los dos lados de ports. La aplicación necesita ese valor para elegir su puerto de escucha. No lee archivos de configuración y el servicio carece de environment y env_file. ¿Qué cambio mantiene una sola fuente de valor?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Declarar API_PORT como argumento de construcción e interpolarlo también en ports."
+        },
+        {
+          "id": "B",
+          "text": "Declarar en environment una entrada API_PORT que use el valor interpolado desde .env."
+        },
+        {
+          "id": "C",
+          "text": "Montar .env en el contenedor para que Compose exporte sus claves al entorno del proceso."
+        },
+        {
+          "id": "D",
+          "text": "Cambiar a la sintaxis extendida de ports y seguir declarando API_PORT únicamente en .env."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Compose usa el archivo .env como fuente de interpolación del modelo. Resolver un valor en ports configura el mapeo y no lo coloca en el entorno del contenedor. Declarar la variable en environment, o cargarla mediante env_file, hace que llegue al proceso. El puerto que escucha la aplicación debe corresponder al lado del contenedor en el mapeo.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-089",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un servicio ClusterIP ofrece api:80 y sus EndpointSlices incluyen Pods listos. La aplicación responde en su IP de Pod en el puerto 8080, pero el Service le envía tráfico al 80. Los clientes deben conservar el puerto 80. ¿Qué ajuste resuelve el error?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Mantener el puerto que ofrece el Service en 80 y fijar targetPort=8080."
+        },
+        {
+          "id": "B",
+          "text": "Añadir containerPort=8080 al Pod y conservar targetPort numérico en 80."
+        },
+        {
+          "id": "C",
+          "text": "Mantener el puerto de destino en 80 y ofrecer el Service en port=8080."
+        },
+        {
+          "id": "D",
+          "text": "Cambiar el tipo a NodePort y mantener el puerto de destino en 80."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Port es el puerto que usan los clientes en la dirección del Service. TargetPort indica a qué puerto de los Pods se dirige la conexión. Con 80 y 8080 respectivamente, el Service conserva su contrato con los clientes y alcanza el listener real. Declarar un containerPort no sustituye un targetPort numérico que apunta a otra parte.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-090",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "La imagen de un servicio declara EXPOSE 8080. En un host de pruebas se quiere publicar ese puerto en un puerto libre elegido por Docker y consultar después cuál se asignó. ¿Qué operación corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Iniciar con docker run -p 8080:8080 y consultar el mapeo con docker port."
+        },
+        {
+          "id": "B",
+          "text": "Iniciar sin opciones de red y consultar las publicaciones con docker port."
+        },
+        {
+          "id": "C",
+          "text": "Iniciar con docker run -P y consultar el puerto asignado con docker port."
+        },
+        {
+          "id": "D",
+          "text": "Iniciar con docker run --network host y consultar el mapeo con docker port."
+        }
+      ],
+      "answer": "C",
+      "explanation": "EXPOSE documenta el puerto que prevé usar la imagen y por sí mismo no lo publica. La opción -P publica los puertos expuestos en puertos del host asignados automáticamente. Docker port muestra los mapeos efectivos. La modalidad de red host usa directamente el namespace del host en Linux y carece de ese mapeo.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-091",
+      "type": "multiple_choice",
+      "topic": "Observabilidad y operación",
+      "prompt": "Los Pods de una API muestran Ready y su CPU es baja, pero clientes externos reciben HTTP 504 del proxy. El objetivo de disponibilidad se mide desde lo que experimenta el usuario. ¿Qué señal debe alimentar el indicador durante este incidente?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La fracción de solicitudes exitosas observadas en el punto de entrada de los clientes."
+        },
+        {
+          "id": "B",
+          "text": "El promedio de CPU y memoria de los contenedores durante las solicitudes."
+        },
+        {
+          "id": "C",
+          "text": "La fracción de Pods que estuvieron Ready en el namespace de la aplicación."
+        },
+        {
+          "id": "D",
+          "text": "La fracción de procesos que no fueron reiniciados por las sondas de liveness."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Un indicador de disponibilidad centrado en el usuario cuenta resultados donde el usuario se conecta. Las solicitudes que terminaron en 504 deben entrar como fallos aunque las sondas internas hayan pasado. Readiness y consumo de recursos son señales para explicar el incidente. Pueden verse normales cuando el problema está en el proxy, la ruta o una dependencia externa.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-092",
+      "type": "multiple_choice",
+      "topic": "Despliegue, escalado y configuración",
+      "prompt": "Un recolector debe leer los logs locales de cada nodo Linux etiquetado para observabilidad. Los nodos incorporados el mes siguiente deben recibir el recolector sin recalcular réplicas. ¿Qué controlador corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Job paralelo con una finalización por nodo y la misma selección de etiquetas."
+        },
+        {
+          "id": "B",
+          "text": "Deployment con distribución por hostname y una cifra de réplicas igual a la actual."
+        },
+        {
+          "id": "C",
+          "text": "StatefulSet con una identidad persistente para cada réplica y afinidad por etiquetado."
+        },
+        {
+          "id": "D",
+          "text": "DaemonSet con un selector de nodos que incluya los etiquetados para observabilidad."
+        }
+      ],
+      "answer": "D",
+      "explanation": "DaemonSet mantiene una copia del Pod por nodo elegible y reconcilia cuando se incorpora un nodo que cumple las condiciones. Deployment y StatefulSet mantienen una cantidad solicitada de réplicas, aunque se pueda influir en su distribución. Un Job busca finalizar trabajo. Para leer los logs del nodo el recolector también necesita acceso autorizado a las fuentes locales.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-093",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "Una prueba mide 400 ms de arranque con la imagen en caché. Un nodo nuevo tarda 55 s en servir la primera solicitud. Las mediciones atribuyen 54 s a la descarga y extracción de la imagen. ¿Qué intervención evaluarías primero para reducir el tiempo en nodos nuevos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reducir el tamaño de la imagen o precargar sus capas en los nodos nuevos."
+        },
+        {
+          "id": "B",
+          "text": "Usar una sonda de disponibilidad con menor intervalo y menor timeout."
+        },
+        {
+          "id": "C",
+          "text": "Afinar los tiempos de inicialización de la aplicación antes de medir otra vez."
+        },
+        {
+          "id": "D",
+          "text": "Aumentar la reserva de CPU del proceso para mejorar la latencia de cada petición."
+        }
+      ],
+      "answer": "A",
+      "explanation": "La latencia de un arranque en frío se compone del tiempo de preparación de la imagen y del tiempo que necesita la aplicación para atender. En este caso casi toda la espera ocurre en la primera etapa. Reducir capas transferidas o precargarlas ataca el cuello de botella observado. Ajustar la sonda mejoraría como máximo la parte posterior a la descarga.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-094",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "El directorio /app/plugins de una imagen contiene tres complementos. En ejecución se monta un directorio vacío del host sobre /app/plugins mediante bind mount. El programa informa que no hay complementos. ¿Qué explica el resultado?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La ruta de montaje muestra el directorio del host y oculta los archivos de la imagen."
+        },
+        {
+          "id": "B",
+          "text": "El runtime sincronizó los directorios y eliminó los complementos de la capa base."
+        },
+        {
+          "id": "C",
+          "text": "El montaje cambió la capa de la imagen y dejó los complementos sin permisos."
+        },
+        {
+          "id": "D",
+          "text": "Docker copió los complementos al host y la aplicación conserva el inventario previo."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Un bind mount hace visible la ruta fuente en el destino y oculta el contenido que ya existía bajo ese punto de montaje. El runtime no borra esos archivos de las capas de la imagen. Si se lanza otra instancia sin el montaje, vuelven a verse. La inicialización de un volumen Docker nuevo y vacío puede copiar contenido preexistente, un comportamiento distinto.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-095",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "Un escáner detecta una biblioteca vulnerable en una etapa Dockerfile que compila el código. El equipo cree que esa etapa nunca llega a producción y debe justificar qué entornos requieren corrección. ¿Qué evidencia permite tomar la decisión?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Usar la severidad del hallazgo en la etapa de build como medida directa de exposición del runtime."
+        },
+        {
+          "id": "B",
+          "text": "Verificar que la imagen final esté firmada y cerrar el hallazgo registrado durante la construcción."
+        },
+        {
+          "id": "C",
+          "text": "Revisar los componentes de la imagen final por digest y evaluar por separado el constructor."
+        },
+        {
+          "id": "D",
+          "text": "Revisar solo los paquetes instalados en el host de CI y aplicar el hallazgo a producción."
+        }
+      ],
+      "answer": "C",
+      "explanation": "La exposición depende de dónde existe el componente y cómo se utiliza. Un SBOM de la imagen final, vinculado a su digest, ayuda a comprobar si la biblioteca se distribuye. Conviene contrastarlo con los artefactos copiados, pues una biblioteca puede estar incorporada al ejecutable. Si el componente solo se usa en el build, queda por evaluar el riesgo del constructor y sus insumos.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-096",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "BuildKit recibe como contexto un repositorio de 2 GB con volcados de prueba que jamás se usan. El Dockerfile construye con COPY . . antes de compilar. ¿Qué medida evita que esos archivos entren en el contexto y en esa copia?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Excluir los volcados mediante .dockerignore en la raíz del contexto enviado."
+        },
+        {
+          "id": "B",
+          "text": "Montar una caché de BuildKit sobre la ruta destino de COPY antes del RUN final."
+        },
+        {
+          "id": "C",
+          "text": "Borrar los volcados con RUN rm en una etapa posterior a la compilación."
+        },
+        {
+          "id": "D",
+          "text": "Ajustar WORKDIR antes de COPY para que el compilador use únicamente src."
+        }
+      ],
+      "answer": "A",
+      "explanation": ".dockerignore filtra rutas del contexto antes de que el constructor las utilice para instrucciones como COPY. Contexto y destino de copia son partes distintas del build. WORKDIR cambia la ruta de destino de instrucciones relativas, pero COPY . sigue considerando todos los archivos admitidos por el contexto. Borrar después conserva el costo de haber incluido los archivos antes.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-097",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "En Swarm, un agente debe ejecutarse una vez en cada worker etiquetado como monitoreado. Al incorporar otro worker con esa etiqueta debe recibir el agente sin actualizar una cifra de réplicas. ¿Cómo se declara el servicio?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Modo replicado con una réplica por zona y un healthcheck para detectar nodos nuevos."
+        },
+        {
+          "id": "B",
+          "text": "Modo replicado con tantas réplicas como workers existentes y una preferencia de reparto."
+        },
+        {
+          "id": "C",
+          "text": "Modo global sobre todos los nodos con un límite de recursos igual en cada tarea."
+        },
+        {
+          "id": "D",
+          "text": "Modo global con una restricción de colocación que seleccione los workers etiquetados."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Un servicio global mantiene una tarea por nodo elegible y se ajusta al conjunto de nodos cuando cambia. La restricción limita ese conjunto a los workers etiquetados. Un servicio replicado mantiene una cantidad global y las preferencias afectan distribución sin convertirla en una relación de una réplica por nodo. El healthcheck evalúa tareas, no calcula el inventario deseado.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-098",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "En Docker Compose, una API falla al arrancar porque su base de datos tarda 25 segundos en aceptar conexiones. El motor de datos ya aparece como Running y depends_on está en su forma corta. ¿Qué ajuste ataca la carrera inicial sin imponer una espera fija?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Mantener depends_on corto y asignar siempre un nombre estable a la base."
+        },
+        {
+          "id": "B",
+          "text": "Añadir un restart a la API y ordenar primero el servicio de la base en el YAML."
+        },
+        {
+          "id": "C",
+          "text": "Comprobar la salud de la API y dar a la base un tiempo de apagado mayor."
+        },
+        {
+          "id": "D",
+          "text": "Medir la disponibilidad de la base con healthcheck y usar service_healthy."
+        }
+      ],
+      "answer": "D",
+      "explanation": "La forma corta de depends_on controla el orden de inicio. La condición service_healthy espera el resultado del healthcheck de la dependencia antes de iniciar el consumidor. La prueba debe representar la disponibilidad necesaria, por ejemplo aceptar una consulta. Para caídas posteriores, el cliente debe gestionar reconexiones porque esa condición opera en el inicio de Compose.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-099",
+      "type": "multiple_choice",
+      "topic": "Administración y API de Docker",
+      "prompt": "Un equipo protege la API remota de Docker con TLS mutuo. Quiere permitir que un operador vea contenedores y que otro pueda crearlos. ¿Qué falta para aplicar esa separación?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Un certificado de servidor distinto para cada listado de contenedores permitido."
+        },
+        {
+          "id": "B",
+          "text": "Un certificado cliente por subred y un filtro de puertos para separar las operaciones."
+        },
+        {
+          "id": "C",
+          "text": "Una autoridad certificadora por operador, con el mismo acceso al daemon para ambos."
+        },
+        {
+          "id": "D",
+          "text": "Una política de autorización por operación además de validar el certificado cliente."
+        }
+      ],
+      "answer": "D",
+      "explanation": "TLS mutuo protege el canal y autentica a los extremos mediante certificados. Aceptar un certificado cliente no define qué operaciones REST puede realizar esa identidad. La separación requiere un mecanismo de autorización, como un plugin que evalúe solicitudes según la identidad y la acción. Si el daemon acepta certificados con permisos amplios, hay que tratarlos como credenciales privilegiadas.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-100",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Dos versiones de un servicio pasan las pruebas unitarias, pero una falla al usar la versión real del motor de datos declarada en Compose. ¿Qué control de CI detecta esta incompatibilidad antes de publicar la entrega?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Probar el intercambio de la imagen candidata con la versión del motor declarada en Compose."
+        },
+        {
+          "id": "B",
+          "text": "Probar la conectividad de la imagen al puerto del motor y validar la sintaxis del YAML."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar pruebas del cliente contra un doble que reproduce las respuestas del motor de datos."
+        },
+        {
+          "id": "D",
+          "text": "Comprobar que la imagen funcione con la versión más reciente del motor disponible en el registro."
+        }
+      ],
+      "answer": "A",
+      "explanation": "La prueba de integración verifica el contrato entre el ejecutable empaquetado y la dependencia que usará al correr. Un contenedor sano puede fallar al usar un protocolo, migración o versión de servidor concreta. Validar el YAML y el registro aporta controles útiles sobre configuración y disponibilidad del artefacto. Esas verificaciones dejan sin ejecutar el intercambio que causa el fallo.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-101",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Un contenedor recibió un ajuste manual en /etc/app y almacena registros en un volumen montado en /var/lib/app. Tras docker commit, otro equipo ejecuta la imagen sin ese volumen. ¿Qué puede esperar si el ajuste en /etc/app se hizo en la capa escribible?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El ajuste y los datos se recuperan si el contenedor origen permanece detenido."
+        },
+        {
+          "id": "B",
+          "text": "La imagen incluye el ajuste de /etc/app y se requiere migrar el volumen aparte."
+        },
+        {
+          "id": "C",
+          "text": "La imagen incluye los datos montados y requiere repetir el ajuste fuera del volumen."
+        },
+        {
+          "id": "D",
+          "text": "El ajuste y los datos aparecen si la imagen se publica en el mismo repositorio."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Docker commit captura cambios de la capa escribible del contenedor y los incorpora en una imagen. Los datos del volumen montado quedan fuera de la captura. Para reproducir la configuración conviene expresar el ajuste en un Dockerfile o suministrarlo al ejecutar el servicio. Los datos requieren un respaldo o una migración acordes al formato de la aplicación.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-102",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Un balanceador externo apunta al puerto publicado de un servicio Swarm en todos los nodos. Dos nodos carecen de tareas locales, pero deben seguir enviando conexiones a réplicas sanas sin cambiar el balanceador. ¿Qué modo corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Configurar DNS round robin interno y eliminar los listeners accesibles al balanceador."
+        },
+        {
+          "id": "B",
+          "text": "Publicar en modo ingress para que la malla de enrutamiento dirija las conexiones."
+        },
+        {
+          "id": "C",
+          "text": "Crear una overlay attachable sin publicar el puerto en los nodos del clúster."
+        },
+        {
+          "id": "D",
+          "text": "Publicar en modo host para resolver cada conexión mediante la tarea local del nodo."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Con ingress, la malla de enrutamiento recibe conexiones al puerto publicado en cualquier nodo del Swarm y las dirige a tareas del servicio. El modo host evita la malla y requiere una tarea local que publique el puerto. Una overlay o DNS de servicio pueden proporcionar acceso dentro del clúster, pero no sustituyen el punto publicado al que apunta el balanceador.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-103",
+      "type": "multiple_choice",
+      "topic": "Administración y API de Docker",
+      "prompt": "Un contenedor participa en dos redes bridge definidas por el usuario. Un script consulta .NetworkSettings.IPAddress y recibe un valor vacío. ¿Qué dato debe usar para identificar la IP en la red del backend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La dirección que la CLI muestra en el contexto activo en docker context inspect."
+        },
+        {
+          "id": "B",
+          "text": "La subred que figura en IPAM.Config del resultado de docker network inspect."
+        },
+        {
+          "id": "C",
+          "text": "La entrada del puerto publicado en .NetworkSettings.Ports del contenedor inspeccionado."
+        },
+        {
+          "id": "D",
+          "text": "La entrada de esa red en .NetworkSettings.Networks del contenedor inspeccionado."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Los endpoints de redes configuradas aparecen bajo NetworkSettings.Networks y cada uno tiene su dirección. El script debe elegir la red cuyo tráfico analiza. IPAM.Config describe la configuración de una subred, no la IP asignada a un contenedor. Los puertos publicados vinculan sockets del host con los del contenedor y el contexto identifica el Engine.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-104",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Un contenedor detenido se llama api. Debes reiniciar esa misma instancia conservando su ID, la capa escribible y los parámetros con los que fue creada. ¿Qué operación satisface el requisito?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutar docker start api sobre la instancia detenida que se quiere conservar."
+        },
+        {
+          "id": "B",
+          "text": "Ejecutar docker run con la imagen y repetir los parámetros de la instancia."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar docker create con la imagen original y los montajes de la instancia."
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar docker compose up con una revisión nueva del servicio api."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Docker start inicia un contenedor existente con la configuración que conserva. Docker run crea otro contenedor y lo inicia, con una capa escribible propia. Docker create prepara otra instancia sin iniciarla. Conservar el contenedor recupera su capa escribible, pero para datos que deben sobrevivir a la eliminación de esa instancia conviene usar almacenamiento separado.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-105",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "Una etapa de construcción descarga dependencias privadas con un token que se puede inyectar en CI. El token debe estar disponible solo durante la instrucción de descarga y quedar fuera de las capas exportadas. ¿Qué mecanismo corresponde?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Copiar el token a una capa de caché compartida entre las compilaciones del proyecto."
+        },
+        {
+          "id": "B",
+          "text": "Copiar el token al inicio del build y borrarlo antes de etiquetar el resultado."
+        },
+        {
+          "id": "C",
+          "text": "Pasar el token como ARG, convertirlo en ENV y vaciarlo en la instrucción siguiente."
+        },
+        {
+          "id": "D",
+          "text": "Montar el token como secreto de BuildKit durante la instrucción RUN que lo usa."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Un montaje de secreto de BuildKit da acceso temporal al archivo o variable durante un RUN. El mecanismo no incorpora el secreto como parte de la capa. La instrucción debe evitar copiarlo a archivos persistentes o imprimirlo. COPY y ENV pueden dejar rastros en capas o metadatos aunque una instrucción posterior quite su valor de la vista final.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-106",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Swarm reprograma una tarea de base de datos en otro nodo. El volumen local tiene el mismo nombre en ambos nodos, pero la nueva instancia muestra una base vacía. Sin restringir la tarea a un único nodo, ¿qué requisito faltó para que el sustituto viera los datos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Un backend accesible desde los nodos elegibles y compatible con el patrón de acceso de la base."
+        },
+        {
+          "id": "B",
+          "text": "Una red overlay para la base y una etiqueta de zona compartida por sus nodos de destino."
+        },
+        {
+          "id": "C",
+          "text": "Un límite de espacio similar para cada volumen y una copia de la propia imagen en el registro."
+        },
+        {
+          "id": "D",
+          "text": "Un nombre de volumen igual al del servicio y una imagen idéntica en todos los workers."
+        }
+      ],
+      "answer": "A",
+      "explanation": "El driver local resuelve un nombre en el Engine de cada nodo. Repetir ese nombre no replica su contenido ni convierte el volumen en almacenamiento distribuido. Para mantener los datos al mover una tarea se necesita un backend con accesibilidad y semántica adecuadas a la aplicación. Una base también puede resolver la continuidad mediante replicación propia si se modifica su diseño.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-107",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Se fija por digest la imagen base, pero una instrucción instala la versión disponible de una biblioteca desde un repositorio de paquetes sin instantáneas. Dos compilaciones del mismo commit ejecutadas en nodos limpios producen versiones diferentes. ¿Qué ajuste ataca esa causa?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fijar los insumos de paquetes mediante versiones resueltas y un repositorio versionado."
+        },
+        {
+          "id": "B",
+          "text": "Mantener la caché del primer constructor y reutilizar sus capas en todos los entornos."
+        },
+        {
+          "id": "C",
+          "text": "Construir con la opción de actualizar la base y conservar el índice de paquetes local."
+        },
+        {
+          "id": "D",
+          "text": "Conservar el nombre de la etiqueta final y firmar cada resultado de la compilación."
+        }
+      ],
+      "answer": "A",
+      "explanation": "El digest fija la imagen inicial. La instrucción de instalación consulta otro insumo, el estado del repositorio de paquetes. Un lockfile con integridad o una instantánea reproducible del origen de paquetes permite resolver los mismos artefactos en un constructor limpio. La firma atestigua una identidad y la caché reutiliza un resultado previo, pero ambas dejan abierta la resolución al reconstruir.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-108",
+      "type": "true_false",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Poner un manager en estado de disponibilidad Drain lo elimina del conjunto de votantes de Raft, además de evacuar las tareas de servicio.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "Drain controla la elegibilidad del nodo para ejecutar tareas y permite mover las tareas que aloja. El rol de manager y su participación en Raft siguen vigentes. Así se puede reservar un nodo para el plano de control sin enviarle cargas. Para cambiar el conjunto de votantes se modifica el rol o la pertenencia al clúster y se debe preservar el quorum.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-109",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Se quiere revisar desde una estación de trabajo un Pod de pruebas cuyo puerto 8080 debe seguir sin publicarse para otros usuarios. El operador tiene acceso autorizado al clúster. ¿Qué opción crea un acceso temporal que termina al cerrar la sesión?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Cambiar el Pod para que use el puerto del host y validar su IP."
+        },
+        {
+          "id": "B",
+          "text": "Ejecutar kubectl port-forward hacia el Pod con enlace local."
+        },
+        {
+          "id": "C",
+          "text": "Crear un Ingress de pruebas con una ruta hacia la aplicación."
+        },
+        {
+          "id": "D",
+          "text": "Convertir el Service en NodePort con un puerto fijo en los nodos."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Kubectl port-forward abre una conexión temporal a través de la API y, por defecto, escucha en interfaces loopback de la estación de trabajo. Permite comprobar un puerto sin crear un endpoint compartido en el clúster. NodePort, Ingress y hostPort cambian la exposición declarada. Si se reemplaza el Pod destino, la sesión temporal debe establecerse otra vez.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-110",
+      "type": "multiple_choice",
+      "topic": "Imágenes, Dockerfile y registros",
+      "prompt": "Una imagen base contiene 800 MB de herramientas. La imagen hija las borra con RUN rm, pero en un nodo sin caché su descarga apenas se reduce. ¿Qué diseño elimina ese costo de transferencia?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Borrar las herramientas en una sola instrucción RUN situada al final del Dockerfile."
+        },
+        {
+          "id": "B",
+          "text": "Conservar la base original y condensar las instrucciones de las capas que añade la hija."
+        },
+        {
+          "id": "C",
+          "text": "Mover la limpieza de herramientas al arranque y aplicar compresión al publicar la imagen."
+        },
+        {
+          "id": "D",
+          "text": "Construir la etapa final desde una base pequeña y copiar allí los artefactos de ejecución."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Una capa posterior oculta los archivos eliminados en la vista del filesystem, pero las capas inferiores inmutables siguen formando parte de la imagen distribuida. Una etapa final construida desde una base pequeña evita heredar la capa pesada. Los binarios, certificados y bibliotecas que la aplicación necesita en ejecución se deben incorporar de manera explícita.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-111",
+      "type": "multiple_choice",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "Una aplicación en el namespace ventas necesita leer por nombre un solo ConfigMap llamado politica. No requiere listados ni cambios. ¿Qué definición de RBAC expresa ese privilegio?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Un Role con list y watch de configmaps, vinculado al usuario que desplegó la aplicación."
+        },
+        {
+          "id": "B",
+          "text": "Un ClusterRoleBinding con get de configmaps llamados politica en cualquier namespace."
+        },
+        {
+          "id": "C",
+          "text": "Un Role con get de todos los configmaps de ventas, vinculado a su ServiceAccount."
+        },
+        {
+          "id": "D",
+          "text": "Un Role con get de configmaps limitado a politica y un RoleBinding a su ServiceAccount."
+        }
+      ],
+      "answer": "D",
+      "explanation": "El Role tiene alcance del namespace y resourceNames permite acotar get al ConfigMap politica. El RoleBinding asigna ese permiso a la identidad que usa el Pod. Un get sin filtro incluye otros objetos del mismo tipo y un ClusterRoleBinding llevaría el permiso a escala del clúster. Los permisos del usuario que despliega el Pod no se transfieren a su ServiceAccount.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-112",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Un entorno local de Compose usa dos volúmenes. cache es gestionado por el proyecto y ningún otro contenedor lo usa. datos aparece como external y pertenece a otra aplicación. ¿Qué efecto tiene docker compose down -v?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Compose elimina datos y conserva cache hasta el próximo compose up."
+        },
+        {
+          "id": "B",
+          "text": "Compose conserva ambos volúmenes porque son recursos nombrados del Engine."
+        },
+        {
+          "id": "C",
+          "text": "Compose elimina cache y deja intacto el volumen externo datos."
+        },
+        {
+          "id": "D",
+          "text": "Compose quita ambos volúmenes si las dos referencias están en el YAML."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Con -v, Compose elimina los volúmenes nombrados declarados que gestiona y los anónimos adjuntos. Los recursos declarados external tienen un ciclo de vida fuera de Compose y la operación no los elimina. El nombre por sí mismo no protege un volumen. Distinguir la propiedad del recurso permite planear la limpieza de pruebas y retener los datos persistentes.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-113",
+      "type": "multiple_choice",
+      "topic": "Docker Compose y prácticas DevOps",
+      "prompt": "Un proyecto combina compose.yaml y compose.pruebas.yaml. El puerto de un servicio difiere del que el equipo espera tras la fusión. Se quiere comprobar el modelo resultante antes de modificar contenedores. ¿Qué consulta es la más directa?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutar docker compose ps con ambos archivos y comparar su duración de ejecución."
+        },
+        {
+          "id": "B",
+          "text": "Inspeccionar la imagen con docker image inspect para conocer sus puertos expuestos."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar docker compose config con los mismos archivos en el mismo orden."
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar docker network inspect sobre la red que el proyecto creó la última vez."
+        }
+      ],
+      "answer": "C",
+      "explanation": "Docker compose config combina los archivos, resuelve interpolaciones y presenta el modelo que Compose aplicaría con esas opciones. Por eso sirve para encontrar una regla de fusión o una variable inesperada antes de desplegar. Compose ps e inspect sobre objetos existentes responden preguntas sobre una ejecución previa. EXPOSE describe la imagen, con independencia de las publicaciones declaradas para el servicio.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-114",
+      "type": "multiple_choice",
+      "topic": "Ciclo de vida, almacenamiento y redes",
+      "prompt": "Un contenedor de cálculo se lanzó en segundo plano. El script automatizado debe esperar su terminación y capturar su código de salida en stdout, sin conectarse a la entrada ni a la salida de la aplicación. ¿Qué comando expresa directamente ese contrato?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ejecutar docker wait sobre el contenedor de cálculo y leer el número que imprime."
+        },
+        {
+          "id": "B",
+          "text": "Ejecutar docker attach al contenedor de cálculo y leer su flujo de salida."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar docker inspect una vez y leer State.ExitCode antes de que termine."
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar docker logs --follow sobre el contenedor hasta que cierre la conexión."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Docker wait bloquea hasta que termina el contenedor y escribe su código de salida en stdout sin adjuntar los flujos de la aplicación. Attach puede devolver el código de salida al terminar, pero conecta los flujos del proceso. Logs --follow sirve para leer lo que se registró. Inspect ofrece una instantánea que puede consultarse antes de que se fije el código final.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-115",
+      "type": "true_false",
+      "topic": "Seguridad y cadena de suministro",
+      "prompt": "En Kubernetes, conceder list sobre Secrets de un namespace mantiene ocultos sus valores mientras la misma identidad carezca del permiso get.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Verdadero"
+        },
+        {
+          "id": "B",
+          "text": "Falso"
+        }
+      ],
+      "answer": "B",
+      "explanation": "List puede devolver los objetos Secret completos, incluidos los datos. La ausencia de get elimina la consulta individual por ese verbo, pero no restringe los campos de los resultados de list. Base64 solo codifica esos datos. Para proteger credenciales hay que limitar también list y watch a las identidades que requieren conocer los valores y configurar protección del almacenamiento.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-116",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un Service selecciona app=carrito. Los Pods tienen app=carrito únicamente en metadata.annotations y muestran Ready. No hay destinos seleccionados para el Service. ¿Qué cambio en la plantilla corrige la selección para futuras réplicas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Declarar app=carrito en metadata.labels de la plantilla de Pods."
+        },
+        {
+          "id": "B",
+          "text": "Declarar app=carrito en metadata.labels del objeto Deployment únicamente."
+        },
+        {
+          "id": "C",
+          "text": "Declarar app=carrito en metadata.annotations del propio Service."
+        },
+        {
+          "id": "D",
+          "text": "Declarar app=carrito como variable de entorno en los contenedores del Pod."
+        }
+      ],
+      "answer": "A",
+      "explanation": "El selector de un Service se evalúa sobre las etiquetas de los Pods de su namespace. Las anotaciones guardan metadatos auxiliares y las etiquetas del Deployment se aplican al Deployment. Colocar la etiqueta en la plantilla hace que las nuevas réplicas la tengan. El estado Ready influye en la disponibilidad del destino una vez que el Pod coincide con el selector.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-117",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Un servicio solo puede ejecutarse en nodos etiquetados uso=pci. Entre esos nodos, se desea repartir las réplicas entre varias zonas cuando haya capacidad. ¿Qué combinación expresa ambos requisitos?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Una restricción por uso y una preferencia de distribución por zona."
+        },
+        {
+          "id": "B",
+          "text": "Una preferencia por uso y una restricción que fije la primera zona."
+        },
+        {
+          "id": "C",
+          "text": "Dos preferencias de distribución, una por uso y la otra por zona."
+        },
+        {
+          "id": "D",
+          "text": "Una restricción por zona y una reserva de memoria mayor en nodos pci."
+        }
+      ],
+      "answer": "A",
+      "explanation": "Una restricción reduce de forma obligatoria el conjunto de destinos elegibles. La preferencia de distribución pide repartir las tareas entre valores de una etiqueta cuando el scheduler pueda. Si se usaran únicamente preferencias, nodos sin la propiedad obligatoria podrían seguir siendo elegibles. Si se fijara una única zona mediante una restricción, se perdería el reparto buscado.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-118",
+      "type": "multiple_choice",
+      "topic": "Docker Swarm y orquestación",
+      "prompt": "Un proxy conectado a la overlay de un servicio Swarm debe descubrir por DNS las IP de las tareas para aplicar sus propias comprobaciones y elegir directamente cada destino. ¿Qué modo de endpoint debe configurar el servicio interno?",
+      "options": [
+        {
+          "id": "A",
+          "text": "host para que el proxy llegue a un puerto local en el nodo que elija."
+        },
+        {
+          "id": "B",
+          "text": "dnsrr para que el nombre del servicio devuelva direcciones de tareas."
+        },
+        {
+          "id": "C",
+          "text": "vip para que el nombre del servicio devuelva la IP virtual de entrada."
+        },
+        {
+          "id": "D",
+          "text": "ingress para que cada nodo responda en un puerto publicado común."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Con DNS round robin, resolver el nombre del servicio devuelve direcciones de las tareas y permite al proxy elegir un destino accesible en la red compartida. Con VIP, el nombre representa la IP virtual del servicio y el plano de red selecciona un destino. Ingress y host describen modos de publicación de puertos, que son una decisión distinta del descubrimiento interno.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-119",
+      "type": "multiple_choice",
+      "topic": "Fundamentos y arquitectura de Docker",
+      "prompt": "Dos bancos de pruebas requieren versiones incompatibles de un módulo del kernel Linux y deben ejecutarse en paralelo sobre el mismo servidor físico. ¿Qué diseño permite probar los dos módulos de forma independiente?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Empaquetar un kernel por imagen y montar el módulo como volumen local."
+        },
+        {
+          "id": "B",
+          "text": "Separar los bancos con namespaces de usuario y límites de memoria propios."
+        },
+        {
+          "id": "C",
+          "text": "Ejecutar un contenedor por banco con su propio filesystem de solo lectura."
+        },
+        {
+          "id": "D",
+          "text": "Ejecutar una VM por banco y cargar el módulo en el kernel invitado."
+        }
+      ],
+      "answer": "D",
+      "explanation": "Una VM ejecuta un kernel invitado que puede cargar su propia versión del módulo. Los contenedores Linux ordinarios ejecutan sus procesos sobre el kernel que los aloja. Cambiar la distribución de la imagen modifica el espacio de usuario y los archivos disponibles. Los namespaces y cgroups separan recursos, pero la carga de módulos sigue afectando al kernel compartido.",
+      "difficulty": "maestria"
+    },
+    {
+      "id": "q-120",
+      "type": "multiple_choice",
+      "topic": "Kubernetes y orquestación",
+      "prompt": "Un equipo creó un Deployment con comandos imperativos. Ahora necesita que los cambios futuros se revisen en Git y que un entorno nuevo pueda aplicar la misma definición que uno existente. ¿Qué flujo cumple esa meta?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Exportar el estado actual antes de cada release y guardar solo la salida resultante."
+        },
+        {
+          "id": "B",
+          "text": "Mantener el manifiesto deseado en Git y aplicarlo tras revisar cada cambio."
+        },
+        {
+          "id": "C",
+          "text": "Mantener los comandos kubectl set en un registro y ejecutar el último en cada entorno."
+        },
+        {
+          "id": "D",
+          "text": "Guardar la lista de Pods generados y recrear cada Pod con su nombre asignado."
+        }
+      ],
+      "answer": "B",
+      "explanation": "Un manifiesto expresa atributos deseados, como la imagen, la plantilla y la estrategia. Git permite revisar su evolución y kubectl apply puede crear o actualizar el recurso administrado a partir de esa definición. Un listado de Pods contiene instancias reconciliadas por los controladores. Conservar solo el último cambio imperativo presupone que la configuración previa de cada entorno ya coincide.",
+      "difficulty": "maestria"
+    }
+  ]
+}

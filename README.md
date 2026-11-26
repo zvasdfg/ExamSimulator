@@ -1,13 +1,12 @@
-# Simulador SecDevOps
+# Simulador de examenes
 
-Plataforma web para practicar examenes de SecDevOps y administracion de redes
-cloud usando bancos de preguntas en JSON.
+Plataforma web para practicar examenes con bancos de preguntas en JSON.
 
 [Abrir simulador publicado](https://examsimulator.isaac11300054.workers.dev/)
 
 ## Funcionalidad principal
 
-- Banco por defecto con 120 preguntas basadas en el material de la asignatura.
+- Banco por defecto con 120 preguntas de maestria sobre contenedores y orquestacion.
 - El titulo visible del examen se toma de la metadata del JSON, por ejemplo
   `title`, `name`, `metadata.title`, `exam.title`, `courseTitle` o `subject`.
 - En **Preparacion** eliges el banco y la cantidad de preguntas. El cronometro
@@ -39,12 +38,11 @@ cloud usando bancos de preguntas en JSON.
 El banco por defecto esta en:
 
 ```text
-public/question-banks/secdevops-unir.json
+public/question-banks/examen_practica_contenedores_maestria_120.json
 ```
 
-El banco fue recalibrado para reducir pistas obvias por longitud o especificidad
-de la respuesta correcta. Las explicaciones tambien fueron ampliadas para que el
-dashboard sirva como herramienta de revision despues del intento.
+El banco anterior, `public/question-banks/secdevops-unir.json`, se conserva y se
+puede seleccionar con `Cargar JSON`.
 
 ## Ejecutar
 
