@@ -3,6 +3,8 @@
 Plataforma web para practicar examenes de SecDevOps y administracion de redes
 cloud usando bancos de preguntas en JSON.
 
+[Abrir simulador publicado](https://examsimulator.isaac11300054.workers.dev/)
+
 ## Funcionalidad principal
 
 - Banco por defecto con 120 preguntas basadas en el material de la asignatura.
@@ -58,6 +60,15 @@ http://localhost:8000/
 ```
 
 Para detener el servidor, usa `Ctrl+C` en la terminal.
+
+## Despliegue
+
+Cada `push` a la rama `main` en GitHub activa automaticamente un build de
+produccion en Cloudflare Workers Builds. Si el build termina correctamente,
+Cloudflare Workers publica la nueva version en la misma URL del simulador.
+
+Para verificar el despliegue, revisa el check `Workers Builds: examsimulator`
+del commit en el [historial de `main`](https://github.com/zvasdfg/ExamSimulator/commits/main/).
 
 ## Arquitectura
 
