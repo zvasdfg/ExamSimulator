@@ -3,338 +3,352 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Simulador de examenes</title>
-    <meta
-      name="description"
-      content="Simulador web de examenes basado en bancos de preguntas JSON."
-    />
+    <meta name="description" content="Portal de práctica con bancos de preguntas y revisión de resultados." />
+    <title>Portal de práctica | Lumbre</title>
+    <link rel="icon" href="./assets/brand/lumbre-mark.png" />
     <script>
       try {
-        const savedTheme = localStorage.getItem("exam-simulator-theme");
-        if (savedTheme === "dark" || savedTheme === "oled") {
-          document.documentElement.dataset.theme = savedTheme;
+        const theme = localStorage.getItem("exam-simulator-theme");
+        if (theme === "dark" || theme === "oled") {
+          document.documentElement.dataset.theme = theme;
+        } else if (theme === "extra-dark" || theme === "black") {
+          document.documentElement.dataset.theme = "oled";
         }
-      } catch (error) {}
+      } catch {}
     </script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/foundation-sites@6.9.0/dist/css/foundation.min.css"
-    />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="./assets/vendor/foundation.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <header class="app-header">
-      <div class="grid-container">
-        <div class="grid-x grid-margin-x grid-margin-y align-middle">
-          <div class="cell small-12 medium-auto">
-            <p class="eyebrow">Simulador de examenes</p>
-            <h1 id="app-title">Simulador de examenes</h1>
+    <a class="skip-link" href="#exam-main">Saltar al contenido</a>
+
+    <header class="site-header">
+      <div class="grid-container page-width topbar">
+        <div class="brand">
+          <span class="brand-mark">
+            <img class="brand-light" src="./assets/brand/lumbre-mark.png" alt="" width="42" height="42" />
+            <img class="brand-inverse" src="./assets/brand/lumbre-mark-inverse.png" alt="" width="42" height="42" />
+          </span>
+          <span class="brand-wordmark">Lumbre</span>
+          <span class="brand-context">Portal de práctica</span>
+        </div>
+        <div class="header-actions">
+          <div class="theme-toggle" role="group" aria-label="Tema visual">
+            <button type="button" class="theme-option" data-theme-choice="light" aria-label="Tema claro" aria-pressed="true" title="Claro (sol)">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#sun"></use></svg>
+            </button>
+            <button type="button" class="theme-option" data-theme-choice="dark" aria-label="Tema oscuro" aria-pressed="false" title="Oscuro (luna creciente)">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#moon"></use></svg>
+            </button>
+            <button type="button" class="theme-option" data-theme-choice="oled" aria-label="Tema OLED" aria-pressed="false" title="OLED (luna nueva)">
+              <svg class="icon icon-solid" aria-hidden="true"><use href="./assets/icons.svg#circle"></use></svg>
+            </button>
           </div>
-          <div class="cell small-12 medium-shrink">
-            <div class="header-controls">
-              <div id="theme-control" class="theme-toggle" role="group" aria-label="Tema visual">
-                <button
-                  type="button"
-                  class="theme-option"
-                  data-theme-choice="light"
-                  aria-label="Tema claro, sol"
-                  aria-pressed="true"
-                  title="Sol"
-                >
-                  <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2" />
-                    <path d="M12 20v2" />
-                    <path d="m4.93 4.93 1.41 1.41" />
-                    <path d="m17.66 17.66 1.41 1.41" />
-                    <path d="M2 12h2" />
-                    <path d="M20 12h2" />
-                    <path d="m6.34 17.66-1.41 1.41" />
-                    <path d="m19.07 4.93-1.41 1.41" />
-                  </svg>
-                  <span class="show-for-sr">Claro</span>
-                </button>
-                <button
-                  type="button"
-                  class="theme-option"
-                  data-theme-choice="dark"
-                  aria-label="Tema oscuro, luna creciente"
-                  aria-pressed="false"
-                  title="Luna creciente"
-                >
-                  <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 3a6.7 6.7 0 0 0 8.65 8.65A8.6 8.6 0 1 1 12 3Z" />
-                  </svg>
-                  <span class="show-for-sr">Oscuro</span>
-                </button>
-                <button
-                  type="button"
-                  class="theme-option"
-                  data-theme-choice="oled"
-                  aria-label="Tema OLED, luna nueva"
-                  aria-pressed="false"
-                  title="Luna nueva"
-                >
-                  <svg class="theme-icon theme-icon-filled" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="7" />
-                  </svg>
-                  <span class="show-for-sr">OLED</span>
-                </button>
-              </div>
-              <label class="attempt-size-control" for="attempt-size">
-                <span>Preguntas</span>
-                <input id="attempt-size" type="number" min="1" max="120" value="25" inputmode="numeric" />
-              </label>
-              <div class="button-group stacked-for-small app-actions">
-                <input id="json-input" type="file" accept="application/json,.json" hidden />
-                <button id="load-json" type="button" class="button secondary hollow">
-                  Cargar JSON
-                </button>
-                <button id="new-attempt" type="button" class="button primary">
-                  Nuevo intento
-                </button>
-              </div>
-            </div>
+          <button id="leave-attempt" class="btn btn-outline new-attempt" type="button" aria-label="Volver al banco" title="Volver al banco" hidden>
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow-left"></use></svg>
+            <span>Volver al banco</span>
+            <span class="new-attempt-short" aria-hidden="true">Banco</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bank-bar">
+        <div class="grid-container page-width bank-inner">
+          <div class="bank-heading">
+            <p class="kicker">Banco activo</p>
+            <h1 id="app-title">Portal de práctica</h1>
+            <p id="bank-meta" class="bank-meta" hidden>
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#book-open"></use></svg>
+              <span id="bank-count"></span>
+              <span id="bank-level" class="bank-level" hidden></span>
+            </p>
           </div>
+          <div id="bank-actions" class="bank-actions">
+            <input id="json-input" type="file" accept="application/json,.json" hidden />
+            <button id="load-json" type="button" class="btn btn-inverse" aria-describedby="source-label">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#upload"></use></svg>
+              Cargar JSON
+            </button>
+            <span id="source-label" class="source-label" hidden></span>
+          </div>
+          <p id="bank-error" class="bank-error" role="alert" hidden></p>
         </div>
       </div>
     </header>
 
-    <section class="statusbar">
-      <div class="grid-container">
-        <div class="grid-x grid-margin-x grid-margin-y small-up-1 medium-up-2 large-up-4">
-          <div class="cell">
-            <div class="callout stat-callout">
-              <span>Banco</span>
-              <strong id="source-label">secdevops-unir.json</strong>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="callout stat-callout">
-              <span>Preguntas</span>
-              <strong id="bank-status">Cargando...</strong>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="callout stat-callout">
-              <span>Avance</span>
-              <strong id="progress-status">0/25 respondidas</strong>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="callout stat-callout">
-              <span>Puntaje</span>
-              <strong id="score-status">0 correctas - 0%</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <main id="exam-main" class="grid-container page-width exam-main" tabindex="-1">
+      <p id="exam-empty" class="empty-state" role="status">Cargando banco de preguntas…</p>
+      <noscript><p class="empty-state">Activa JavaScript para realizar el examen.</p></noscript>
 
-    <main class="grid-container app-shell">
-      <div class="grid-x grid-margin-x grid-margin-y">
-        <section class="cell small-12 large-8">
-          <article class="card exam-panel">
-            <div class="card-section question-head">
-              <div class="label-row">
-                <span id="topic-badge" class="label primary">Tema</span>
-                <span id="type-badge" class="label secondary">ABCD</span>
-                <span id="marked-badge" class="label warning hidden">Marcada</span>
-              </div>
-              <div class="grid-x grid-margin-x grid-margin-y align-middle question-title-row">
-                <div class="cell small-12 medium-auto">
-                  <p id="question-counter" class="counter">Pregunta 1 de 25</p>
-                  <h2 id="question-text">Cargando pregunta...</h2>
-                </div>
-                <div class="cell small-12 medium-shrink">
-                  <button id="mark-review" type="button" class="button clear secondary compact">
-                    Revisar
-                  </button>
-                </div>
-              </div>
-            </div>
+      <ol id="attempt-steps" class="workflow-steps" aria-label="Etapas del intento" hidden>
+        <li data-step="prepare">Preparación</li>
+        <li data-step="answering">Práctica</li>
+        <li data-step="reviewing">Revisión</li>
+        <li data-step="submitted">Resultado</li>
+      </ol>
+      <p id="storage-status" class="form-notice storage-status" role="status" hidden></p>
 
-            <div class="card-section question-body">
-              <div id="options" class="options"></div>
-              <div id="feedback" class="feedback callout hidden"></div>
-            </div>
-
-            <div class="card-section question-footer">
-              <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div id="progress-fill" class="progress-meter"></div>
-              </div>
-              <div class="button-group stacked-for-small nav-actions">
-                <button id="prev-question" type="button" class="button secondary hollow">
-                  Anterior
+      <div id="preparation-view" class="preparation-view" hidden>
+        <section class="workflow-section" aria-labelledby="preparation-title">
+          <h2 id="preparation-title" tabindex="-1">Preparar intento</h2>
+          <form id="attempt-form" novalidate hidden>
+            <div class="stepper-row">
+              <label for="attempt-size">Preguntas por intento</label>
+              <div class="stepper">
+                <button id="decrease-size" class="btn icon-button" type="button" aria-label="Reducir cantidad" title="Reducir cantidad">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#minus"></use></svg>
                 </button>
-                <button id="next-question" type="button" class="button secondary hollow">
-                  Siguiente
-                </button>
-                <button id="next-pending" type="button" class="button warning">
-                  Pendiente
-                </button>
-                <button id="submit-exam" type="button" class="button primary">
-                  Enviar examen
-                </button>
-                <button id="view-results" type="button" class="button secondary hollow hidden">
-                  Ver reporte
+                <input id="attempt-size" type="number" min="1" step="1" value="25" inputmode="numeric" aria-describedby="attempt-range" />
+                <button id="increase-size" class="btn icon-button" type="button" aria-label="Aumentar cantidad" title="Aumentar cantidad">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#plus"></use></svg>
                 </button>
               </div>
             </div>
-          </article>
+            <p id="attempt-range" class="field-hint"></p>
+            <div id="size-presets" class="size-presets" role="group" aria-label="Cantidades sugeridas">
+              <button class="btn btn-outline" type="button" data-size="10" aria-pressed="false">10</button>
+              <button class="btn btn-outline" type="button" data-size="25" aria-pressed="false">25</button>
+              <button class="btn btn-outline" type="button" data-size="50" aria-pressed="false">50</button>
+            </div>
+            <div class="workflow-actions">
+              <button id="start-attempt" class="btn btn-primary" type="submit">
+                <span id="start-label">Empezar práctica</span>
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow-right"></use></svg>
+              </button>
+              <button id="restore-default-bank" class="btn btn-quiet" type="button" hidden>Usar banco predeterminado</button>
+            </div>
+          </form>
         </section>
 
-        <aside class="cell small-12 large-4 side">
-          <section class="card">
-            <div class="card-section">
-              <div class="score-head">
-                <div>
-                  <span>Resultado</span>
-                  <strong id="score-big">0%</strong>
-                </div>
-                <div class="callout score-box">
-                  <span>Aciertos</span>
-              <strong id="score-count">0/25</strong>
-                </div>
-              </div>
-              <div class="grid-x grid-margin-x small-up-1 medium-up-3 large-up-3 mini-stats">
-                <div class="cell">
-                  <div class="callout success">
-                    <strong id="correct-count">0</strong>
-                    <span>Correctas</span>
-                  </div>
-                </div>
-                <div class="cell">
-                  <div class="callout alert">
-                    <strong id="wrong-count">0</strong>
-                    <span>Fallos</span>
-                  </div>
-                </div>
-                <div class="cell">
-                  <div class="callout warning">
-                    <strong id="marked-count">0</strong>
-                    <span>Revisar</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <aside id="saved-attempts" class="saved-attempts" aria-label="Intentos guardados" hidden>
+          <section id="resume-section" class="workflow-section" aria-labelledby="resume-title" hidden>
+            <h2 id="resume-title">Intento en curso</h2>
+            <p id="resume-bank" class="saved-bank"></p>
+            <p id="resume-progress" class="workflow-meta"></p>
+            <button id="resume-attempt" class="btn btn-primary" type="button">
+              Continuar intento
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow-right"></use></svg>
+            </button>
           </section>
-
-          <section class="card">
-            <div class="card-section">
-              <div class="card-title">
-                <h3>Navegacion</h3>
-                <span id="pending-count">25 pendientes</span>
-              </div>
-              <div id="question-grid" class="question-grid"></div>
-            </div>
-          </section>
-
-          <section class="card">
-            <div class="card-section">
-              <h3>Banco activo</h3>
-              <p id="bank-title" class="bank-title">Sin banco</p>
-              <div class="grid-x grid-margin-x small-up-2 bank-grid">
-                <div class="cell">
-                  <div class="callout">
-                    <span>Total</span>
-                    <strong id="bank-total">0</strong>
-                  </div>
-                </div>
-                <div class="cell">
-                  <div class="callout">
-                    <span>Intento</span>
-                    <strong id="attempt-total">0</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <section id="last-result-section" class="workflow-section" aria-labelledby="last-result-title" hidden>
+            <h2 id="last-result-title">Último resultado</h2>
+            <p id="last-result-bank" class="saved-bank"></p>
+            <p id="last-result-stats" class="workflow-meta"></p>
+            <button id="open-last-result" class="btn btn-outline" type="button">Ver último resultado</button>
           </section>
         </aside>
-
       </div>
-    </main>
 
-    <div id="result-overlay" class="result-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
-      <section id="result-dashboard" class="dashboard card" aria-live="polite">
-        <div class="dashboard-toolbar">
-          <div>
-            <p class="eyebrow">Dashboard de resultado</p>
-            <h2 id="result-title">Resumen del intento</h2>
-            <p id="result-status" class="dashboard-status">
-              Envia el examen para ver las metricas finales.
-            </p>
+      <div id="exam-layout" class="exam-layout" hidden>
+        <section class="exam-progress" aria-labelledby="progress-heading">
+          <div class="progress-header">
+            <h2 id="progress-heading">Progreso</h2>
+            <span class="timer">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#clock"></use></svg>
+              <span class="show-for-sr">Tiempo transcurrido</span>
+              <span id="elapsed-time">00:00</span>
+            </span>
           </div>
-          <button id="close-dashboard" type="button" class="button clear secondary compact">
-            Cerrar
-          </button>
-        </div>
-
-        <div class="dashboard-scroll">
-          <div class="dashboard-head">
-            <div class="callout dashboard-score">
-              <span>Calificacion</span>
-              <strong id="result-score">0%</strong>
+          <div class="progress-caption">
+            <span id="progress-status"></span>
+            <strong id="progress-percent"></strong>
+          </div>
+          <div id="progress-track" class="progress-track" role="progressbar" aria-label="Preguntas respondidas" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span id="progress-fill"></span>
+          </div>
+          <dl class="live-stats">
+            <div>
+              <dt><svg class="icon icon-correct" aria-hidden="true"><use href="./assets/icons.svg#check"></use></svg>Aciertos</dt>
+              <dd id="correct-count">0</dd>
             </div>
-            <div class="grid-x grid-margin-x small-up-1 medium-up-3 large-up-6 metric-grid">
-              <div class="cell">
-                <div class="callout">
-                  <span>Respondidas</span>
-                  <strong id="result-answered">0/25</strong>
+            <div>
+              <dt><svg class="icon icon-wrong" aria-hidden="true"><use href="./assets/icons.svg#x"></use></svg>Fallos</dt>
+              <dd id="wrong-count">0</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="question-panel" aria-labelledby="question-text">
+          <div class="question-toolbar">
+            <p id="question-counter" class="kicker">Pregunta</p>
+            <button id="mark-review" class="btn btn-quiet mark-button" aria-label="Marcar para revisar" aria-pressed="false" type="button">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#bookmark"></use></svg>
+              <span id="mark-label">Marcar</span>
+            </button>
+          </div>
+          <div class="question-body">
+            <div class="question-meta">
+              <span id="topic-badge" class="question-topic"></span>
+              <span id="type-badge" class="question-type"></span>
+            </div>
+            <h2 id="question-text" tabindex="-1"></h2>
+            <div id="options" class="options" role="group" aria-label="Opciones de respuesta"></div>
+            <p id="feedback-live" class="show-for-sr" role="status"></p>
+            <div id="feedback" class="feedback" hidden>
+              <div class="feedback-heading">
+                <svg class="icon" aria-hidden="true"><use id="feedback-icon" href="./assets/icons.svg#circle-check"></use></svg>
+                <div>
+                  <strong id="feedback-title"></strong>
+                  <p id="feedback-answer" hidden></p>
                 </div>
               </div>
-              <div class="cell">
-                <div class="callout success">
-                  <span>Correctas</span>
-                  <strong id="result-correct">0</strong>
-                </div>
-              </div>
-              <div class="cell">
-                <div class="callout alert">
-                  <span>Fallos</span>
-                  <strong id="result-wrong">0</strong>
-                </div>
-              </div>
-              <div class="cell">
-                <div class="callout secondary">
-                  <span>Marcadas</span>
-                  <strong id="result-marked">0</strong>
-                </div>
-              </div>
-              <div class="cell">
-                <div class="callout">
-                  <span>Tiempo total</span>
-                  <strong id="result-total-time">0:00</strong>
-                </div>
-              </div>
-              <div class="cell">
-                <div class="callout">
-                  <span>Promedio</span>
-                  <strong id="result-average-time">0:00</strong>
-                </div>
-              </div>
+              <details id="feedback-details">
+                <summary>Ver explicación</summary>
+                <p id="feedback-explanation"></p>
+              </details>
             </div>
           </div>
-
-          <div class="grid-x grid-margin-x grid-margin-y review-grid">
-            <section class="cell small-12 large-4 callout dashboard-section">
-              <div class="card-title">
-                <h3>Preguntas</h3>
-                <span id="result-pending">0 pendientes</span>
-              </div>
-              <div id="review-question-list" class="review-question-list"></div>
-            </section>
-            <section class="cell small-12 large-8 callout dashboard-section review-detail">
-              <h3 id="review-question-title">Detalle</h3>
-              <div id="review-question-detail"></div>
-            </section>
+          <div class="question-actions">
+            <button id="prev-question" type="button" class="btn btn-outline">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow-left"></use></svg>
+              Anterior
+            </button>
+            <button id="next-question" type="button" class="btn btn-forward">
+              <span id="next-label">Siguiente</span>
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow-right"></use></svg>
+            </button>
           </div>
+        </section>
 
-          <p id="result-meta" class="result-meta"></p>
+        <aside class="exam-navigation" aria-label="Navegación del examen">
+          <div class="finish-actions">
+            <button id="review-attempt" type="button" class="btn btn-outline submit-action">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#list"></use></svg>
+              Revisar intento
+            </button>
+            <button id="next-pending" type="button" class="btn btn-quiet">
+              Ir a pendiente
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#chevron-right"></use></svg>
+            </button>
+            <button id="view-results" type="button" class="btn btn-primary" hidden>
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#list"></use></svg>
+              Ver resultados
+            </button>
+          </div>
+          <details id="question-navigator" class="navigator">
+            <summary>
+              <span class="navigator-heading">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#list"></use></svg>
+                Preguntas
+              </span>
+              <span class="navigator-status">
+                <span id="pending-count"></span>
+                <svg class="icon disclosure-icon" aria-hidden="true"><use href="./assets/icons.svg#chevron-down"></use></svg>
+              </span>
+            </summary>
+            <div class="navigator-body">
+              <nav id="question-grid" class="question-grid" aria-label="Ir a la pregunta"></nav>
+              <ul class="question-legend">
+                <li><span class="legend-pending"></span>Pendiente</li>
+                <li><svg class="icon icon-correct" aria-hidden="true"><use href="./assets/icons.svg#check"></use></svg>Correcta</li>
+                <li><svg class="icon icon-wrong" aria-hidden="true"><use href="./assets/icons.svg#x"></use></svg>Incorrecta</li>
+                <li><svg class="icon icon-marked" aria-hidden="true"><use href="./assets/icons.svg#bookmark"></use></svg>Marcada</li>
+              </ul>
+            </div>
+          </details>
+        </aside>
+      </div>
+
+      <section id="submission-view" aria-labelledby="finish-title" hidden>
+        <h2 id="finish-title" class="workflow-title" tabindex="-1">Revisar antes de enviar</h2>
+        <div class="submission-layout">
+          <aside class="workflow-section submission-summary" aria-labelledby="submission-summary-title">
+            <h3 id="submission-summary-title">Resumen del intento</h3>
+            <dl class="finish-summary">
+              <div><dt>Respondidas</dt><dd id="finish-answered"></dd></div>
+              <div><dt>Pendientes</dt><dd id="finish-pending"></dd></div>
+              <div><dt>Marcadas</dt><dd id="finish-marked"></dd></div>
+            </dl>
+            <p id="finish-message" class="form-notice" hidden>Responde todas las preguntas para enviar el examen.</p>
+            <div class="workflow-actions">
+              <button id="confirm-finish" class="btn btn-primary" type="button">
+                <span id="confirm-finish-label">Confirmar envío</span>
+                <svg class="icon" aria-hidden="true"><use id="confirm-finish-icon" href="./assets/icons.svg#send"></use></svg>
+              </button>
+              <button id="back-to-questions" class="btn btn-outline" type="button">Volver a las preguntas</button>
+            </div>
+          </aside>
+          <section class="submission-questions" aria-labelledby="submission-questions-title">
+            <h3 id="submission-questions-title">Preguntas del intento</h3>
+            <div class="review-filters" role="group" aria-label="Filtrar preguntas del intento">
+              <button class="btn btn-outline" type="button" data-summary-filter="all" aria-pressed="true">Todas</button>
+              <button class="btn btn-outline" type="button" data-summary-filter="pending" aria-pressed="false">Pendientes</button>
+              <button class="btn btn-outline" type="button" data-summary-filter="marked" aria-pressed="false">Marcadas</button>
+            </div>
+            <ul id="submission-list" class="submission-list"></ul>
+            <p id="submission-empty" class="workflow-meta" role="status" hidden></p>
+          </section>
         </div>
       </section>
-    </div>
+    </main>
 
-    <script src="/app.js"></script>
+    <dialog id="replace-dialog" class="modal" aria-labelledby="replace-title" aria-describedby="replace-message">
+      <header class="modal-header">
+        <h2 id="replace-title">Iniciar otro intento</h2>
+        <button class="btn icon-button" type="button" data-dialog-close aria-label="Cerrar" title="Cerrar">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#x"></use></svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <p id="replace-message">Al empezar otro intento, se perderá el avance del que tienes en curso.</p>
+      </div>
+      <footer class="modal-actions">
+        <button class="btn btn-outline" type="button" data-dialog-close autofocus>Cancelar</button>
+        <button id="confirm-replace" class="btn btn-primary" type="button">Empezar otro</button>
+      </footer>
+    </dialog>
+
+    <dialog id="result-dialog" class="modal report" aria-labelledby="result-title">
+      <header class="modal-header report-header">
+        <div>
+          <h2 id="result-title" tabindex="-1" autofocus>Resultado del intento</h2>
+          <p id="result-bank"></p>
+        </div>
+        <button class="btn icon-button" type="button" data-dialog-close aria-label="Cerrar resultados" title="Cerrar resultados">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#x"></use></svg>
+        </button>
+      </header>
+      <div class="report-body">
+        <div class="report-overview">
+          <div class="report-score">
+            <span>Calificación</span>
+            <strong id="result-score"></strong>
+            <span id="result-answered"></span>
+          </div>
+          <dl class="report-metrics">
+            <div><dt>Aciertos</dt><dd id="result-correct"></dd></div>
+            <div><dt>Fallos</dt><dd id="result-wrong"></dd></div>
+            <div><dt>Marcadas</dt><dd id="result-marked"></dd></div>
+            <div><dt>Tiempo total</dt><dd id="result-total-time"></dd></div>
+            <div><dt>Promedio por pregunta</dt><dd id="result-average-time"></dd></div>
+          </dl>
+        </div>
+        <section class="review" aria-labelledby="review-title">
+          <h3 id="review-title">Revisión de preguntas</h3>
+          <div class="review-filters" role="group" aria-label="Filtrar preguntas">
+            <button class="btn btn-outline" type="button" data-review-filter="all" aria-pressed="true">Todas</button>
+            <button class="btn btn-outline" type="button" data-review-filter="wrong" aria-pressed="false">Fallos</button>
+            <button class="btn btn-outline" type="button" data-review-filter="marked" aria-pressed="false">Marcadas</button>
+          </div>
+          <div class="review-layout">
+            <nav id="review-question-list" class="review-list" aria-label="Preguntas para revisar"></nav>
+            <p id="review-empty" class="review-empty" role="status" hidden></p>
+            <article id="review-detail" class="review-detail" aria-labelledby="review-question-title">
+              <h4 id="review-question-title" tabindex="-1"></h4>
+              <p id="review-question-meta" class="review-meta"></p>
+              <p id="review-question-text" class="review-prompt"></p>
+              <ul id="review-options" class="review-options"></ul>
+              <div class="review-explanation">
+                <h5>Explicación</h5>
+                <p id="review-explanation"></p>
+              </div>
+            </article>
+          </div>
+        </section>
+        <p id="result-meta" class="result-meta"></p>
+      </div>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

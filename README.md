@@ -8,18 +8,27 @@ cloud usando bancos de preguntas en JSON.
 - Banco por defecto con 120 preguntas basadas en el material de la asignatura.
 - El titulo visible del examen se toma de la metadata del JSON, por ejemplo
   `title`, `name`, `metadata.title`, `exam.title`, `courseTitle` o `subject`.
-- El usuario elige cuantas preguntas quiere contestar por intento.
+- En **Preparacion** eliges el banco y la cantidad de preguntas. El cronometro
+  empieza al pulsar `Empezar practica`.
 - Cada intento selecciona preguntas de forma aleatoria desde el banco completo.
 - No hay cuota fija de preguntas verdadero/falso ni ABCD.
 - Las respuestas se reordenan aleatoriamente en cada intento, por lo que la
   respuesta correcta no queda fija en la misma letra.
 - Al elegir una respuesta, la app indica de inmediato si fue correcta o
   incorrecta.
-- El boton `Enviar examen` genera un dashboard flotante con resultado final.
-- El dashboard muestra calificacion, aciertos, fallos, preguntas marcadas,
+- Una pregunta por pantalla, con cronometro, barra de progreso y mapa para
+  saltar entre preguntas pendientes, respondidas o marcadas.
+- **Revision** muestra todas las preguntas y permite filtrar las pendientes o
+  marcadas, y volver directamente a cualquiera. El envio se habilita cuando
+  todas estan respondidas.
+- El navegador guarda el intento en curso. `Continuar intento` conserva el
+  orden de las preguntas y opciones, las respuestas, las marcas y el tiempo.
+- Al enviar se genera un reporte flotante. El ultimo resultado se puede abrir
+  desde **Preparacion**, incluso despues de recargar en el mismo navegador.
+- El reporte muestra calificacion, aciertos, fallos, preguntas marcadas,
   tiempo total y tiempo promedio por pregunta.
-- Desde el dashboard se puede revisar cada pregunta, la respuesta elegida, la
-  respuesta correcta, el tiempo dedicado y la explicacion.
+- Desde el reporte se pueden filtrar los fallos o las preguntas marcadas y
+  revisar la respuesta elegida, la correcta, el tiempo dedicado y la explicacion.
 - Incluye selector de tema claro, oscuro y OLED con preferencia guardada en el
   navegador.
 
@@ -49,6 +58,38 @@ http://localhost:8000/
 ```
 
 Para detener el servidor, usa `Ctrl+C` en la terminal.
+
+## Arquitectura
+
+El banco alimenta el intento. El intento genera el reporte al confirmar el
+envio. Las vistas muestran el estado del motor y delegan las transiciones.
+
+- `bank-normalizer.js` y `bank-validator.js` adaptan y validan los bancos JSON.
+- `attempt-engine.js` selecciona preguntas y reordena sus opciones.
+- `attempt-session.js` controla el avance, el tiempo activo y el envio. Usa
+  `scoring.js` para calcular el puntaje y genera una copia del resultado.
+- `attempt-store.js` guarda el banco importado seleccionado, el borrador y el
+  ultimo resultado en un registro versionado de `localStorage`.
+- `app.js` coordina las vistas de preparacion, practica, revision y resultado.
+
+El guardado pertenece al navegador y a la URL del portal. Se recupera un
+borrador y el ultimo resultado.
+
+Referencias para el flujo y la separacion entre banco, intento y reporte.
+[Moodle Quiz](https://docs.moodle.org/503/en/Using_Quiz),
+[revision de Pearson VUE](https://www.pearsonvue.com/content/dam/VUE/vue/en/documents/clients/cpshr/platform-navigation-guide-qme.pdf)
+y [modelo de resultados QTI](https://www.imsglobal.org/sites/default/files/spec/qti/v3/rr-bind/index.html).
+
+## Validar
+
+Las pruebas de logica se ejecutan con:
+
+```bash
+node tests/run-tests.mjs
+```
+
+Validan el formato de los bancos, la aleatorizacion, el puntaje, los temas y
+el ciclo de un intento guardado, reanudado y enviado.
 
 ## Formato JSON
 
